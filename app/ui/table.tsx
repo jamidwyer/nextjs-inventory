@@ -1,5 +1,5 @@
 import { IncrementInventoryItem, DecrementInventoryItem } from '@/app/ui/buttons';
-import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
+import { formatDateToLocal } from '@/app/lib/utils';
 import { fetchFilteredInventoryItems } from '@/app/lib/data';
 
 export default async function InventoryItemsTable({
@@ -24,7 +24,7 @@ export default async function InventoryItemsTable({
                 <div className="flex w-full items-center justify-between pt-4">
                   <div>
                     <p className="text-xl font-medium">
-                      {formatCurrency(inventoryitem.amount)}
+                      {inventoryitem.amount}
                     </p>
                     <p>{formatDateToLocal(inventoryitem.expiration_date)}</p>
                   </div>

@@ -4,7 +4,6 @@ import {
   Product,
   User,
 } from './definitions';
-import { formatCurrency } from './utils';
 
 const ITEMS_PER_PAGE = 6;
 export async function fetchFilteredInventoryItems(
