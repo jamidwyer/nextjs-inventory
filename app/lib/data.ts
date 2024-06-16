@@ -1,10 +1,8 @@
 import { sql } from '@vercel/postgres';
 import { InventoryItem, Product, User } from './definitions';
 
-export async function fetchInventoryItems(userId: string | number | boolean | null | undefined) {
+export async function fetchInventoryItems(userId: string) {
   try {
-    //    const data = await sql<InventoryItem>`SELECT inventory_items.product_id, inventory_items.exipration_date, products.name FROM inventory_items INNER JOIN products on products.product_id=inventory_items.product_id`;
-    //    const data = await sql<InventoryItem>`SELECT inventory_items.product_id, inventory_items.amount, inventory_items.exipration_date products.name FROM inventory_items JOIN products ON inventory_items.product_id=products.product_id`;
     const data = await sql<InventoryItem>`SELECT *
     FROM inventory_items, products
     WHERE product_id = product_id AND user_id = ${userId};`;
