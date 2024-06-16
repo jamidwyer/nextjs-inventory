@@ -3,41 +3,41 @@
 @tailwind utilities;
 
 :root {
-  --legible-font: "Gotham,Sofia,filson-pro,Courier,Helvetica Neue, Helvetica, Arial,Geneva,sans-serif";
+  --legible-font: 'Gotham,Sofia,filson-pro,Courier,Helvetica Neue, Helvetica, Arial,Geneva,sans-serif';
 
   /* green */
   --honeydew: rgb(240, 255, 240);
-  --granny-smith-apple: #9DE093;
-  --asparagus: #7BA05B;
-  --avocado: rgb(110,112,66);
+  --granny-smith-apple: #9de093;
+  --asparagus: #7ba05b;
+  --avocado: rgb(110, 112, 66);
 
   /* orange */
-  --apricot: #FDD5B1;
+  --apricot: #fdd5b1;
   --apricot-peel: #ffb16d;
   --butterscotch: #fdb147;
   --orange: rgb(255, 165, 0);
   --mango: #ffa62b;
   --tangerine: #f28500;
   --carrot: #f36f09;
-  --smashed-pumpkin: #FF6D3A;
+  --smashed-pumpkin: #ff6d3a;
   --tomato-sauce: rgb(255, 99, 71);
   --bloodorange: #fe4b03;
 
   /* yellow */
   --lemon-chiffon: rgb(255, 250, 205);
-  --banana-mania: #FBE7B2;
+  --banana-mania: #fbe7b2;
   --butter: #ffff81;
   --banana: #ffff7e;
-  --lemon: 	#FFFF38;
+  --lemon: #ffff38;
   --maize: #f4d054;
   --mustard: #ceb301;
   --cheddar-cheese: rgb();
 
   /* white */
   --coconut: #fefefe;
-  --mozarella: #FAF6ED;
+  --mozarella: #faf6ed;
   --jasmine-rice: #f1eeec;
-  --bit-of-sugar: rgb(244,242,236);
+  --bit-of-sugar: rgb(244, 242, 236);
   --egg-white: rgb();
   --eggshell: rgb();
   --whipped-cream: rgb();
@@ -50,36 +50,36 @@
   --stainless: #d4d4d8;
   --charcoal: #343837;
   --black-bean: #282222;
-  --licorice: #1A1110;
+  --licorice: #1a1110;
 
   /* blue */
-  --blueberry: #1F3050;
+  --blueberry: #1f3050;
 
   /* pink */
   --peach-puff: rgb(255, 218, 185);
-  --peach: #FFD0B9;
+  --peach: #ffd0b9;
   --macaron: #d7a291;
   --dark-salmon: rgb(233, 150, 122);
   --peach-peel: #e1887c;
   --salmon: rgb(250, 128, 114);
   --persimmon: rgb(255, 89, 89);
   --grapefruit: #fd5956;
-  --wild-watermelon: rgb(#FD5B78);
+  --wild-watermelon: rgb(#fd5b78);
 
   /* brown */
-  --almond: #EED9C4;
+  --almond: #eed9c4;
   --bisque: rgb(255, 228, 196);
   --blanched-almond: rgb(255, 235, 205);
   --button-mushroom: rgb();
   --wheat: rgb(245, 222, 179);
-  --ground-ginger: rgb(217,202,159);
-  --brown-sugar: #AF6E4D;
-  --caramel: #af6f09	;
+  --ground-ginger: rgb(217, 202, 159);
+  --brown-sugar: #af6e4d;
+  --caramel: #af6f09;
   --chanterelle: rgb();
   --cinnamon: #ac4f06;
   --cocoa: rgb(86, 36, 36);
   --coffee-grounds: rgb();
-  --chocolate: #3d1c02	;
+  --chocolate: #3d1c02;
   --cranberry-sauce: rgb();
   --crimini-mushroom: rgb();
   --curry: rgb(215, 169, 75);
@@ -104,13 +104,13 @@
   --darksage: #598556;
   --spearmint: rgb();
   --strawberry: rgb();
-  --sugar-beet: rgb(131,66, 83);
-  --sugar-plum: 	#914E75;
-  --tomato: #E62200;
+  --sugar-beet: rgb(131, 66, 83);
+  --sugar-plum: #914e75;
+  --tomato: #e62200;
   --vanilla-bean: rgb();
-  --logo-font: "Horta";
+  --logo-font: 'Horta';
   --party-font: 'hortaregular', 'Surveyor', 'Bodoni', 'abril-display';
-  --dinner-party-font: "Circular,Gotham,Ogonek-Light,Georgia,Times,serif";
+  --dinner-party-font: 'Circular,Gotham,Ogonek-Light,Georgia,Times,serif';
 }
 
 input[type='number'] {
@@ -181,11 +181,11 @@ nav {
 
 @font-face {
   font-family: 'hortaregular';
-  src: url('fonts/horta_demo.woff2') format('woff2'),
+  src:
+    url('fonts/horta_demo.woff2') format('woff2'),
     url('fonts/horta_demo.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
 }
 
 a:hover {

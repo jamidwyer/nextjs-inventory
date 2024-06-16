@@ -1,10 +1,12 @@
 const { db } = require('@vercel/postgres');
 const {
-  inventoryItems,
+  inventory_items,
+  products,
   users,
   quantitative_units,
 } = require('../app/lib/placeholder-data.js');
 const bcrypt = require('bcrypt');
+const { v4 } = require('uuid');
 
 async function seedUsers(client) {
   try {
@@ -27,8 +29,8 @@ async function seedUsers(client) {
         const hashedPassword = await bcrypt.hash(user.password, 10);
         return client.sql`
         INSERT INTO users (id, first_name, email, password)
-        VALUES (${user.id}, ${user.first_name}, ${user.email}, ${hashedPassword})
-        ON CONFLICT (id) DO NOTHING;
+        VALUES (${v4()}, ${user.first_name}, ${user.email}, ${hashedPassword})
+        ON CONFLICT (email) DO NOTHING;
       `;
       }),
     );
@@ -56,20 +58,21 @@ async function seedInventoryItems(client) {
     amount INT NOT NULL,
     exipration_date DATE,
     product_id UUID NOT NULL,
-    quantitative_unit_id UUID NOT NULL,
+    quantitative_unit_id UUID NOT NULL
   );
 `;
 
     console.log(`Created "inventoryItems" table`);
 
     const insertedInventoryItems = await Promise.all(
-      inventory_items.map(
-        (inventory_item) => client.sql`
-        INSERT INTO inventory_items (user_id, amount, status, date, product_id, quantitative_unit_id)
+      inventory_items.map((inventory_item) => {
+        console.log(inventory_item);
+        return client.sql`
+        INSERT INTO inventory_items (user_id, amount, exipration_date, product_id, quantitative_unit_id)
         VALUES (${inventory_item.user_id}, ${inventory_item.amount}, ${inventory_item.expiration_date}, ${inventory_item.product_id}, ${inventory_item.quantitative_unit_id})
         ON CONFLICT (id) DO NOTHING;
-      `,
-      ),
+      `;
+      }),
     );
 
     console.log(`Seeded ${insertedInventoryItems.length} items`);
@@ -91,20 +94,21 @@ async function seedProducts(client) {
     const createTable = await client.sql`
       CREATE TABLE IF NOT EXISTS products (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
+        name VARCHAR(255) NOT NULL
       );
     `;
 
     console.log(`Created "products" table`);
 
     const insertedProducts = await Promise.all(
-      products.map(
-        (product) => client.sql`
+      products.map((product) => {
+        const uuid = v4();
+        return client.sql`
         INSERT INTO products (id, name)
-        VALUES (${product.id}, ${product.name})
+        VALUES (${uuid}, ${product.name})
         ON CONFLICT (id) DO NOTHING;
-      `,
-      ),
+      `;
+      }),
     );
 
     console.log(`Seeded ${insertedProducts.length} products`);
@@ -124,20 +128,22 @@ async function seedQuantitativeUnits(client) {
     const createTable = await client.sql`
       CREATE TABLE IF NOT EXISTS quantitative_units (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        name VARCHAR(50) NOT NULL UNIQUE,
+        name VARCHAR(50) NOT NULL UNIQUE
       );
     `;
 
     console.log(`Created "quantitative_units" table`);
 
     const insertedQuantitativeUnits = await Promise.all(
-      quantitative_units.map(
-        (unit) => client.sql`
+      quantitative_units.map((unit) => {
+        const uuid = v4();
+        console.log(uuid);
+        return client.sql`
         INSERT INTO quantitative_units (id, name)
-        VALUES (${unit.id}, ${unit.name})
+        VALUES (${uuid}, ${unit.name})
         ON CONFLICT (name) DO NOTHING;
-      `,
-      ),
+      `;
+      }),
     );
 
     console.log(`Seeded ${insertedQuantitativeUnits.length} units`);
@@ -157,8 +163,8 @@ async function main() {
 
   await seedUsers(client);
   await seedProducts(client);
-  await seedInventoryItems(client);
   await seedQuantitativeUnits(client);
+  await seedInventoryItems(client);
 
   await client.end();
 }

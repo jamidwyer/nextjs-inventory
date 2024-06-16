@@ -1,33 +1,17 @@
 import { sql } from '@vercel/postgres';
-import {
-  InventoryItem,
-  Product,
-  User,
-} from './definitions';
+import { InventoryItem, Product, User } from './definitions';
 
-const ITEMS_PER_PAGE = 6;
-export async function fetchFilteredInventoryItems(
-  query: string,
-  currentPage: number,
-) {
-  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
-
+export async function fetchInventoryItems(userId) {
   try {
-    const inventoryItems = await sql<InventoryItem>`
-      SELECT
-        inventory_items.id,
-        inventory_items.amount,
-        inventory_items.date,
-        users.first_name,
-      FROM inventory_items
-      JOIN users ON inventory_items.user_id = users.id
-      WHERE
-        products.name ILIKE ${`%${query}%`} OR
-      ORDER BY inventory_items.expiration_date ASC
-      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
-    `;
+    //    const data = await sql<InventoryItem>`SELECT inventory_items.product_id, inventory_items.exipration_date, products.name FROM inventory_items INNER JOIN products on products.product_id=inventory_items.product_id`;
+    //    const data = await sql<InventoryItem>`SELECT inventory_items.product_id, inventory_items.amount, inventory_items.exipration_date products.name FROM inventory_items JOIN products ON inventory_items.product_id=products.product_id`;
+    const data = await sql<InventoryItem>`SELECT *
+    FROM inventory_items, products
+    WHERE product_id = product_id AND user_id = ${userId};`;
 
-    return inventoryItems.rows;
+    console.log(data.rows);
+
+    return data.rows;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch inventory items.');
