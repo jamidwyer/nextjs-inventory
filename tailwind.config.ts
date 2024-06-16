@@ -21,6 +21,8 @@ const config: Config = {
         licorice: '#1A1110',
         oyster: 'rgb(187, 179, 178)',
         peachPuff: 'rgb(255, 218, 185)',
+        stainless: '#d4d4d8',
+        tilapiaScale: 'rgb(164,180,182)',
         wildWatermelon: '#FD5B78',
       },
     },

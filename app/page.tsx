@@ -1,13 +1,20 @@
 import InventoryItemsTable from '@/app/ui/table';
 import { Suspense } from 'react';
-import { AddInventoryItem } from './ui/buttons';
-import Search from './ui/search';
 
-export default function Page() {
+export default function Page({
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string;
+    page?: string;
+  };
+}) {
+  const query = searchParams?.query || '';
+  const currentPage = Number(searchParams?.page) || 1;
   return (
     <>
-      <Suspense>
-        <InventoryItemsTable currentPage={1} query="" />
+      <Suspense key={query + currentPage}>
+        <InventoryItemsTable currentPage={currentPage} query={query} />
       </Suspense>
     </>
   );

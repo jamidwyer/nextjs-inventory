@@ -9,7 +9,8 @@ export const formatDateToLocal = (
     year: 'numeric',
   };
   const formatter = new Intl.DateTimeFormat(locale, options);
-  return formatter.format(date);
+  const formatted = formatter.format(date);
+  return formatted;
 };
 
 export const generatePagination = (currentPage: number, totalPages: number) => {
