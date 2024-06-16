@@ -10,7 +10,7 @@ export function AddInventoryItem() {
   return (
     <Link
       href="/inventory/items/create"
-      className="flex h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-bloodorange focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+      className="flex h-10 items-center rounded-sm bg-bloodorange px-4 text-sm font-medium text-coconut transition-colors hover:bg-grapefruit hover:text-jasmineRice focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grapefruit"
     >
       <span className="hidden md:block">Add Inventory Item</span>{' '}
       <PlusIcon className="h-5 md:ml-4" />
@@ -20,7 +20,7 @@ export function AddInventoryItem() {
 
 export function IncrementInventoryItem({ id }: { id: string }) {
   return (
-    <button className="rounded-md border p-2 hover:bg-gray-100">
+    <button className="rounded-sm border p-2 hover:bg-stainless">
       <PlusIcon className="w-5" />
     </button>
   );
@@ -28,7 +28,7 @@ export function IncrementInventoryItem({ id }: { id: string }) {
 
 export function DecrementInventoryItem({ id }: { id: string }) {
   return (
-    <button className="rounded-md border p-2 hover:bg-gray-100">
+    <button className="rounded-sm border p-2 hover:bg-stainless">
       <MinusIcon className="w-5" />
     </button>
   );
@@ -37,7 +37,7 @@ export function DecrementInventoryItem({ id }: { id: string }) {
 export function DeleteInventoryItem({ id }: { id: string }) {
   return (
     <>
-      <button className="rounded-md border p-2 hover:bg-gray-100">
+      <button className="rounded-sm border p-2 hover:bg-stainless">
         <span className="sr-only">Delete</span>
         <TrashIcon className="w-5" />
       </button>

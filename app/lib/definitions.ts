@@ -13,7 +13,7 @@ export type InventoryItem = {
   product_id: string;
   quantitative_unit_id: string;
   amount: number;
-  expiration_date: string;
+  exipration_date: string;
 };
 
 export type Product = {

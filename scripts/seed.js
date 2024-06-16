@@ -66,7 +66,6 @@ async function seedInventoryItems(client) {
 
     const insertedInventoryItems = await Promise.all(
       inventory_items.map((inventory_item) => {
-        console.log(inventory_item);
         return client.sql`
         INSERT INTO inventory_items (user_id, amount, exipration_date, product_id, quantitative_unit_id)
         VALUES (${inventory_item.user_id}, ${inventory_item.amount}, ${inventory_item.expiration_date}, ${inventory_item.product_id}, ${inventory_item.quantitative_unit_id})
@@ -137,7 +136,6 @@ async function seedQuantitativeUnits(client) {
     const insertedQuantitativeUnits = await Promise.all(
       quantitative_units.map((unit) => {
         const uuid = v4();
-        console.log(uuid);
         return client.sql`
         INSERT INTO quantitative_units (id, name)
         VALUES (${uuid}, ${unit.name})

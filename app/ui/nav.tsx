@@ -12,7 +12,7 @@ export default function PageHeader() {
       ) : (
         <Link
           href="/login"
-          className="flex items-center gap-5 self-start rounded-lg bg-bloodorange px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
+          className="flex items-center gap-5 self-start rounded-sm bg-bloodorange px-6 py-3 text-sm font-medium text-coconut transition-colors hover:bg-blue-400 md:text-base"
         >
           <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
         </Link>

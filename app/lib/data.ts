@@ -1,18 +1,46 @@
 import { sql } from '@vercel/postgres';
 import { InventoryItem, Product, User } from './definitions';
 
-export async function fetchInventoryItems(userId: string) {
+const ITEMS_PER_PAGE = 20;
+
+export async function fetchInventoryItems(
+  userId: string,
+  query: string,
+  currentPage: number,
+) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
   try {
     const data = await sql<InventoryItem>`SELECT *
     FROM inventory_items, products
-    WHERE product_id = product_id AND user_id = ${userId};`;
-
-    console.log(data.rows);
+    WHERE product_id = product_id AND user_id = ${userId} AND
+    name ILIKE ${`%${query}%`}
+    LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+;`;
 
     return data.rows;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch inventory items.');
+  }
+}
+
+export async function fetchInventoryItemsPages(
+  userId: string,
+  query: string,
+  currentPage: number,
+) {
+  try {
+    const count = await sql`SELECT COUNT(*)
+    FROM inventory_items, products
+    WHERE product_id = product_id AND user_id = ${userId} AND
+    name ILIKE ${`%${query}%`};`;
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of inventory items.');
   }
 }
 

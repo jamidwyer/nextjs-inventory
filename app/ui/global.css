@@ -7,16 +7,21 @@
 
   /* green */
   --honeydew: rgb(240, 255, 240);
+  --sage: rgb(185, 196, 177);
   --granny-smith-apple: #9de093;
   --asparagus: #7ba05b;
+  --darksage: #598556;
   --avocado: rgb(110, 112, 66);
+  --olive: #6e750e;
+  --tilapia: rgb(95, 115, 89);
+  --parsley: rgb(44, 101, 29);
 
   /* orange */
   --apricot: #fdd5b1;
   --apricot-peel: #ffb16d;
   --butterscotch: #fdb147;
+  --cheddar: rgb(246, 178, 83);
   --orange: rgb(255, 165, 0);
-  --mango: #ffa62b;
   --tangerine: #f28500;
   --carrot: #f36f09;
   --smashed-pumpkin: #ff6d3a;
@@ -30,24 +35,36 @@
   --banana: #ffff7e;
   --lemon: #ffff38;
   --maize: #f4d054;
+  --egg-yolk: rgb(245, 181, 4);
+  --curry: rgb(215, 169, 75);
   --mustard: #ceb301;
-  --cheddar-cheese: rgb();
 
   /* white */
+  --whipped-cream: rgb(240, 240, 240);
   --coconut: #fefefe;
   --mozarella: #faf6ed;
   --jasmine-rice: #f1eeec;
   --bit-of-sugar: rgb(244, 242, 236);
-  --egg-white: rgb();
-  --eggshell: rgb();
-  --whipped-cream: rgb();
+  --eggshell: rgb(242, 243, 245);
+  --egg-white: rgb(239, 243, 234);
   --baby-artichoke: rgb(233, 227, 206);
+  --cod-belly: rgb(210, 199, 190);
   --oyster: rgb(187, 179, 178);
 
   /* purple */
   --aubergine: #3d0734;
-  /* black */
+  --deep-lavender: #8d5eb7;
+  --eggplant: #614051;
+  --sugar-beet: rgb(131, 66, 83);
+  --sugar-plum: #914e75;
+
+  /* gray */
   --stainless: #d4d4d8;
+  --tilapia-scale: rgb(164, 180, 182);
+  --trout-belly: rgb(175, 177, 189);
+  --herring: rgb(108, 120, 119);
+  --trout-back: rgb(101, 93, 88);
+  --coho-back: rgb(86, 80, 73);
   --charcoal: #343837;
   --black-bean: #282222;
   --licorice: #1a1110;
@@ -57,57 +74,28 @@
 
   /* pink */
   --peach-puff: rgb(255, 218, 185);
-  --peach: #ffd0b9;
-  --macaron: #d7a291;
+  --rainbow-trout: rgb(215, 166, 175);
   --dark-salmon: rgb(233, 150, 122);
   --peach-peel: #e1887c;
   --salmon: rgb(250, 128, 114);
+  --coho-salmon: rgb(185, 96, 94);
   --persimmon: rgb(255, 89, 89);
   --grapefruit: #fd5956;
   --wild-watermelon: rgb(#fd5b78);
+  --tomato: #e62200;
 
   /* brown */
   --almond: #eed9c4;
   --bisque: rgb(255, 228, 196);
   --blanched-almond: rgb(255, 235, 205);
-  --button-mushroom: rgb();
   --wheat: rgb(245, 222, 179);
   --ground-ginger: rgb(217, 202, 159);
   --brown-sugar: #af6e4d;
   --caramel: #af6f09;
-  --chanterelle: rgb();
-  --cinnamon: #ac4f06;
   --cocoa: rgb(86, 36, 36);
-  --coffee-grounds: rgb();
   --chocolate: #3d1c02;
-  --cranberry-sauce: rgb();
-  --crimini-mushroom: rgb();
-  --curry: rgb(215, 169, 75);
-  --deep-lavender: #8d5eb7;
-  --dijon-mustard: rgb();
-  --eggplant: #614051;
-  --egg-yolk: rgb();
-  --fennel: rgb();
-  --jalapeno: rgb();
-  --kale: rgb();
-  --kiwi: #9cef43;
-  --lime-juice: rgb();
-  --maraschino-cherry: rgb();
-  --merlot: rgb();
-  --morel: rgb();
-  --nopal: rgb();
-  --olive: #6e750e;
-  --extra-virgin-olive-oil: rgb();
-  --parsley: rgb(44, 101, 29);
-  --poblano-pepper: rgb();
-  --sage: rgb(185, 196, 177);
-  --darksage: #598556;
-  --spearmint: rgb();
-  --strawberry: rgb();
-  --sugar-beet: rgb(131, 66, 83);
-  --sugar-plum: #914e75;
-  --tomato: #e62200;
-  --vanilla-bean: rgb();
+  --cod-speckle: rgb(55, 38, 30);
+
   --logo-font: 'Horta';
   --party-font: 'hortaregular', 'Surveyor', 'Bodoni', 'abril-display';
   --dinner-party-font: 'Circular,Gotham,Ogonek-Light,Georgia,Times,serif';
@@ -140,7 +128,7 @@ body {
   border-color: var(--black-bean);
   color: var(--black-bean);
   font-family: var(--legible-font);
-  font-size: 16px;
+  font-size: 20px;
   height: 100%;
 }
 
@@ -189,7 +177,7 @@ nav {
 }
 
 a:hover {
-  color: var(--tomato);
+  color: var(--jasmine-rice);
 }
 
 button {
