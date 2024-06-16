@@ -8,8 +8,16 @@ npm run dev
 
 ### Deploy
 
+Open PR.
+
+Get approval.
+
+Merge.
+
 ### Roadmap
-- commit
+
+- integrate with cms db
+- recipes
 - internationalize
 - bg video that changes depending on route
 - help nextjs upgrade react deps

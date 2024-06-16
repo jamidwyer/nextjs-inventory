@@ -8,6 +8,7 @@ export type User = {
 
 export type InventoryItem = {
   id: string;
+  name: string;
   user_id: string;
   product_id: string;
   quantitative_unit_id: string;
