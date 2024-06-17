@@ -1,12 +1,4 @@
 import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
-import Form from '@/app/ui/add-form';
-import { fetchProducts } from '@/app/lib/data';
-
-export async function AddInventoryItem({ userId }) {
-  const products = await fetchProducts();
-
-  return <Form userId={userId} products={products} />;
-}
 
 export function IncrementInventoryItem({ id }: { id: string }) {
   return (

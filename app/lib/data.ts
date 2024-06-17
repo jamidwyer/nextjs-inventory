@@ -11,7 +11,8 @@ export async function fetchInventoryItems(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    const data = await sql<InventoryItem>`SELECT expiration_date, name, amount
+    const data =
+      await sql<InventoryItem>`SELECT expiration_date, name, amount, product_id
 FROM inventory_items
 INNER JOIN products
 ON inventory_items.product_id = products.id
@@ -61,21 +62,17 @@ export async function fetchProducts() {
   }
 }
 
-export async function fetchProductById(id: string) {
+export async function fetchRecipesByIngredient(id: string) {
   try {
     const data = await sql<Product>`
       SELECT
-        products.id,
-        products.name,
-      FROM products
-      WHERE products.id = ${id};
+        recipes.id,
+        recipes.name,
+      FROM recipes
+      WHERE products.ingredient_id = ${id};
     `;
 
-    const product = data.rows.map((product) => ({
-      ...product,
-    }));
-
-    return product[0];
+    return data.rows;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch product.');

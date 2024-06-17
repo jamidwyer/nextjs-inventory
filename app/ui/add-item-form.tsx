@@ -4,7 +4,13 @@ import { Button } from '@/app/ui/button';
 import { quantitative_units } from '../lib/placeholder-data';
 import { createInventoryItem } from '@/app/lib/actions';
 
-export default function Form({ userId, products }) {
+type Props = {
+  userId: string;
+  products: Product[];
+};
+
+export default function AddItemForm(props: Props) {
+  const { userId, products } = props;
   return (
     <form action={createInventoryItem}>
       <input type="hidden" value={userId} name="userId" />
