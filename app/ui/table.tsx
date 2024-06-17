@@ -1,12 +1,17 @@
 import {
   IncrementInventoryItem,
   DecrementInventoryItem,
-  AddInventoryItem,
 } from '@/app/ui/buttons';
 import { formatDateToLocal } from '@/app/lib/utils';
-import { fetchInventoryItems, fetchInventoryItemsPages } from '@/app/lib/data';
+import {
+  fetchInventoryItems,
+  fetchInventoryItemsPages,
+  fetchProducts,
+} from '@/app/lib/data';
 import Search from './search';
 import Pagination from './pagination';
+import Link from 'next/link';
+import AddItemForm from './add-item-form';
 
 export default async function InventoryItemsTable({
   query,
@@ -20,12 +25,13 @@ export default async function InventoryItemsTable({
 
   const totalPages = await fetchInventoryItemsPages(userId, query, currentPage);
 
+  const products = await fetchProducts();
+
   return (
     <div className="flex w-full flex-col gap-6  rounded-sm bg-gray-50 p-2">
       <div className="mt-2 flex flex-col justify-between gap-2">
         <Search placeholder="Search inventory..." />
       </div>
-
       <div className="md:hidden">
         {inventoryItems?.map((inventoryItem) => {
           return (
@@ -36,7 +42,7 @@ export default async function InventoryItemsTable({
               <div className="flex w-full items-center justify-between pt-4">
                 <div>
                   <p className="text-xl font-medium">{inventoryItem.amount}</p>
-                  <p>{formatDateToLocal(inventoryItem.exipration_date)}</p>
+                  <p>{formatDateToLocal(inventoryItem.expiration_date)}</p>
                 </div>
                 <div className="flex justify-end gap-2">
                   <IncrementInventoryItem id={inventoryItem.id} />
@@ -65,34 +71,39 @@ export default async function InventoryItemsTable({
           </tr>
         </thead>
         <tbody className="bg-coconut">
-          {inventoryItems?.map((inventoryitem) => (
-            <tr
-              key={inventoryitem.id}
-              className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
-            >
-              <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                <div className="flex items-center gap-3">
-                  <p>{inventoryitem.name}</p>
-                </div>
-              </td>
-              <td className="whitespace-nowrap px-3 py-3">
-                {inventoryitem.amount}
-              </td>
-              <td className="whitespace-nowrap px-3 py-3">
-                {formatDateToLocal(inventoryitem.exipration_date)}
-              </td>
-              <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                <div className="flex justify-end gap-3">
-                  <IncrementInventoryItem id={inventoryitem.id} />
-                  <DecrementInventoryItem id={inventoryitem.id} />
-                </div>
-              </td>
-            </tr>
-          ))}
+          {inventoryItems?.map((inventoryItem) => {
+            const url = `/products/${inventoryItem.product_id}`;
+            return (
+              <tr
+                key={inventoryItem.id}
+                className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
+              >
+                <td className="whitespace-nowrap py-3 pl-6 pr-3">
+                  <div className="flex items-center gap-3">
+                    <p>
+                      <Link href={url}>{inventoryItem.name}</Link>
+                    </p>
+                  </div>
+                </td>
+                <td className="whitespace-nowrap px-3 py-3">
+                  {inventoryItem.amount}
+                </td>
+                <td className="whitespace-nowrap px-3 py-3">
+                  {formatDateToLocal(inventoryItem.expiration_date)}
+                </td>
+                <td className="whitespace-nowrap py-3 pl-6 pr-3">
+                  <div className="flex justify-end gap-3">
+                    <IncrementInventoryItem id={inventoryItem.id} />
+                    <DecrementInventoryItem id={inventoryItem.id} />
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
       <Pagination totalPages={totalPages} />
-      <AddInventoryItem />
+      <AddItemForm userId={userId} products={products} />;
     </div>
   );
 }
