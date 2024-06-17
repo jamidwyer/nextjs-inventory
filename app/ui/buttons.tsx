@@ -19,7 +19,7 @@ export function DecrementInventoryItem({ id }: { id: string }) {
 export function DeleteInventoryItem({ id }: { id: string }) {
   return (
     <>
-      <button className="rounded-sm border p-2 hover:bg-stainless">
+      <button className="rounded-sm border p-2 bg-jasmineRice hover:bg-stainless">
         <span className="sr-only">Delete</span>
         <TrashIcon className="w-5" />
       </button>
