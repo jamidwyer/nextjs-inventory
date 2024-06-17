@@ -36,7 +36,7 @@ export default async function InventoryItemsTable({
               <div className="flex w-full items-center justify-between pt-4">
                 <div>
                   <p className="text-xl font-medium">{inventoryItem.amount}</p>
-                  <p>{formatDateToLocal(inventoryItem.exipration_date)}</p>
+                  <p>{formatDateToLocal(inventoryItem.expiration_date)}</p>
                 </div>
                 <div className="flex justify-end gap-2">
                   <IncrementInventoryItem id={inventoryItem.id} />
@@ -79,7 +79,7 @@ export default async function InventoryItemsTable({
                 {inventoryitem.amount}
               </td>
               <td className="whitespace-nowrap px-3 py-3">
-                {formatDateToLocal(inventoryitem.exipration_date)}
+                {formatDateToLocal(inventoryitem.expiration_date)}
               </td>
               <td className="whitespace-nowrap py-3 pl-6 pr-3">
                 <div className="flex justify-end gap-3">
@@ -92,7 +92,7 @@ export default async function InventoryItemsTable({
         </tbody>
       </table>
       <Pagination totalPages={totalPages} />
-      <AddInventoryItem />
+      <AddInventoryItem userId={userId} />
     </div>
   );
 }

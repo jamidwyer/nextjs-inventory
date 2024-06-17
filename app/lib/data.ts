@@ -11,11 +11,14 @@ export async function fetchInventoryItems(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    const data = await sql<InventoryItem>`SELECT *
-    FROM inventory_items, products
-    WHERE product_id = product_id AND user_id = ${userId} AND
-    name ILIKE ${`%${query}%`}
-    LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    const data = await sql<InventoryItem>`SELECT expiration_date, name, amount
+FROM inventory_items
+INNER JOIN products
+ON inventory_items.product_id = products.id
+WHERE user_id = ${userId} AND
+name ILIKE ${`%${query}%`}
+ORDER BY inventory_items.expiration_date ASC
+LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
 ;`;
 
     return data.rows;
@@ -41,6 +44,20 @@ export async function fetchInventoryItemsPages(
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch total number of inventory items.');
+  }
+}
+
+export async function fetchProducts() {
+  try {
+    const products = await sql<Product>`
+      SELECT *
+      FROM products
+    `;
+
+    return products.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch products.');
   }
 }
 

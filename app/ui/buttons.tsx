@@ -1,21 +1,11 @@
-import {
-  MinusIcon,
-  PencilIcon,
-  PlusIcon,
-  TrashIcon,
-} from '@heroicons/react/24/outline';
-import Link from 'next/link';
+import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
+import Form from '@/app/ui/add-form';
+import { fetchProducts } from '@/app/lib/data';
 
-export function AddInventoryItem() {
-  return (
-    <Link
-      href="/inventory/items/create"
-      className="flex h-10 items-center rounded-sm bg-bloodorange px-4 text-sm font-medium text-coconut transition-colors hover:bg-grapefruit hover:text-jasmineRice focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grapefruit"
-    >
-      <span className="hidden md:block">Add Inventory Item</span>{' '}
-      <PlusIcon className="h-5 md:ml-4" />
-    </Link>
-  );
+export async function AddInventoryItem({ userId }) {
+  const products = await fetchProducts();
+
+  return <Form userId={userId} products={products} />;
 }
 
 export function IncrementInventoryItem({ id }: { id: string }) {

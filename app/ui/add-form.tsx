@@ -2,13 +2,15 @@ import { Product } from '@/app/lib/definitions';
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
 import { quantitative_units } from '../lib/placeholder-data';
+import { createInventoryItem } from '@/app/lib/actions';
 
-export default function Form({ products }: { products: Product[] }) {
+export default function Form({ userId, products }) {
   return (
-    <form>
-      <div className="rounded-sm bg-gray-50 p-4 md:p-6">
+    <form action={createInventoryItem}>
+      <input type="hidden" value={userId} name="userId" />
+      <div className="flex flex-row items-end gap-2 rounded-sm bg-gray-50 p-4 md:p-6">
         {/* Product Name */}
-        <div className="mb-4">
+        <div>
           <label htmlFor="product" className="mb-2 block text-sm font-medium">
             Choose product
           </label>
@@ -22,7 +24,7 @@ export default function Form({ products }: { products: Product[] }) {
               <option value="" disabled>
                 Select a product
               </option>
-              {products.map((product) => (
+              {products.map((product: Product) => (
                 <option key={product.id} value={product.id}>
                   {product.name}
                 </option>
@@ -32,9 +34,9 @@ export default function Form({ products }: { products: Product[] }) {
         </div>
 
         {/* Inventory Amount */}
-        <div className="mb-4">
+        <div>
           <label htmlFor="amount" className="mb-2 block text-sm font-medium">
-            Choose an amount
+            Amount
           </label>
           <div className="relative mt-2 rounded-sm">
             <div className="relative">
@@ -50,14 +52,14 @@ export default function Form({ products }: { products: Product[] }) {
         </div>
 
         {/* Quantitative Unit */}
-        <div className="mb-4">
+        <div>
           <label htmlFor="product" className="mb-2 block text-sm font-medium">
             Unit
           </label>
           <div className="relative">
             <select
               id="unit"
-              name="unitId"
+              name="unit"
               className="peer block w-full cursor-pointer rounded-sm border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               defaultValue=""
             >
@@ -72,8 +74,24 @@ export default function Form({ products }: { products: Product[] }) {
             </select>
           </div>
         </div>
-      </div>
-      <div className="mt-2 flex justify-end gap-4">
+
+        {/* Expiration Date */}
+        <div>
+          <label htmlFor="amount" className="mb-2 block text-sm font-medium">
+            Expiration Date
+          </label>
+          <div className="relative mt-2 rounded-sm">
+            <div className="relative">
+              <input
+                id="amount"
+                name="expirationDate"
+                type="date"
+                placeholder="Enter expiration date"
+                className="peer block w-full rounded-sm border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+            </div>
+          </div>
+        </div>
         <Link
           href="/inventory"
           className="flex h-10 items-center rounded-sm bg-stainless px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"

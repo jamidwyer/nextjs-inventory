@@ -56,7 +56,7 @@ async function seedInventoryItems(client) {
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
     user_id UUID NOT NULL,
     amount INT NOT NULL,
-    exipration_date DATE,
+    expiration_date DATE,
     product_id UUID NOT NULL,
     quantitative_unit_id UUID NOT NULL
   );
@@ -67,7 +67,7 @@ async function seedInventoryItems(client) {
     const insertedInventoryItems = await Promise.all(
       inventory_items.map((inventory_item) => {
         return client.sql`
-        INSERT INTO inventory_items (user_id, amount, exipration_date, product_id, quantitative_unit_id)
+        INSERT INTO inventory_items (user_id, amount, expiration_date, product_id, quantitative_unit_id)
         VALUES (${inventory_item.user_id}, ${inventory_item.amount}, ${inventory_item.expiration_date}, ${inventory_item.product_id}, ${inventory_item.quantitative_unit_id})
         ON CONFLICT (id) DO NOTHING;
       `;
@@ -93,7 +93,7 @@ async function seedProducts(client) {
     const createTable = await client.sql`
       CREATE TABLE IF NOT EXISTS products (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        name VARCHAR(255) NOT NULL
+        name VARCHAR(255) NOT NULL UNIQUE
       );
     `;
 
