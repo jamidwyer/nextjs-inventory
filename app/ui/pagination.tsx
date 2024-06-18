@@ -106,7 +106,8 @@ function PaginationArrow({
     'flex h-10 w-10 items-center justify-center rounded-sm border',
     {
       'pointer-events-none text-gray-300': isDisabled,
-      'text-black-bean hover:text-bloodorange bg-jasmineRice hover:bg-stainless': !isDisabled,
+      'text-black-bean hover:text-bloodorange bg-jasmineRice hover:bg-stainless':
+        !isDisabled,
       'mr-2 md:mr-4': direction === 'left',
       'ml-2 md:ml-4': direction === 'right',
     },

@@ -4,7 +4,7 @@ import { InventoryItem, Product, User } from './definitions';
 const ITEMS_PER_PAGE = 20;
 
 export async function fetchInventoryItems(
-  userId: string,
+  userId: number,
   query: string,
   currentPage: number,
 ) {
@@ -30,7 +30,7 @@ LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
 }
 
 export async function fetchInventoryItemsPages(
-  userId: string,
+  userId: number,
   query: string,
   currentPage: number,
 ) {
@@ -62,20 +62,45 @@ export async function fetchProducts() {
   }
 }
 
-export async function fetchRecipesByIngredient(id: string) {
+export async function fetchRecipesByIngredient(id: number) {
   try {
-    const data = await sql<Product>`
-      SELECT
-        recipes.id,
-        recipes.name,
+    const data = await sql<Product>`SELECT
+       *
       FROM recipes
-      WHERE products.ingredient_id = ${id};
-    `;
-
+      INNER JOIN recipes_to_ingredients
+      ON recipes.id = recipes_to_ingredients.recipe_id
+      WHERE recipes_to_ingredients.ingredient_id = ${id};`;
     return data.rows;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch product.');
+    throw new Error('Failed to fetch recipes.');
+  }
+}
+
+export async function fetchRecipeById(id: number) {
+  try {
+    const recipe = await sql`select * from recipes_to_ingredients
+    inner join recipes
+    on recipes.id = recipes_to_ingredients.recipe_id
+    inner join products
+    on products.id = recipes_to_ingredients.ingredient_id
+    where recipes.id= ${id}
+;`;
+
+    const recipeData = {
+      ingredients: [],
+      instructions: recipe.rows[0].instructions,
+    };
+
+    recipe.rows.map((row) => {
+      // @ts-ignore # need to optimize query so this not needed
+      recipeData.ingredients.push(row.name);
+    });
+
+    return recipeData;
+  } catch (error) {
+    console.error('Failed to fetch recipe:', error);
+    throw new Error('Failed to fetch recipe.');
   }
 }
 

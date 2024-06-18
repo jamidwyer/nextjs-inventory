@@ -5,7 +5,7 @@ import { quantitative_units } from '../lib/placeholder-data';
 import { createInventoryItem } from '@/app/lib/actions';
 
 type Props = {
-  userId: string;
+  userId: number;
   products: Product[];
 };
 
