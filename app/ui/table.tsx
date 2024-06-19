@@ -44,7 +44,6 @@ export default async function InventoryItemsTable({
                   <p className="text-xl font-medium">{inventoryItem.amount}</p>
                   <p>{formatDateToLocal(inventoryItem.expiration_date)}</p>
                 </div>
-                <InventoryItemButtons id={inventoryItem.id} />
               </div>
             </div>
           );

@@ -18,14 +18,13 @@ Preview: https://nextjs-inventory-sage.vercel.app
 
 ### Roadmap
 
-- delete
-- increment/decrement
 - integrate with cms and db
 - optimize table join
 - recipe name
 - axe
 - pagination when not more pages
 - deploy
+- docker
 - internationalize
 - seo urls
 - bg video that changes depending on route
