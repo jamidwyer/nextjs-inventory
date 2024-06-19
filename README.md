@@ -14,11 +14,20 @@ Get approval.
 
 Merge.
 
+Preview: https://nextjs-inventory-sage.vercel.app
+
 ### Roadmap
 
-- integrate with cms db
-- recipes
+- delete
+- increment/decrement
+- integrate with cms and db
+- optimize table join
+- recipe name
+- axe
+- pagination when not more pages
+- deploy
 - internationalize
+- seo urls
 - bg video that changes depending on route
 - help nextjs upgrade react deps
 - fun fonts

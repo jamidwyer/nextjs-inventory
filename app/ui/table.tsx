@@ -1,3 +1,6 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLink } from '@fortawesome/free-solid-svg-icons';
+
 import {
   IncrementInventoryItem,
   DecrementInventoryItem,
@@ -20,7 +23,7 @@ export default async function InventoryItemsTable({
   query: string;
   currentPage: number;
 }) {
-  const userId = '410544b2-4001-4271-9855-fec4b6a6442a';
+  const userId = 1;
   const inventoryItems = await fetchInventoryItems(userId, query, currentPage);
 
   const totalPages = await fetchInventoryItemsPages(userId, query, currentPage);
@@ -72,6 +75,7 @@ export default async function InventoryItemsTable({
         </thead>
         <tbody className="bg-coconut">
           {inventoryItems?.map((inventoryItem) => {
+            console.log('iiiiii', inventoryItem);
             const url = `/products/${inventoryItem.product_id}`;
             return (
               <tr
@@ -79,9 +83,15 @@ export default async function InventoryItemsTable({
                 className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
               >
                 <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2">
                     <p>
-                      <Link href={url}>{inventoryItem.name}</Link>
+                      <Link
+                        className="flex flex-row items-center gap-1 text-bloodorange hover:text-smashedPumpkin"
+                        href={url}
+                      >
+                        {inventoryItem.name}{' '}
+                        <FontAwesomeIcon icon={faLink} className="w-4" />
+                      </Link>
                     </p>
                   </div>
                 </td>
@@ -103,7 +113,7 @@ export default async function InventoryItemsTable({
         </tbody>
       </table>
       <Pagination totalPages={totalPages} />
-      <AddItemForm userId={userId} products={products} />;
+      <AddItemForm userId={userId} products={products} />
     </div>
   );
 }

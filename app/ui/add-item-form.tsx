@@ -5,7 +5,7 @@ import { quantitative_units } from '../lib/placeholder-data';
 import { createInventoryItem } from '@/app/lib/actions';
 
 type Props = {
-  userId: string;
+  userId: number;
   products: Product[];
 };
 
@@ -100,7 +100,7 @@ export default function AddItemForm(props: Props) {
         </div>
         <Link
           href="/inventory"
-          className="flex h-10 items-center rounded-sm bg-stainless px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+          className="flex h-10 items-center rounded-sm bg-jasmineRice px-4 text-sm font-medium text-blackBean transition-colors hover:bg-stainless hover:text-bloodorange"
         >
           Cancel
         </Link>
