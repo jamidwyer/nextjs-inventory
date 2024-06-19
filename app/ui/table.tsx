@@ -1,10 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 
-import {
-  IncrementInventoryItem,
-  DecrementInventoryItem,
-} from '@/app/ui/buttons';
 import { formatDateToLocal } from '@/app/lib/utils';
 import {
   fetchInventoryItems,
@@ -15,6 +11,7 @@ import Search from './search';
 import Pagination from './pagination';
 import Link from 'next/link';
 import AddItemForm from './add-item-form';
+import InventoryItemButtons from './inventory-item-buttons';
 
 export default async function InventoryItemsTable({
   query,
@@ -47,10 +44,7 @@ export default async function InventoryItemsTable({
                   <p className="text-xl font-medium">{inventoryItem.amount}</p>
                   <p>{formatDateToLocal(inventoryItem.expiration_date)}</p>
                 </div>
-                <div className="flex justify-end gap-2">
-                  <IncrementInventoryItem id={inventoryItem.id} />
-                  <DecrementInventoryItem id={inventoryItem.id} />
-                </div>
+                <InventoryItemButtons id={inventoryItem.id} />
               </div>
             </div>
           );
@@ -75,7 +69,6 @@ export default async function InventoryItemsTable({
         </thead>
         <tbody className="bg-coconut">
           {inventoryItems?.map((inventoryItem) => {
-            console.log('iiiiii', inventoryItem);
             const url = `/products/${inventoryItem.product_id}`;
             return (
               <tr
@@ -102,10 +95,10 @@ export default async function InventoryItemsTable({
                   {formatDateToLocal(inventoryItem.expiration_date)}
                 </td>
                 <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                  <div className="flex justify-end gap-3">
-                    <IncrementInventoryItem id={inventoryItem.id} />
-                    <DecrementInventoryItem id={inventoryItem.id} />
-                  </div>
+                  <InventoryItemButtons
+                    id={inventoryItem.id}
+                    amount={inventoryItem.amount}
+                  />
                 </td>
               </tr>
             );

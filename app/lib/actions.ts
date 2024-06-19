@@ -34,3 +34,24 @@ export async function createInventoryItem(formData: FormData) {
   revalidatePath('/');
   redirect('/');
 }
+
+export async function updateInventoryItem(id: number, amount: number) {
+  await sql`
+    UPDATE inventory_items
+    set amount=${amount}
+    where id=${id};
+  `;
+
+  revalidatePath('/');
+  redirect('/');
+}
+
+export async function deleteInventoryItem(id: number) {
+  await sql`
+    delete from inventory_items
+    where id=${id};
+  `;
+
+  revalidatePath('/');
+  redirect('/');
+}
