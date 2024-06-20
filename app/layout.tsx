@@ -2,6 +2,16 @@ import '@/app/ui/global.css';
 import PageHeader from '@/app/ui/page-header';
 import Nav from '@/app/ui/nav';
 
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  metadataBase: new URL('https://hord.dev'),
+  title: {
+    template: '%s | Hord',
+    default: 'Inventory | Hord',
+  },
+};
+
 export default function RootLayout({
   children,
 }: {

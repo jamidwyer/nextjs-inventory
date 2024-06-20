@@ -1,5 +1,11 @@
 import { fetchRecipesByIngredient } from '@/app/lib/data';
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Ingredient',
+  description: 'Recipes by ingredient.',
+};
 
 export default async function Page({ params }: { params: { id: number } }) {
   const productId = params.id;
