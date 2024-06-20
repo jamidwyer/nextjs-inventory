@@ -28,7 +28,7 @@ export default async function InventoryItemsTable({
   const products = await fetchProducts();
 
   return (
-    <div className="flex w-full flex-col gap-6  rounded-sm bg-gray-50 p-2">
+    <div className="flex w-full flex-col gap-6 rounded-sm  bg-coconut p-2">
       <div className="mt-2 flex flex-col justify-between gap-2">
         <Search placeholder="Search inventory..." />
       </div>
@@ -72,7 +72,7 @@ export default async function InventoryItemsTable({
             return (
               <tr
                 key={inventoryItem.id}
-                className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
+                className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-sm [&:first-child>td:last-child]:rounded-tr-sm [&:last-child>td:first-child]:rounded-bl-sm [&:last-child>td:last-child]:rounded-br-sm"
               >
                 <td className="whitespace-nowrap py-3 pl-6 pr-3">
                   <div className="flex items-center gap-2">

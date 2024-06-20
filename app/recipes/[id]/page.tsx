@@ -1,8 +1,12 @@
+import { notFound } from 'next/navigation';
 import { fetchRecipeById } from '@/app/lib/data';
 
 export default async function Page({ params }: { params: { id: number } }) {
   const recipeId = params.id;
   const recipe = await fetchRecipeById(recipeId);
+  if (!recipe) {
+    notFound();
+  }
   return (
     <main>
       {/* <h2>{recipe.name}</h2> */}

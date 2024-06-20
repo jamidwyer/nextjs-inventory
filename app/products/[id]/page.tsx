@@ -11,7 +11,12 @@ export default async function Page({ params }: { params: { id: number } }) {
           const url = `/recipes/${recipe.id}`;
           return (
             <li key={recipe.id}>
-              <Link href={url}>{recipe.name}</Link>
+              <Link
+                href={url}
+                className="items-center justify-center border text-bloodorange hover:text-smashedPumpkin"
+              >
+                {recipe.name}
+              </Link>
             </li>
           );
         })}
