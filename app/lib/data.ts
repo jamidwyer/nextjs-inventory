@@ -12,13 +12,13 @@ export async function fetchInventoryItems(
 
   try {
     const data =
-      await sql<InventoryItem>`SELECT expiration_date, name, amount, product_id
-FROM inventory_items
-INNER JOIN products
-ON inventory_items.product_id = products.id
-WHERE user_id = ${userId} AND
-name ILIKE ${`%${query}%`}
-ORDER BY inventory_items.expiration_date ASC
+      await sql<InventoryItem>`SELECT i.id, i.expiration_date, p.name, i.amount, i.product_id
+FROM inventory_items i
+INNER JOIN products p
+ON i.product_id = p.id
+WHERE i.user_id = ${userId} AND
+p.name ILIKE ${`%${query}%`}
+ORDER BY i.expiration_date ASC
 LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
 ;`;
 
