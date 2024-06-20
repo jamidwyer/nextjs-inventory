@@ -1,5 +1,11 @@
 import { notFound } from 'next/navigation';
 import { fetchRecipeById } from '@/app/lib/data';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Recipe',
+  description: 'A recipe.',
+};
 
 export default async function Page({ params }: { params: { id: number } }) {
   const recipeId = params.id;
