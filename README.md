@@ -18,7 +18,9 @@ Preview: https://nextjs-inventory-sage.vercel.app
 
 ### Roadmap
 
+- meta
 - integrate with cms and db
+- get session
 - optimize table join
 - recipe name
 - axe
@@ -27,6 +29,7 @@ Preview: https://nextjs-inventory-sage.vercel.app
 - docker
 - internationalize
 - seo urls
+- prioritize TODO comments
 - bg video that changes depending on route
 - help nextjs upgrade react deps
 - fun fonts

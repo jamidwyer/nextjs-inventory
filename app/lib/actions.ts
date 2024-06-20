@@ -4,54 +4,118 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { signIn } from '@/auth';
+import { AuthError } from 'next-auth';
 
 const FormSchema = z.object({
-  id: z.string(),
-  userId: z.string(),
-  amount: z.coerce.number(),
-  productId: z.string(),
+  id: z.coerce.number(),
+  userId: z.coerce.number(),
+  amount: z.coerce.number({
+    invalid_type_error: 'Please enter a whole number.',
+  }),
+  productId: z.coerce.number({
+    invalid_type_error: 'Please select a product.',
+  }),
   unit: z.string(),
   expirationDate: z.string(),
 });
 
 const CreateInventoryItem = FormSchema.omit({ id: true });
 
-export async function createInventoryItem(formData: FormData) {
-  const { userId, amount, productId, unit, expirationDate } =
-    CreateInventoryItem.parse({
-      userId: formData.get('userId'),
-      productId: formData.get('productId'),
-      amount: formData.get('amount'),
-      unit: formData.get('unit'),
-      expirationDate: formData.get('expirationDate'),
-    });
+export type State = {
+  errors?: {
+    userId?: string[];
+    amount?: string[];
+    productId?: string[];
+    unit?: string[];
+    expirationDate?: string[];
+  };
+  message?: string | null;
+};
 
-  await sql`
+export async function authenticate(
+  prevState: string | undefined,
+  formData: FormData,
+) {
+  try {
+    await signIn('credentials', formData);
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case 'CredentialsSignin':
+          return 'Invalid credentials.';
+        default:
+          return 'Something went wrong.';
+      }
+    }
+    throw error;
+  }
+}
+
+export async function createInventoryItem(
+  prevState: State,
+  formData: FormData,
+) {
+  const validatedFields = CreateInventoryItem.safeParse({
+    userId: formData.get('userId'),
+    productId: formData.get('productId'),
+    amount: formData.get('amount'),
+    unit: formData.get('unit'),
+    expirationDate: formData.get('expirationDate'),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Invoice.',
+    };
+  }
+  const { userId, amount, productId, expirationDate, unit } =
+    validatedFields.data;
+
+  try {
+    await sql`
     INSERT INTO inventory_items (user_id, amount, product_id, expiration_date, quantitative_unit_id)
     VALUES (${userId}, ${amount}, ${productId}, ${expirationDate}, ${unit})
   `;
+  } catch (error) {
+    return {
+      message: 'Database Error: Failed to add inventory item.',
+    };
+  }
 
   revalidatePath('/');
   redirect('/');
 }
 
 export async function updateInventoryItem(id: number, amount: number) {
-  await sql`
+  try {
+    await sql`
     UPDATE inventory_items
     set amount=${amount}
     where id=${id};
   `;
+  } catch (error) {
+    return {
+      message: 'Database Error: Failed to update inventory item.',
+    };
+  }
 
   revalidatePath('/');
   redirect('/');
 }
 
 export async function deleteInventoryItem(id: number) {
-  await sql`
+  try {
+    await sql`
     delete from inventory_items
     where id=${id};
   `;
-
+  } catch (error) {
+    return {
+      message: 'Database Error: Failed to delete inventory item.',
+    };
+  }
   revalidatePath('/');
   redirect('/');
 }

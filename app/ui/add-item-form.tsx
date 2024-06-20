@@ -1,3 +1,6 @@
+'use client';
+import { useFormState } from 'react-dom';
+
 import { Product } from '@/app/lib/definitions';
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
@@ -11,10 +14,12 @@ type Props = {
 
 export default function AddItemForm(props: Props) {
   const { userId, products } = props;
+  const initialState = { message: '', errors: {} };
+  const [state, dispatch] = useFormState(createInventoryItem, initialState);
   return (
-    <form action={createInventoryItem}>
+    <form action={dispatch}>
       <input type="hidden" value={userId} name="userId" />
-      <div className="flex flex-row items-end gap-2 rounded-sm bg-gray-50 p-4 md:p-6">
+      <div className="bg-coconut p-4 flex flex-row items-end gap-2 rounded-sm md:p-6">
         {/* Product Name */}
         <div>
           <label htmlFor="product" className="mb-2 block text-sm font-medium">
@@ -26,6 +31,7 @@ export default function AddItemForm(props: Props) {
               name="productId"
               className="peer block w-full cursor-pointer rounded-sm border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               defaultValue=""
+              aria-describedby="product-error"
             >
               <option value="" disabled>
                 Select a product
@@ -36,6 +42,14 @@ export default function AddItemForm(props: Props) {
                 </option>
               ))}
             </select>
+          </div>
+          <div id="customer-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.productId &&
+              state.errors.productId.map((error: string) => (
+                <p className="mt-2 text-sm text-wildWatermelon" key={error}>
+                  {error}
+                </p>
+              ))}
           </div>
         </div>
 
@@ -100,7 +114,7 @@ export default function AddItemForm(props: Props) {
         </div>
         <Link
           href="/inventory"
-          className="flex h-10 items-center rounded-sm bg-jasmineRice px-4 text-sm font-medium text-blackBean transition-colors hover:bg-stainless hover:text-bloodorange"
+          className="flex h-10 items-center rounded-sm bg-stainless px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
         >
           Cancel
         </Link>

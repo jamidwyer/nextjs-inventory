@@ -1,16 +1,20 @@
 import { cherryCreamSoda } from '@/app/ui/fonts/index';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBowlRice } from '@fortawesome/free-solid-svg-icons';
+import UserLinks from '@/app/ui/user-links';
 
 export default function PageHeader() {
   return (
     <div
-      className={`${cherryCreamSoda.className} flex h-40 shrink-0 flex-row items-end bg-bloodorange p-2 text-jasmineRice`}
+      className={`flex h-40 shrink-0 flex-row items-end justify-between bg-bloodorange p-2 text-jasmineRice`}
     >
-      <FontAwesomeIcon icon={faBowlRice} className="h-20" />
-      <h1 className={`${cherryCreamSoda.className} items-end antialiased`}>
-        <strong>hord</strong>
-      </h1>
+      <div className={`flex flex-row items-end`}>
+        <FontAwesomeIcon icon={faBowlRice} className="h-20" />
+        <h1 className={`${cherryCreamSoda.className} items-end antialiased`}>
+          <strong>hord</strong>
+        </h1>
+      </div>
+      <UserLinks />
     </div>
   );
 }

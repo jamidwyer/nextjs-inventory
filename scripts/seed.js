@@ -224,10 +224,10 @@ async function seedRecipesToIngredients(client) {
 async function main() {
   const client = await db.connect();
 
-  //  await seedUsers(client);
+  await seedUsers(client);
   // await seedProducts(client);
   //  await seedQuantitativeUnits(client);
-  await seedInventoryItems(client);
+  // await seedInventoryItems(client);
   //await seedRecipes(client);
   //await seedRecipesToIngredients(client);
 

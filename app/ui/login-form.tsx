@@ -1,12 +1,21 @@
+'use client';
+
+import { useFormStatus, useFormState } from 'react-dom';
 import { AtSymbolIcon, KeyIcon } from '@heroicons/react/24/outline';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from './button';
+import { authenticate } from '@/app/lib/actions';
+
+const initialState = '';
 
 export default function LoginForm() {
+  const [state, formAction] = useFormState(authenticate, initialState);
+  const { pending } = useFormStatus();
+
   return (
-    <form className="space-y-3">
-      <div className="flex-1 rounded-sm bg-gray-50 px-6 pb-4 pt-8">
-        <h1 className={`mb-3 text-2xl`}>Please log in to continue.</h1>
+    <form action={formAction}>
+      <div className="flex-1 rounded-sm bg-coconut px-6">
+        <p className={`text-l mb-3`}>Please log in to continue.</p>
         <div className="w-full">
           <div>
             <label
@@ -48,19 +57,10 @@ export default function LoginForm() {
             </div>
           </div>
         </div>
-        <LoginButton />
-        <div className="flex h-8 items-end space-x-1">
-          {/* Add form errors here */}
-        </div>
+        <button type="submit" className="mt-4 w-full" aria-disabled={pending}>
+          Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-coconut" />
+        </button>
       </div>
     </form>
-  );
-}
-
-function LoginButton() {
-  return (
-    <Button className="mt-4 w-full">
-      Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
-    </Button>
   );
 }

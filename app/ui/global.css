@@ -101,6 +101,10 @@
   --dinner-party-font: 'Circular,Gotham,Ogonek-Light,Georgia,Times,serif';
 }
 
+:focus {
+  outline: solid var(--bloodorange);
+}
+
 input[type='number'] {
   -moz-appearance: textfield;
   appearance: textfield;
