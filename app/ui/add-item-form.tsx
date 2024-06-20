@@ -19,7 +19,7 @@ export default function AddItemForm(props: Props) {
   return (
     <form action={dispatch}>
       <input type="hidden" value={userId} name="userId" />
-      <div className="bg-coconut p-4 flex flex-row items-end gap-2 rounded-sm md:p-6">
+      <div className="flex flex-row items-end gap-2 rounded-sm bg-coconut p-4 md:p-6">
         {/* Product Name */}
         <div>
           <label htmlFor="product" className="mb-2 block text-sm font-medium">

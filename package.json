@@ -3,13 +3,13 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "lint": "next lint",
     "format": "prettier --write --ignore-unknown .",
+    "lint": "next lint",
+    "prepare": "husky && husky install",
     "prettier:check": "prettier --check --ignore-unknown .",
     "seed": "node -r dotenv/config ./scripts/seed.js",
     "start": "next start",
-    "tsc": "tsc --pretty",
-    "prepare": "husky && husky install"
+    "tsc": "tsc --pretty"
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.5.2",

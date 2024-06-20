@@ -28,7 +28,7 @@ export default async function InventoryItemsTable({
   const products = await fetchProducts();
 
   return (
-    <div className="bg-coconut p-2 flex w-full flex-col  gap-6 rounded-sm">
+    <div className="flex w-full flex-col gap-6 rounded-sm  bg-coconut p-2">
       <div className="mt-2 flex flex-col justify-between gap-2">
         <Search placeholder="Search inventory..." />
       </div>
