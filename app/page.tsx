@@ -1,5 +1,11 @@
 import InventoryItemsTable from '@/app/ui/table';
 import { Suspense } from 'react';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Inventory',
+  description: 'Food resource availability.',
+};
 
 export default function Page({
   searchParams,

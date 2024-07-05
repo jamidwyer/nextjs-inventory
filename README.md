@@ -19,19 +19,24 @@ Preview: https://nextjs-inventory-sage.vercel.app
 ### Roadmap
 
 - meta
-- integrate with cms and db
+- use vercel db for django app!!!
 - get session
 - optimize table join
 - recipe name
+- intermittent inventory add error
 - axe
 - pagination when not more pages
 - deploy
+- db backups
+- barcodes
 - docker
 - internationalize
 - seo urls
+- performance opt
 - prioritize TODO comments
 - bg video that changes depending on route
 - help nextjs upgrade react deps
+- think about rest vs server components
 - fun fonts
 - logo
 - xkcd colors to color var gist
