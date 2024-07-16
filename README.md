@@ -18,8 +18,7 @@ Preview: https://nextjs-inventory-sage.vercel.app
 
 ### Roadmap
 
-- meta
-- use vercel db for django app!!!
+- use postgres instead of vercel/postgres
 - get session
 - optimize table join
 - recipe name
