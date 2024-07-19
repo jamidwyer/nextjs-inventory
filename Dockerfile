@@ -1,11 +1,10 @@
-FROM node:alpine
+FROM node:18-alpine
 
+WORKDIR /app
 
-RUN mkdir /client
-COPY . /client
-COPY package.json /client/package.json
-WORKDIR /client
-RUN chmod +x ./entrypoint.sh
+COPY package.json package-lock.json* pnpm-lock.yaml* ./
 RUN npm install
 
-CMD ["./entrypoint.sh"]
+COPY . .
+
+CMD ["sh", "./entrypoint.sh"]
