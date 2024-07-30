@@ -1,0 +1,18 @@
+query GetInventory {
+  inventoryItems {
+    id
+    quantity
+    expirationDate
+    product {
+      id
+      name
+    }
+  }
+}
+
+query GetProducts {
+  products {
+    id
+    name
+  }
+}
