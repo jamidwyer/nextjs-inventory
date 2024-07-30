@@ -6,6 +6,7 @@ export const authConfig = {
   },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
+      return true;
       const isLoggedIn = !!auth?.user;
       const isOnInventory = nextUrl.pathname.match('/');
       if (isOnInventory) {

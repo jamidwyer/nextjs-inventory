@@ -9,11 +9,11 @@ import { authenticate } from '@/app/lib/actions';
 const initialState = '';
 
 export default function LoginForm() {
-  const [state, formAction] = useFormState(authenticate, initialState);
+  // const [state, formAction] = useFormState(authenticate, initialState);
   const { pending } = useFormStatus();
 
   return (
-    <form action={formAction}>
+    <form action={() => {}}>
       <div className="flex-1 rounded-sm bg-coconut px-6">
         <p className={`text-l mb-3`}>Please log in to continue.</p>
         <div className="w-full">
