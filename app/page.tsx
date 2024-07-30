@@ -1,5 +1,5 @@
-import InventoryItemsTable from '@/app/ui/table';
-import { Suspense } from 'react';
+import InventoryItemsTable from '@/app/InventoryTable';
+import PageUI from '@/app/ui/pageui';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -18,10 +18,8 @@ export default function Page({
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
   return (
-    <>
-      <Suspense key={query + currentPage}>
-        <InventoryItemsTable currentPage={currentPage} query={query} />
-      </Suspense>
-    </>
+    <PageUI>
+      <InventoryItemsTable currentPage={currentPage} query={query} />
+    </PageUI>
   );
 }

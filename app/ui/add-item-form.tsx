@@ -16,6 +16,10 @@ export default function AddItemForm(props: Props) {
   const { userId, products } = props;
   const initialState = { message: '', errors: {} };
   const [state, dispatch] = useFormState(createInventoryItem, initialState);
+  if (!products) {
+    return null;
+  }
+
   return (
     <form action={dispatch}>
       <input type="hidden" value={userId} name="userId" />
