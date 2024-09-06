@@ -13,6 +13,7 @@ import { formatDateToLocal } from '@/app/lib/utils';
 import {
   GetInventoryDocument,
   GetProductsDocument,
+  UpdateItemQuantityDocument,
 } from '@/app/InventoryTable/documents.generated';
 
 import Search from '@/app/ui/search';
@@ -35,6 +36,7 @@ export default function InventoryItemsTable({
   const { data: inventory, error } = useReadQuery(inventoryQueryRef);
   const { data: productsData } = useReadQuery(productQueryRef);
   const { products } = productsData;
+  const [updateItemQuantity, { data, loading, error: updateError }] = useMutation(UpdateItemQuantityDocument);
 
   return (
     <Suspense fallback={<>Loading...</>}>
@@ -49,13 +51,10 @@ export default function InventoryItemsTable({
                 Product
               </th>
               <th scope="col" className="px-3 py-5 font-medium">
-                Quantity
-              </th>
-              <th scope="col" className="px-3 py-5 font-medium">
                 Expiration Date
               </th>
-              <th scope="col" className="relative py-3 pl-6 pr-3">
-                <span className="sr-only">Edit</span>
+              <th scope="col" className="px-3 py-5 font-medium">
+                Quantity
               </th>
             </tr>
           </thead>
@@ -81,15 +80,14 @@ export default function InventoryItemsTable({
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {inventoryItem?.quantity}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-3">
                     {inventoryItem?.expirationDate}
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <ItemActionButtons
-                      id={inventoryItem?.id}
-                      amount={inventoryItem?.quantity}
+                      id={parseInt(inventoryItem?.id, 10)}
+                      quantity={inventoryItem?.quantity}
+                      updateItemQuantity={updateItemQuantity}
+                      unit={inventoryItem.unit}
                     />
                   </td>
                 </tr>
