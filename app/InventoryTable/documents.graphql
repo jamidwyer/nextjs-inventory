@@ -16,3 +16,12 @@ query GetProducts {
     name
   }
 }
+
+mutation UpdateItemQuantity($id: Int!, $quantity: Int!) {
+  updateItemQuantity(id: $id, quantity: $quantity) {
+    inventoryItem {
+      id
+      quantity
+    }
+  }
+}

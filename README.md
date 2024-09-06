@@ -18,8 +18,15 @@ Preview: https://nextjs-inventory-sage.vercel.app
 
 ### Roadmap
 
-- use postgres instead of vercel/postgres
+
+#### MVP
+
 - get session
+- separate recipes app
+
+#### Nice To Have
+
+- apollo client instead of postgres
 - optimize table join
 - recipe name
 - intermittent inventory add error

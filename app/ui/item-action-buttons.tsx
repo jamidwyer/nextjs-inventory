@@ -2,35 +2,44 @@
 
 import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
-import { updateInventoryItem, deleteInventoryItem } from '@/app/lib/actions';
+import { MutationUpdateItemQuantityArgs } from '@/components/types.generated';
+import { UpdateItemQuantityDocument, UpdateItemQuantityMutationVariables } from '../InventoryTable/documents.generated';
 
 type Props = {
-  id?: string;
-  amount?: number;
+  id?: number;
+  quantity: number;
+  updateItemQuantity: ({variables}: {variables: UpdateItemQuantityMutationVariables}) => void;
+  unit: string;
 };
 
 export default function InventoryItemButtons(props: Props) {
-  const { id, amount: initialAmount } = props;
-  const [amount, setAmount] = useState(initialAmount);
+  const { id, quantity = 0, updateItemQuantity, unit } = props;
+
   if (!id) {
     return null;
   }
+
+  const handleChangeQuantity = (quantity: number) => {
+    updateItemQuantity({variables: {
+      id: id,
+      quantity: quantity,
+  }});
+  };
 
   return (
     <div className="flex justify-end gap-2">
       <button
         onClick={async () => {
-          // const updatedAmount = await updateInventoryItem(id, amount + 1);
-          // setAmount(amount + 1);
+          handleChangeQuantity(quantity+1)
         }}
         className="rounded-sm border p-2 hover:bg-stainless"
       >
         <PlusIcon className="w-5" />
       </button>
+      {quantity}
       <button
         onClick={async () => {
-          // const updatedAmount = await updateInventoryItem(id, amount - 1);
-          // setAmount(amount - 1);
+          await handleChangeQuantity(quantity >=  1 ? quantity - 1 : 0);
         }}
         className="rounded-sm border p-2 hover:bg-stainless"
       >
