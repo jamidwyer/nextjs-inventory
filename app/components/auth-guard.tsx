@@ -13,7 +13,7 @@ interface AuthGuardProps {
 const AuthGuard = ({ children, excludedRoutes }: AuthGuardProps) => {
   const [viewerQueryRef] = useBackgroundQuery(ViewerDocument);
   const { data: viewer, error } = useReadQuery(viewerQueryRef);
-  console.log(viewer)
+  console.log(viewer);
   return <>{children}</>;
 };
 

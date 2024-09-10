@@ -18,19 +18,19 @@ export default function SignupForm() {
     const data = {
       email: event.target.email.value,
       password: event.target.password.value,
-    }
+    };
     console.log(data);
-  }
+  };
   // return (
   //   <div>I'm excited to share this, but it's still being tested! Sign up soon.</div>
   // );
 
   return (
-    <form onSubmit={handleSubmit} className='w-full'>
-      <div className="flex-1 w-full rounded-sm bg-coconut p-8">
+    <form onSubmit={handleSubmit} className="w-full">
+      <div className="w-full flex-1 rounded-sm bg-coconut p-8">
         <p className={`text-l mb-3`}>Sign up!</p>
         <div className="w-full">
-          <div className='w-full'>
+          <div className="w-full">
             <label
               className="mb-3 mt-5 block text-xs font-medium text-licorice"
               htmlFor="email"
@@ -76,5 +76,4 @@ export default function SignupForm() {
       </div>
     </form>
   );
-
 }

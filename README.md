@@ -18,7 +18,6 @@ Preview: https://nextjs-inventory-sage.vercel.app
 
 ### Roadmap
 
-
 #### MVP
 
 - get session
@@ -29,7 +28,6 @@ Preview: https://nextjs-inventory-sage.vercel.app
 - apollo client instead of postgres
 - optimize table join
 - recipe name
-- intermittent inventory add error
 - axe
 - pagination when not more pages
 - deploy

@@ -3,9 +3,9 @@
 import '@/public/global.css';
 import PageHeader from '@/app/components/page-header';
 import Nav from '@/app/components/nav';
-import { ApolloProvider } from '@apollo/client'
-import client from './apollo-client'
-import AuthGuard from './components/auth-guard'
+import { ApolloProvider } from '@apollo/client';
+import client from './apollo-client';
+import AuthGuard from './components/auth-guard';
 
 export default function RootLayout({
   children,
@@ -19,11 +19,9 @@ export default function RootLayout({
           <AuthGuard>
             <PageHeader />
             <Nav />
-            <main className="items-center justify-center w-full flex flex-col">
+            <main className="flex w-full flex-col items-center justify-center">
               <div className="p-6">
-                <div className="flex grow flex-row">
-                  {children}
-                </div>
+                <div className="flex grow flex-row">{children}</div>
               </div>
             </main>
           </AuthGuard>

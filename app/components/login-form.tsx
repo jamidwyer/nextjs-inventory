@@ -13,11 +13,11 @@ export default function LoginForm() {
   const { pending } = useFormStatus();
 
   return (
-    <form action={() => {}} className='w-full'>
-      <div className="flex-1 w-full rounded-sm bg-coconut p-8">
+    <form action={() => {}} className="w-full">
+      <div className="w-full flex-1 rounded-sm bg-coconut p-8">
         <p className={`text-l mb-3`}>Please log in to continue.</p>
         <div className="w-full">
-          <div className='w-full'>
+          <div className="w-full">
             <label
               className="mb-3 mt-5 block text-xs font-medium text-licorice"
               htmlFor="email"
