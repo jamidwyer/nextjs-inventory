@@ -3,7 +3,7 @@ import { useFormState } from 'react-dom';
 
 import { Product } from '@/app/lib/definitions';
 import Link from 'next/link';
-import { Button } from '@/app/ui/button';
+import { Button } from '@/app/components/button';
 import { quantitative_units } from '../lib/placeholder-data';
 import { createInventoryItem } from '@/app/lib/actions';
 
@@ -21,7 +21,7 @@ export default function AddItemForm(props: Props) {
   }
 
   return (
-    <form action={dispatch}>
+    <form>
       <input type="hidden" value={userId} name="userId" />
       <div className="flex flex-row items-end gap-2 rounded-sm bg-coconut p-4 md:p-6">
         {/* Product Name */}

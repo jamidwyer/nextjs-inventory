@@ -14,13 +14,13 @@ import {
   GetInventoryDocument,
   GetProductsDocument,
   UpdateItemQuantityDocument,
-} from '@/app/InventoryTable/documents.generated';
+} from '@/app/components/inventory-table/documents.generated';
 
-import Search from '@/app/ui/search';
-import Pagination from '@/app/ui/pagination';
+import Search from '@/app/components/search';
+import Pagination from '@/app/components/pagination';
 import Link from 'next/link';
-import AddItemForm from '@/app/ui/add-item-form';
-import ItemActionButtons from '@/app/ui/item-action-buttons';
+import AddItemForm from '@/app/components/add-item-form';
+import ItemActionButtons from '@/app/components/item-action-buttons';
 
 export default function InventoryItemsTable({
   query,
@@ -39,7 +39,6 @@ export default function InventoryItemsTable({
   const [updateItemQuantity, { data, loading, error: updateError }] = useMutation(UpdateItemQuantityDocument);
 
   return (
-    <Suspense fallback={<>Loading...</>}>
       <div className="flex w-full flex-col gap-6 rounded-sm  bg-coconut p-2">
         <div className="mt-2 flex flex-col justify-between gap-2">
           <Search placeholder="Search inventory..." />
@@ -98,6 +97,5 @@ export default function InventoryItemsTable({
         <Pagination totalPages={1} />
         {products && <AddItemForm userId={userId} products={products} />}
       </div>
-    </Suspense>
   );
 }

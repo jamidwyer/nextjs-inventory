@@ -1,9 +1,7 @@
 'use client';
 
 import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
-import { MutationUpdateItemQuantityArgs } from '@/components/types.generated';
-import { UpdateItemQuantityDocument, UpdateItemQuantityMutationVariables } from '../InventoryTable/documents.generated';
+import { UpdateItemQuantityMutationVariables } from './inventory-table/documents.generated';
 
 type Props = {
   id?: number;

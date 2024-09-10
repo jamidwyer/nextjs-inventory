@@ -1,5 +1,4 @@
-import InventoryItemsTable from '@/app/InventoryTable';
-import PageUI from '@/app/ui/pageui';
+import InventoryItemsTable from '@/app/components/inventory-table';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -18,8 +17,6 @@ export default function Page({
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
   return (
-    <PageUI>
-      <InventoryItemsTable currentPage={currentPage} query={query} />
-    </PageUI>
+    <InventoryItemsTable currentPage={currentPage} query={query} />
   );
 }

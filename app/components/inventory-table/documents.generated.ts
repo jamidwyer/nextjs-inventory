@@ -1,4 +1,4 @@
-import * as Types from '../../components/types.generated';
+import * as Types from '../../../components/types.generated';
 
 import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type GetInventoryQueryVariables = Types.Exact<{ [key: string]: never; }>;
