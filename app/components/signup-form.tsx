@@ -5,19 +5,32 @@ import { AtSymbolIcon, KeyIcon } from '@heroicons/react/24/outline';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from './button';
 import { authenticate } from '@/app/lib/actions';
+import { FormEventHandler } from 'react';
 
 const initialState = '';
 
-export default function LoginForm() {
+export default function SignupForm() {
   // const [state, formAction] = useFormState(authenticate, initialState);
   const { pending } = useFormStatus();
 
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
+    const data = {
+      email: event.target.email.value,
+      password: event.target.password.value,
+    };
+    console.log(data);
+  };
+  // return (
+  //   <div>I'm excited to share this, but it's still being tested! Sign up soon.</div>
+  // );
+
   return (
-    <form action={() => {}}>
-      <div className="flex-1 rounded-sm bg-coconut px-6">
-        <p className={`text-l mb-3`}>Please log in to continue.</p>
+    <form onSubmit={handleSubmit} className="w-full">
+      <div className="w-full flex-1 rounded-sm bg-coconut p-8">
+        <p className={`text-l mb-3`}>Sign up!</p>
         <div className="w-full">
-          <div>
+          <div className="w-full">
             <label
               className="mb-3 mt-5 block text-xs font-medium text-licorice"
               htmlFor="email"
@@ -58,7 +71,7 @@ export default function LoginForm() {
           </div>
         </div>
         <button type="submit" className="mt-4 w-full" aria-disabled={pending}>
-          Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-coconut" />
+          Sign up <ArrowRightIcon className="ml-auto h-5 w-5 text-coconut" />
         </button>
       </div>
     </form>
