@@ -7,3 +7,19 @@ query Viewer {
     }
   }
 }
+
+mutation CreateUser($username: String, $password: String!, $email: String!) {
+  createUser(username: $username, password: $password, email: $email) {
+      user {
+        username
+      }
+  }
+}
+
+mutation TokenAuth($password: String!, $email: String!) {
+  tokenAuth(password: $password, email: $email) {
+    payload
+    token
+    refreshExpiresIn
+  }
+}

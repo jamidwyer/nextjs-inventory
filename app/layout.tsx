@@ -16,7 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ApolloProvider client={client}>
-          <AuthGuard>
+          <AuthGuard excludedRoutes={['/login', '/signup']}>
             <PageHeader />
             <Nav />
             <main className="flex w-full flex-col items-center justify-center">
