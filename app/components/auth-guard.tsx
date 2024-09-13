@@ -1,9 +1,8 @@
-// @ts-nocheck
-'use client';
-
-import { ReactNode } from 'react';
-import { useReadQuery, useBackgroundQuery } from '@apollo/client';
+import { ReactNode, useEffect } from 'react';
+import { useQuery, useReactiveVar } from '@apollo/client';
 import { ViewerDocument } from './user/documents.generated';
+import { usePathname, useRouter } from 'next/navigation';
+import client, { authenticatedVar } from '../apollo-client';
 
 interface AuthGuardProps {
   children: ReactNode;
@@ -11,10 +10,32 @@ interface AuthGuardProps {
 }
 
 const AuthGuard = ({ children, excludedRoutes }: AuthGuardProps) => {
-  const [viewerQueryRef] = useBackgroundQuery(ViewerDocument);
-  const { data: viewer, error } = useReadQuery(viewerQueryRef);
-  console.log(viewer);
-  return <>{children}</>;
+  const { data: viewer, error, refetch } = useQuery(ViewerDocument);
+  const authenticated = useReactiveVar(authenticatedVar);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!excludedRoutes?.includes(pathname)) {
+      refetch();
+    }
+  }, [pathname])
+
+  useEffect(() => {
+    if (!authenticated && !excludedRoutes?.includes(pathname)) {
+      router.push('/login');
+      client.resetStore();
+    }
+  }, [authenticated, router])
+
+  return (
+    <>
+      {
+        excludedRoutes?.includes(pathname) ?
+          ( children ) : (<>{viewer && children}</>)
+      }
+    </>
+  )
 };
 
 export default AuthGuard;

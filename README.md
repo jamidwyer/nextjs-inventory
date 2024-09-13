@@ -20,27 +20,29 @@ Preview: https://nextjs-inventory-sage.vercel.app
 
 #### MVP
 
-- get session
+- gate inventory on auth
 - separate recipes app
 
 #### Nice To Have
 
 - apollo client instead of postgres
-- optimize table join
+- ts-yescheck
+- hook for shared login/signup fxnality
 - recipe name
 - axe
 - pagination when not more pages
-- deploy
+- improve deploy
 - db backups
 - barcodes
-- docker
 - internationalize
 - seo urls
 - performance opt
+- figure out how Next wants us to organize pages
+- organize data components vs. plain ui components
 - prioritize TODO comments
 - bg video that changes depending on route
 - help nextjs upgrade react deps
-- think about rest vs server components
+- switch react icons to fontawesome
 - fun fonts
 - logo
 - xkcd colors to color var gist
