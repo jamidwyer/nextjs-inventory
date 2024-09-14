@@ -1,15 +1,11 @@
-import { ApolloWrapper } from './ApolloWrapper';
-import '@/app/ui/global.css';
+'use client';
 
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  metadataBase: new URL('https://hord.tech'),
-  title: {
-    template: '%s | Hord',
-    default: 'Inventory | Hord',
-  },
-};
+import '@/public/global.css';
+import PageHeader from '@/app/components/page-header';
+import Nav from '@/app/components/nav';
+import { ApolloProvider } from '@apollo/client';
+import client from './apollo-client';
+import AuthGuard from './components/auth-guard';
 
 export default function RootLayout({
   children,
@@ -19,7 +15,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ApolloWrapper>{children}</ApolloWrapper>
+        <ApolloProvider client={client}>
+          <AuthGuard excludedRoutes={['/login', '/signup']}>
+            <PageHeader />
+            <Nav />
+            <main className="flex w-full flex-col items-center justify-center">
+              <div className="p-6">
+                <div className="flex grow flex-row">{children}</div>
+              </div>
+            </main>
+          </AuthGuard>
+        </ApolloProvider>
       </body>
     </html>
   );

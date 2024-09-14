@@ -1,7 +1,7 @@
-import { cherryCreamSoda } from '@/app/ui/fonts/index';
+import { cherryCreamSoda } from '@/public/fonts/index';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBowlRice } from '@fortawesome/free-solid-svg-icons';
-import UserLinks from '@/app/ui/user-links';
+import UserLinks from '@/app/components/user-links';
 
 export default function PageHeader() {
   return (

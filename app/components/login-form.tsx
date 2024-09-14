@@ -4,20 +4,41 @@ import { useFormStatus, useFormState } from 'react-dom';
 import { AtSymbolIcon, KeyIcon } from '@heroicons/react/24/outline';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from './button';
-import { authenticate } from '@/app/lib/actions';
-
-const initialState = '';
+import { TokenAuthDocument } from './user/documents.generated';
+import { useMutation } from '@apollo/client';
+import client from '../apollo-client';
+import { useRouter } from 'next/navigation';
+import { authenticatedVar } from '../apollo-client';
 
 export default function LoginForm() {
-  // const [state, formAction] = useFormState(authenticate, initialState);
+  const router = useRouter();
   const { pending } = useFormStatus();
+  const [tokenAuth, { data, loading, error: updateError }] =
+    useMutation(TokenAuthDocument);
+
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
+    const data = {
+      email: event.target.email.value,
+      password: event.target.password.value,
+    };
+    tokenAuth({
+      variables: {
+        ...data,
+      },
+    });
+    client.refetchQueries({ include: 'active' });
+    authenticatedVar(true);
+
+    router.push('/');
+  };
 
   return (
-    <form action={() => {}}>
-      <div className="flex-1 rounded-sm bg-coconut px-6">
+    <form onSubmit={handleSubmit} className="w-full">
+      <div className="w-full flex-1 rounded-sm bg-coconut p-8">
         <p className={`text-l mb-3`}>Please log in to continue.</p>
         <div className="w-full">
-          <div>
+          <div className="w-full">
             <label
               className="mb-3 mt-5 block text-xs font-medium text-licorice"
               htmlFor="email"
