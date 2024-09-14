@@ -9,7 +9,7 @@ import { TokenAuthDocument } from './user/documents.generated';
 import { useMutation } from '@apollo/client';
 import client from '../apollo-client';
 import { useRouter } from 'next/navigation';
-import { authenticatedVar } from '../apollo-client'
+import { authenticatedVar } from '../apollo-client';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -25,10 +25,10 @@ export default function LoginForm() {
     };
     tokenAuth({
       variables: {
-        ...data
-      }
+        ...data,
+      },
     });
-    client.refetchQueries({ include: "active" });
+    client.refetchQueries({ include: 'active' });
     authenticatedVar(true);
 
     router.push('/');

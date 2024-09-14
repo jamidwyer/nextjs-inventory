@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 'use client';
 import { useDebouncedCallback } from 'use-debounce';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';

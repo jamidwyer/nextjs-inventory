@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client';
 
 import { useFormStatus, useFormState } from 'react-dom';
@@ -6,7 +7,10 @@ import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from './button';
 import { authenticate } from '@/app/lib/actions';
 import { FormEventHandler } from 'react';
-import { CreateUserDocument, TokenAuthDocument } from './user/documents.generated';
+import {
+  CreateUserDocument,
+  TokenAuthDocument,
+} from './user/documents.generated';
 import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/navigation';
 
@@ -26,18 +30,21 @@ export default function SignupForm() {
       username: event.target.username.value,
     };
     await createUser({
-      variables: {...data},
+      variables: { ...data },
     });
-    await login({variables: {
-      email: event.target.email.value,
-      password: event.target.password.value,
-    }});
+    await login({
+      variables: {
+        email: event.target.email.value,
+        password: event.target.password.value,
+      },
+    });
 
     router.push('/');
   };
   return (
-     // eslint-disable-next-line react/no-unescaped-entities
-     <div>I'm excited to share this, but it's still being tested. Sign-up soon!</div>
+    <div>
+      I'm excited to share this, but it's still being tested. Sign-up soon!
+    </div>
   );
 
   // return (

@@ -1,21 +1,34 @@
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
+export type MakeEmpty<
+  T extends { [key: string]: unknown },
+  K extends keyof T,
+> = { [_ in K]?: never };
+export type Incremental<T> =
+  | T
+  | {
+      [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
+    };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string; }
-  String: { input: string; output: string; }
-  Boolean: { input: boolean; output: boolean; }
-  Int: { input: number; output: number; }
-  Float: { input: number; output: number; }
-  Date: { input: any; output: any; }
-  DateTime: { input: any; output: any; }
-  Decimal: { input: any; output: any; }
-  GenericScalar: { input: any; output: any; }
+  ID: { input: string; output: string };
+  String: { input: string; output: string };
+  Boolean: { input: boolean; output: boolean };
+  Int: { input: number; output: number };
+  Float: { input: number; output: number };
+  Date: { input: any; output: any };
+  DateTime: { input: any; output: any };
+  Decimal: { input: any; output: any };
+  GenericScalar: { input: any; output: any };
 };
 
 export type CreateInventoryItem = {
@@ -33,8 +46,8 @@ export type IngredientType = {
   id: Scalars['ID']['output'];
   product: ProductType;
   recipes: RecipeTypeConnection;
+  unit: UnitType;
 };
-
 
 export type IngredientTypeRecipesArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -59,6 +72,7 @@ export type InventoryItemType = {
   person: Array<UserType>;
   product: ProductType;
   quantity: Scalars['Int']['output'];
+  unit: UnitType;
 };
 
 export type Mutation = {
@@ -72,11 +86,9 @@ export type Mutation = {
   verifyToken?: Maybe<Verify>;
 };
 
-
 export type MutationCreateInventoryItemArgs = {
   newInventoryItem: InventoryItemInput;
 };
-
 
 export type MutationCreateUserArgs = {
   email: Scalars['String']['input'];
@@ -84,23 +96,19 @@ export type MutationCreateUserArgs = {
   username?: InputMaybe<Scalars['String']['input']>;
 };
 
-
 export type MutationRefreshTokenArgs = {
   token?: InputMaybe<Scalars['String']['input']>;
 };
-
 
 export type MutationTokenAuthArgs = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
 };
 
-
 export type MutationUpdateItemQuantityArgs = {
-  id: Scalars['Int']['input'];
+  id: Scalars['String']['input'];
   quantity: Scalars['Int']['input'];
 };
-
 
 export type MutationVerifyTokenArgs = {
   token?: InputMaybe<Scalars['String']['input']>;
@@ -158,18 +166,15 @@ export type Query = {
   viewer?: Maybe<Query>;
 };
 
-
 export type QueryProductArgs = {
   id?: InputMaybe<Scalars['Int']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
 };
 
-
 export type QueryRecipeArgs = {
   id?: InputMaybe<Scalars['Int']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
 };
-
 
 export type QueryRecipesArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -179,7 +184,6 @@ export type QueryRecipesArgs = {
   name?: InputMaybe<Scalars['String']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
 };
-
 
 export type QueryTagArgs = {
   id?: InputMaybe<Scalars['Int']['input']>;
@@ -230,6 +234,14 @@ export type TagType = {
   value?: Maybe<Scalars['String']['output']>;
 };
 
+export type UnitType = {
+  __typename?: 'UnitType';
+  id: Scalars['ID']['output'];
+  ingredientSet: Array<IngredientType>;
+  inventoryitemSet: Array<InventoryItemType>;
+  name: Scalars['String']['output'];
+};
+
 export type UpdateItemQuantity = {
   __typename?: 'UpdateItemQuantity';
   inventoryItem?: Maybe<InventoryItemType>;
@@ -250,7 +262,6 @@ export type UserType = {
   recipeSet: RecipeTypeConnection;
   username?: Maybe<Scalars['String']['output']>;
 };
-
 
 export type UserTypeRecipeSetArgs = {
   after?: InputMaybe<Scalars['String']['input']>;

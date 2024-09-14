@@ -1,9 +1,12 @@
-// @ts-nocheck
-
 'use client';
 
 import { Suspense } from 'react';
-import { useReadQuery, useBackgroundQuery, useMutation } from '@apollo/client';
+import {
+  useReadQuery,
+  useBackgroundQuery,
+  useMutation,
+  useQuery,
+} from '@apollo/client';
 
 // TODO: components/ui
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,6 +24,8 @@ import Pagination from '@/app/components/pagination';
 import Link from 'next/link';
 import AddItemForm from '@/app/components/add-item-form';
 import ItemActionButtons from '@/app/components/item-action-buttons';
+import Loading from '@/app/loading';
+import Error from '@/app/error';
 
 export default function InventoryItemsTable({
   query,
@@ -31,16 +36,51 @@ export default function InventoryItemsTable({
 }) {
   const userId = 1;
 
-  const [inventoryQueryRef] = useBackgroundQuery(GetInventoryDocument);
   const [productQueryRef] = useBackgroundQuery(GetProductsDocument);
-  const { data: inventory, error } = useReadQuery(inventoryQueryRef);
+  const {
+    data: inventory,
+    loading: inventoryLoading,
+    error,
+  } = useQuery(GetInventoryDocument);
   const { data: productsData } = useReadQuery(productQueryRef);
   const { products } = productsData;
   const [updateItemQuantity, { data, loading, error: updateError }] =
     useMutation(UpdateItemQuantityDocument);
 
+  if (inventoryLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <Error error={error} />;
+  }
+
+  if (!inventory || !inventory.inventoryItems) {
+    return (
+      <div className="flex w-full flex-col items-center justify-center gap-4">
+        <p className="text-sm text-grapefruit">
+          Unable to load inventory data. Please try again later.
+        </p>
+        <Error
+          error={{
+            name: 'Inventory Error',
+            message: 'Inventory data is not available.',
+          }}
+        />
+      </div>
+    );
+  }
+
+  if (inventory.inventoryItems.length < 1) {
+    return (
+      <div className="flex w-full flex-col items-center justify-center gap-4">
+        No items found.
+      </div>
+    );
+  }
+
   return (
-    <div className="flex w-full flex-col gap-6 rounded-sm  bg-coconut p-2">
+    <div className="flex w-full flex-col gap-6 rounded-sm bg-coconut p-2">
       <div className="mt-2 flex flex-col justify-between gap-2">
         <Search placeholder="Search inventory..." />
       </div>
@@ -59,7 +99,7 @@ export default function InventoryItemsTable({
           </tr>
         </thead>
         <tbody className="bg-coconut">
-          {inventory.inventoryItems?.map((inventoryItem) => {
+          {inventory.inventoryItems.map((inventoryItem) => {
             const url = `/products/${inventoryItem?.product.id}`;
             return (
               <tr
@@ -84,10 +124,8 @@ export default function InventoryItemsTable({
                 </td>
                 <td className="whitespace-nowrap py-3 pl-6 pr-3">
                   <ItemActionButtons
-                    id={parseInt(inventoryItem?.id, 10)}
-                    quantity={inventoryItem?.quantity}
+                    {...inventoryItem}
                     updateItemQuantity={updateItemQuantity}
-                    unit={inventoryItem.unit}
                   />
                 </td>
               </tr>
@@ -96,7 +134,7 @@ export default function InventoryItemsTable({
         </tbody>
       </table>
       <Pagination totalPages={1} />
-      {products && <AddItemForm userId={userId} products={products} />}
+      {products ? <AddItemForm userId={userId} products={products} /> : null}
     </div>
   );
 }

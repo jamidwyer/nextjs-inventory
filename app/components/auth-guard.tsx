@@ -19,23 +19,26 @@ const AuthGuard = ({ children, excludedRoutes }: AuthGuardProps) => {
     if (!excludedRoutes?.includes(pathname)) {
       refetch();
     }
-  }, [pathname])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
 
   useEffect(() => {
     if (!authenticated && !excludedRoutes?.includes(pathname)) {
       router.push('/login');
       client.resetStore();
     }
-  }, [authenticated, router])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authenticated, router]);
 
   return (
     <>
-      {
-        excludedRoutes?.includes(pathname) ?
-          ( children ) : (<>{viewer && children}</>)
-      }
+      {excludedRoutes?.includes(pathname) ? (
+        children
+      ) : (
+        <>{viewer && children}</>
+      )}
     </>
-  )
+  );
 };
 
 export default AuthGuard;

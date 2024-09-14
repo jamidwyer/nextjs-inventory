@@ -3,21 +3,24 @@
 import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { UpdateItemQuantityMutationVariables } from './inventory-table/documents.generated';
 
+// TODO: id and quantity should be non-null numbers
 type Props = {
-  id?: number;
-  quantity: number;
+  id?: string;
+  quantity?: number;
   updateItemQuantity: ({
     variables,
   }: {
     variables: UpdateItemQuantityMutationVariables;
   }) => void;
-  unit: string;
+  unit?: {
+    name: string;
+  };
 };
 
 export default function InventoryItemButtons(props: Props) {
   const { id, quantity = 0, updateItemQuantity, unit } = props;
 
-  if (!id) {
+  if (!id || !quantity) {
     return null;
   }
 
@@ -40,7 +43,7 @@ export default function InventoryItemButtons(props: Props) {
       >
         <PlusIcon className="w-5" />
       </button>
-      {quantity}
+      {quantity} {unit?.name}
       <button
         onClick={async () => {
           await handleChangeQuantity(quantity >= 1 ? quantity - 1 : 0);

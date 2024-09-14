@@ -6,17 +6,23 @@ import Link from 'next/link';
 import { Button } from '@/app/components/button';
 import { quantitative_units } from '../lib/placeholder-data';
 import { createInventoryItem } from '@/app/lib/actions';
+import { ProductType } from '@/components/types.generated';
 
 type Props = {
   userId: number;
-  products: Product[];
+  products?: ({
+    __typename?: 'ProductType' | undefined;
+    id: string;
+    name: string;
+  } | null)[];
 };
 
 export default function AddItemForm(props: Props) {
   const { userId, products } = props;
   const initialState = { message: '', errors: {} };
   const [state, dispatch] = useFormState(createInventoryItem, initialState);
-  if (!products) {
+
+  if (!products || products.length < 1) {
     return null;
   }
 
@@ -40,9 +46,9 @@ export default function AddItemForm(props: Props) {
               <option value="" disabled>
                 Select a product
               </option>
-              {products.map((product: Product) => (
-                <option key={product.id} value={product.id}>
-                  {product.name}
+              {products.map((product) => (
+                <option key={product?.id} value={product?.id}>
+                  {product?.name}
                 </option>
               ))}
             </select>

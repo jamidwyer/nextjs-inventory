@@ -7,6 +7,9 @@ query GetInventory {
       id
       name
     }
+    unit {
+      name
+    }
   }
 }
 
@@ -17,11 +20,14 @@ query GetProducts {
   }
 }
 
-mutation UpdateItemQuantity($id: Int!, $quantity: Int!) {
+mutation UpdateItemQuantity($id: String!, $quantity: Int!) {
   updateItemQuantity(id: $id, quantity: $quantity) {
     inventoryItem {
       id
       quantity
+      unit {
+        name
+      }
     }
   }
 }
