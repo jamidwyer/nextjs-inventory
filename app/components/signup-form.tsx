@@ -5,7 +5,6 @@ import { useFormStatus, useFormState } from 'react-dom';
 import { AtSymbolIcon, KeyIcon } from '@heroicons/react/24/outline';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from './button';
-import { authenticate } from '@/app/lib/actions';
 import { FormEventHandler } from 'react';
 import {
   CreateUserDocument,

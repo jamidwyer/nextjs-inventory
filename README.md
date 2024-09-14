@@ -26,7 +26,7 @@ Preview: https://nextjs-inventory-sage.vercel.app
 #### Nice To Have
 
 - apollo client instead of postgres
-- ts-yescheck
+- update node
 - hook for shared login/signup fxnality
 - recipe name
 - axe

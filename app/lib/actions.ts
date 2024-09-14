@@ -2,8 +2,6 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-// import { signIn } from '@/auth';
-import { AuthError } from 'next-auth';
 
 const FormSchema = z.object({
   id: z.coerce.number(),
@@ -30,25 +28,6 @@ export type State = {
   };
   message?: string | null;
 };
-
-export async function authenticate(
-  prevState: string | undefined,
-  formData: FormData,
-) {
-  // try {
-  //   await signIn('credentials', formData);
-  // } catch (error) {
-  //   if (error instanceof AuthError) {
-  //     switch (error.type) {
-  //       case 'CredentialsSignin':
-  //         return 'Invalid credentials.';
-  //       default:
-  //         return 'Something went wrong.';
-  //     }
-  //   }
-  //   throw error;
-  // }
-}
 
 export async function createInventoryItem(
   prevState: State,
@@ -79,23 +58,6 @@ export async function createInventoryItem(
   } catch (error) {
     return {
       message: 'Database Error: Failed to add inventory item.',
-    };
-  }
-
-  revalidatePath('/');
-  redirect('/');
-}
-
-export async function updateInventoryItem(id: number, amount: number) {
-  try {
-    await sql`
-    UPDATE inventory_items
-    set amount=${amount}
-    where id=${id};
-  `;
-  } catch (error) {
-    return {
-      message: 'Database Error: Failed to update inventory item.',
     };
   }
 
