@@ -10,7 +10,6 @@ export const metadata: Metadata = {
 export default async function Page({ params }: { params: { id: number } }) {
   const productId = params?.id;
   const recipes = await fetchRecipesByIngredient(productId);
-  console.log(recipes);
   return (
     <main>
       <ul>

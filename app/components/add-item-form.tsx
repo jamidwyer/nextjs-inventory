@@ -31,7 +31,7 @@ export default function AddItemForm(props: Props) {
       <input type="hidden" value={userId} name="userId" />
       <div className="flex flex-row items-end gap-2 rounded-sm bg-coconut p-4 md:p-6">
         {/* Product Name */}
-        <div>
+        <div className="w-1/4">
           <label htmlFor="product" className="mb-2 block text-sm font-medium">
             Choose product
           </label>
@@ -64,7 +64,7 @@ export default function AddItemForm(props: Props) {
         </div>
 
         {/* Inventory Amount */}
-        <div>
+        <div className="w-1/8">
           <label htmlFor="amount" className="mb-2 block text-sm font-medium">
             Amount
           </label>
@@ -82,7 +82,7 @@ export default function AddItemForm(props: Props) {
         </div>
 
         {/* Quantitative Unit */}
-        <div>
+        <div className="w-1/8">
           <label htmlFor="product" className="mb-2 block text-sm font-medium">
             Unit
           </label>
@@ -106,9 +106,9 @@ export default function AddItemForm(props: Props) {
         </div>
 
         {/* Expiration Date */}
-        <div>
+        <div className="w-1/4">
           <label htmlFor="amount" className="mb-2 block text-sm font-medium">
-            Expiration Date
+            Expires
           </label>
           <div className="relative mt-2 rounded-sm">
             <div className="relative">
@@ -124,7 +124,7 @@ export default function AddItemForm(props: Props) {
         </div>
         <Link
           href="/inventory"
-          className="flex h-10 items-center rounded-sm bg-stainless px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+          className="w-1/8 flex h-10 items-center rounded-sm bg-jasmineRice px-4 text-sm font-medium text-blackBean transition-colors hover:bg-stainless hover:text-licorice"
         >
           Cancel
         </Link>
