@@ -3,32 +3,6 @@ import { InventoryItem, Product, User } from './definitions';
 
 const ITEMS_PER_PAGE = 20;
 
-export async function fetchInventoryItems(
-  userId: number,
-  query: string,
-  currentPage: number,
-) {
-  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
-
-  try {
-    const data =
-      await sql<InventoryItem>`SELECT i.id, i.expiration_date, p.name, i.amount, i.product_id
-FROM inventory_items i
-INNER JOIN products p
-ON i.product_id = p.id
-WHERE i.user_id = ${userId} AND
-p.name ILIKE ${`%${query}%`}
-ORDER BY i.expiration_date ASC
-LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
-;`;
-
-    return data.rows;
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch inventory items.');
-  }
-}
-
 export async function fetchInventoryItemsPages(
   userId: number,
   query: string,
@@ -45,20 +19,6 @@ export async function fetchInventoryItemsPages(
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch total number of inventory items.');
-  }
-}
-
-export async function fetchProducts() {
-  try {
-    const products = await sql<Product>`
-      SELECT *
-      FROM products
-    `;
-
-    return products.rows;
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch products.');
   }
 }
 
@@ -101,15 +61,5 @@ export async function fetchRecipeById(id: number) {
   } catch (error) {
     console.error('Failed to fetch recipe:', error);
     throw new Error('Failed to fetch recipe.');
-  }
-}
-
-export async function getUser(email: string) {
-  try {
-    const user = await sql`SELECT * FROM users WHERE email=${email}`;
-    return user.rows[0] as User;
-  } catch (error) {
-    console.error('Failed to fetch user:', error);
-    throw new Error('Failed to fetch user.');
   }
 }

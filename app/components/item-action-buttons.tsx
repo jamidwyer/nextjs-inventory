@@ -19,7 +19,6 @@ type Props = {
 
 export default function InventoryItemButtons(props: Props) {
   const { id, quantity = 0, updateItemQuantity, unit } = props;
-
   if (!id || !quantity) {
     return null;
   }
@@ -34,7 +33,7 @@ export default function InventoryItemButtons(props: Props) {
   };
 
   return (
-    <div className="flex justify-end gap-2">
+    <div className="flex items-center justify-start gap-2">
       <button
         onClick={async () => {
           handleChangeQuantity(quantity + 1);
@@ -43,7 +42,9 @@ export default function InventoryItemButtons(props: Props) {
       >
         <PlusIcon className="w-5" />
       </button>
-      {quantity} {unit?.name}
+      <div className="line-clamp-1 flex w-32 justify-center">
+        {quantity} {unit?.name}
+      </div>
       <button
         onClick={async () => {
           await handleChangeQuantity(quantity >= 1 ? quantity - 1 : 0);

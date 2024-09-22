@@ -22,11 +22,14 @@ Preview: https://nextjs-inventory-sage.vercel.app
 
 - gate inventory on auth
 - separate recipes app
+- relative urls
 
 #### Nice To Have
 
-- apollo client instead of postgres
+- finish swapping out postgres for apollo client
+- user trust levels for admin
 - update node
+- generalize inventory-row to table-row
 - hook for shared login/signup fxnality
 - recipe name
 - axe

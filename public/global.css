@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --legible-font: 'Gotham,Sofia,filson-pro,Courier,Helvetica Neue, Helvetica, Arial,Geneva,sans-serif';
+  --legible-font: 'Gotham', 'Sofia', 'filson-pro', 'Courier', 'Helvetica Neue',
+    'Helvetica', 'Arial', 'Geneva', 'sans-serif';
 
   /* green */
   --honeydew: rgb(240, 255, 240);
@@ -14,7 +15,6 @@
   --asparagus: #7ba05b;
   --darksage: #598556;
   --avocado: rgb(110, 112, 66);
-  --olive: #6e750e;
   --tilapia: rgb(95, 115, 89);
   --parsley: rgb(44, 101, 29);
 
@@ -63,7 +63,7 @@
   /* gray */
   --stainless: #d4d4d8;
   --tilapia-scale: rgb(164, 180, 182);
-  --trout-belly: rgb(175, 177, 189);
+  --silver-chalice: #aaaaaa;
   --herring: rgb(108, 120, 119);
   --trout-back: rgb(101, 93, 88);
   --coho-back: rgb(86, 80, 73);
@@ -95,8 +95,8 @@
   --ground-ginger: rgb(217, 202, 159);
   --brown-sugar: #af6e4d;
   --caramel: #af6f09;
-  --cocoa: rgb(86, 36, 36);
   --chocolate: #3d1c02;
+  --black-coffee: #483d3f;
   --cod-speckle: rgb(55, 38, 30);
 
   --logo-font: 'Horta';

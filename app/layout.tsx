@@ -19,9 +19,9 @@ export default function RootLayout({
           <AuthGuard excludedRoutes={['/login', '/signup']}>
             <PageHeader />
             <Nav />
-            <main className="flex w-full flex-col items-center justify-center">
+            <main className="w-full flex-col items-center justify-center">
               <div className="p-6">
-                <div className="flex grow flex-row">{children}</div>
+                <div className="flex-row">{children}</div>
               </div>
             </main>
           </AuthGuard>
