@@ -89,14 +89,15 @@ export default function InventoryItemsTable({
               inventoryItem;
             return (
               // TODO: ProductType shouldn't have inventoryitemSet or require ingredientSet fields
-              // @ts-ignore
               id && (
                 <InventoryRow
                   id={id}
                   expirationDate={expirationDate}
+                  // @ts-ignore
                   product={product}
                   key={id}
                   quantity={quantity}
+                  // @ts-ignore
                   unit={unit}
                 />
               )
