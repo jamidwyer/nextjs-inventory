@@ -1,3 +1,5 @@
+import { GraphQLClient, RequestOptions } from 'graphql-request';
+import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -18,6 +20,7 @@ export type Incremental<T> =
   | {
       [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
     };
+type GraphQLClientRequestHeaders = RequestOptions['requestHeaders'];
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string };
@@ -276,3 +279,271 @@ export type Verify = {
   __typename?: 'Verify';
   payload: Scalars['GenericScalar']['output'];
 };
+
+export type GetInventoryQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetInventoryQuery = {
+  __typename?: 'Query';
+  inventoryItems?: Array<{
+    __typename?: 'InventoryItemType';
+    id: string;
+    quantity: number;
+    expirationDate?: any | null;
+    product: { __typename?: 'ProductType'; id: string; name: string };
+    unit: { __typename?: 'UnitType'; name: string };
+  } | null> | null;
+};
+
+export type GetProductsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetProductsQuery = {
+  __typename?: 'Query';
+  products?: Array<{
+    __typename?: 'ProductType';
+    id: string;
+    name: string;
+  } | null> | null;
+};
+
+export type UpdateItemQuantityMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  quantity: Scalars['Int']['input'];
+}>;
+
+export type UpdateItemQuantityMutation = {
+  __typename?: 'Mutation';
+  updateItemQuantity?: {
+    __typename?: 'UpdateItemQuantity';
+    inventoryItem?: {
+      __typename?: 'InventoryItemType';
+      id: string;
+      quantity: number;
+      unit: { __typename?: 'UnitType'; name: string };
+    } | null;
+  } | null;
+};
+
+export type ViewerQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ViewerQuery = {
+  __typename?: 'Query';
+  viewer?: {
+    __typename?: 'Query';
+    me?: {
+      __typename?: 'UserType';
+      id: string;
+      email: string;
+      username?: string | null;
+    } | null;
+  } | null;
+};
+
+export type CreateUserMutationVariables = Exact<{
+  username?: InputMaybe<Scalars['String']['input']>;
+  password: Scalars['String']['input'];
+  email: Scalars['String']['input'];
+}>;
+
+export type CreateUserMutation = {
+  __typename?: 'Mutation';
+  createUser?: {
+    __typename?: 'CreateUser';
+    user?: { __typename?: 'UserType'; username?: string | null } | null;
+  } | null;
+};
+
+export type TokenAuthMutationVariables = Exact<{
+  password: Scalars['String']['input'];
+  email: Scalars['String']['input'];
+}>;
+
+export type TokenAuthMutation = {
+  __typename?: 'Mutation';
+  tokenAuth?: {
+    __typename?: 'ObtainJSONWebToken';
+    payload: any;
+    token: string;
+    refreshExpiresIn: number;
+  } | null;
+};
+
+export const GetInventoryDocument = gql`
+  query GetInventory {
+    inventoryItems {
+      id
+      quantity
+      expirationDate
+      product {
+        id
+        name
+      }
+      unit {
+        name
+      }
+    }
+  }
+`;
+export const GetProductsDocument = gql`
+  query GetProducts {
+    products {
+      id
+      name
+    }
+  }
+`;
+export const UpdateItemQuantityDocument = gql`
+  mutation UpdateItemQuantity($id: String!, $quantity: Int!) {
+    updateItemQuantity(id: $id, quantity: $quantity) {
+      inventoryItem {
+        id
+        quantity
+        unit {
+          name
+        }
+      }
+    }
+  }
+`;
+export const ViewerDocument = gql`
+  query Viewer {
+    viewer {
+      me {
+        id
+        email
+        username
+      }
+    }
+  }
+`;
+export const CreateUserDocument = gql`
+  mutation CreateUser($username: String, $password: String!, $email: String!) {
+    createUser(username: $username, password: $password, email: $email) {
+      user {
+        username
+      }
+    }
+  }
+`;
+export const TokenAuthDocument = gql`
+  mutation TokenAuth($password: String!, $email: String!) {
+    tokenAuth(password: $password, email: $email) {
+      payload
+      token
+      refreshExpiresIn
+    }
+  }
+`;
+
+export type SdkFunctionWrapper = <T>(
+  action: (requestHeaders?: Record<string, string>) => Promise<T>,
+  operationName: string,
+  operationType?: string,
+  variables?: any,
+) => Promise<T>;
+
+const defaultWrapper: SdkFunctionWrapper = (
+  action,
+  _operationName,
+  _operationType,
+  _variables,
+) => action();
+
+export function getSdk(
+  client: GraphQLClient,
+  withWrapper: SdkFunctionWrapper = defaultWrapper,
+) {
+  return {
+    GetInventory(
+      variables?: GetInventoryQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<GetInventoryQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetInventoryQuery>(GetInventoryDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'GetInventory',
+        'query',
+        variables,
+      );
+    },
+    GetProducts(
+      variables?: GetProductsQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<GetProductsQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetProductsQuery>(GetProductsDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'GetProducts',
+        'query',
+        variables,
+      );
+    },
+    UpdateItemQuantity(
+      variables: UpdateItemQuantityMutationVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<UpdateItemQuantityMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<UpdateItemQuantityMutation>(
+            UpdateItemQuantityDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders },
+          ),
+        'UpdateItemQuantity',
+        'mutation',
+        variables,
+      );
+    },
+    Viewer(
+      variables?: ViewerQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<ViewerQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<ViewerQuery>(ViewerDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'Viewer',
+        'query',
+        variables,
+      );
+    },
+    CreateUser(
+      variables: CreateUserMutationVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<CreateUserMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<CreateUserMutation>(CreateUserDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'CreateUser',
+        'mutation',
+        variables,
+      );
+    },
+    TokenAuth(
+      variables: TokenAuthMutationVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<TokenAuthMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<TokenAuthMutation>(TokenAuthDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'TokenAuth',
+        'mutation',
+        variables,
+      );
+    },
+  };
+}
+export type Sdk = ReturnType<typeof getSdk>;
