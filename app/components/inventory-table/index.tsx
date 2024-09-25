@@ -3,9 +3,7 @@
 import { useReadQuery, useBackgroundQuery, useQuery } from '@apollo/client';
 import Link from 'next/link';
 
-import {
-  GetInventoryDocument,
-} from '@/app/components/inventory-table/documents.generated';
+import { GetInventoryDocument } from '@/app/components/inventory-table/documents.generated';
 
 import Search from '@/app/components/search';
 import Pagination from '@/app/components/pagination';

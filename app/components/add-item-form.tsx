@@ -8,7 +8,7 @@ import { createInventoryItem } from '@/app/lib/actions';
 import { useBackgroundQuery, useReadQuery } from '@apollo/client';
 import { GetProductsDocument } from './inventory-table/documents.generated';
 
-export default function AddItemForm(props: { userId: any; }) {
+export default function AddItemForm(props: { userId: any }) {
   const [productQueryRef] = useBackgroundQuery(GetProductsDocument);
   const { data: productsData } = useReadQuery(productQueryRef);
   const { products } = productsData;
