@@ -1,24 +1,18 @@
 'use client';
 import { useFormState } from 'react-dom';
 
-import { Product } from '@/app/lib/definitions';
 import Link from 'next/link';
 import { Button } from '@/app/components/button';
 import { quantitative_units } from '../lib/placeholder-data';
 import { createInventoryItem } from '@/app/lib/actions';
-import { ProductType } from '@/components/types.generated';
+import { useBackgroundQuery, useReadQuery } from '@apollo/client';
+import { GetProductsDocument } from './inventory-table/documents.generated';
 
-type Props = {
-  userId: number;
-  products?: ({
-    __typename?: 'ProductType' | undefined;
-    id: string;
-    name: string;
-  } | null)[];
-};
-
-export default function AddItemForm(props: Props) {
-  const { userId, products } = props;
+export default function AddItemForm(props: { userId: any }) {
+  const [productQueryRef] = useBackgroundQuery(GetProductsDocument);
+  const { data: productsData } = useReadQuery(productQueryRef);
+  const { products } = productsData;
+  const { userId } = props;
   const initialState = { message: '', errors: {} };
   const [state, dispatch] = useFormState(createInventoryItem, initialState);
 

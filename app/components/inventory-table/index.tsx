@@ -3,10 +3,7 @@
 import { useReadQuery, useBackgroundQuery, useQuery } from '@apollo/client';
 import Link from 'next/link';
 
-import {
-  GetInventoryDocument,
-  GetProductsDocument,
-} from '@/app/components/inventory-table/documents.generated';
+import { GetInventoryDocument } from '@/app/components/inventory-table/documents.generated';
 
 import Search from '@/app/components/search';
 import Pagination from '@/app/components/pagination';
@@ -26,14 +23,11 @@ export default function InventoryItemsTable({
   const userId = 1;
   const totalPages = 0;
 
-  const [productQueryRef] = useBackgroundQuery(GetProductsDocument);
   const {
     data: inventory,
     loading: inventoryLoading,
     error,
   } = useQuery(GetInventoryDocument);
-  const { data: productsData } = useReadQuery(productQueryRef);
-  const { products } = productsData;
 
   if (inventoryLoading) {
     return <Loading />;
@@ -68,7 +62,7 @@ export default function InventoryItemsTable({
   }
 
   return (
-    <div className="flex flex-col items-center gap-6 rounded-sm bg-coconut p-2">
+    <>
       <div className="mt-2 flex flex-col justify-between gap-2">
         <Search placeholder="Search inventory..." />
       </div>
@@ -106,13 +100,6 @@ export default function InventoryItemsTable({
         </tbody>
       </table>
       {totalPages > 1 && <Pagination totalPages={totalPages} />}
-      {products ? <AddItemForm userId={userId} products={products} /> : null}
-      <Link
-        href="http://localhost/admin/inventory/product/add/"
-        className="flex h-10 w-[200px] items-center justify-center whitespace-nowrap bg-bloodorange px-4 text-sm font-medium tracking-normal text-coconut transition-colors hover:bg-smashedPumpkin focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bloodorange active:bg-smashedPumpkin aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
-      >
-        Add Product
-      </Link>
-    </div>
+    </>
   );
 }
