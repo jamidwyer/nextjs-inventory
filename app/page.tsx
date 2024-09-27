@@ -3,10 +3,15 @@
 import InventoryItemsTable from '@/app/components/inventory-table';
 import { Scanner } from '@yudiel/react-qr-scanner';
 import { useState } from 'react';
+import { useQuery } from '@apollo/client';
 import Link from 'next/link';
 import { Button } from './components/button';
 import AddItemForm from './components/add-item-form';
 import { Section } from './components/section';
+import { GetInventoryDocument } from './components/inventory-table/documents.generated';
+import Error from '@/app/error';
+import Loading from './loading';
+import Pagination from './components/pagination';
 
 // import { Metadata } from 'next';
 
@@ -23,16 +28,59 @@ export default function Page({
     page?: string;
   };
 }) {
+  const userId = 1;
+  const totalPages = 0;
+
+  const {
+    data: inventory,
+    loading: inventoryLoading,
+    error,
+    refetch,
+  } = useQuery(GetInventoryDocument);
+
   const [showScanner, setShowScanner] = useState(false);
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
+
+  if (inventoryLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <Error error={error} />;
+  }
+
+  if (!inventory?.inventoryItems) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-4">
+        <p className="text-sm text-grapefruit">
+          Unable to load inventory data. Please try again later.
+        </p>
+        <Error
+          error={{
+            name: 'Inventory Error',
+            message: 'Inventory data is not available.',
+          }}
+        />
+      </div>
+    );
+  }
+
+  const { inventoryItems } = inventory;
+
   return (
     <>
       <Section name="Inventory">
-        <InventoryItemsTable currentPage={currentPage} query={query} />
+        <InventoryItemsTable
+          currentPage={currentPage}
+          query={query}
+          // @ts-ignore
+          inventoryItems={inventoryItems}
+        />
+        {totalPages > 1 && <Pagination totalPages={totalPages} />}
       </Section>
       <Section name="Add Inventory Item">
-        <AddItemForm userId={1} />
+        <AddItemForm userId={1} onAddItem={refetch} />
       </Section>
       <Section name="Scan Barcode">
         <Button onClick={() => setShowScanner(!showScanner)}>

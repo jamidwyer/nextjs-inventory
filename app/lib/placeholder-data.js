@@ -9,116 +9,6 @@ const users = [
   },
 ];
 
-const products = [
-  {
-    id: 1,
-    name: 'Black Beans',
-  },
-  {
-    id: 2,
-    name: 'Potato',
-  },
-  {
-    id: 3,
-    name: 'Wheat Thins',
-  },
-  {
-    id: 4,
-    name: 'Corn Tortillas',
-  },
-  {
-    id: 5,
-    name: 'Cheddar Cheese',
-  },
-  {
-    id: 6,
-    name: 'Ricotta Cheese',
-  },
-  {
-    id: 7,
-    name: 'Mozzarella Cheese',
-  },
-  {
-    id: 8,
-    name: 'Tofu',
-  },
-  {
-    id: 9,
-    name: 'Egg',
-  },
-  {
-    id: 10,
-    name: 'Marinara Sauce',
-  },
-  {
-    id: 11,
-    name: 'Tomato',
-  },
-  {
-    id: 12,
-    name: 'Jumbo Shells',
-  },
-  {
-    id: 13,
-    name: 'Parmesan Cheese',
-  },
-];
-
-const quantitative_units = [
-  {
-    id: 1,
-    name: 'Can',
-  },
-  {
-    id: 2,
-    name: 'Bag',
-  },
-  {
-    id: 3,
-    name: 'Each',
-  },
-  {
-    id: 4,
-    name: 'Box',
-  },
-  {
-    id: 5,
-    name: 'Container',
-  },
-  {
-    id: 6,
-    name: 'Jar',
-  },
-  {
-    id: 7,
-    name: 'Bottle',
-  },
-];
-
-const inventory_items = [
-  {
-    product_id: products[5].id,
-    user_id: users[0].id,
-    amount: 1,
-    quantitative_unit_id: quantitative_units[4].id,
-    expiration_date: '2024-6-14',
-  },
-  {
-    product_id: products[0].id,
-    user_id: users[0].id,
-    amount: 10,
-    quantitative_unit_id: quantitative_units[0].id,
-    expiration_date: '2025-12-06',
-  },
-  {
-    product_id: products[1].id,
-    user_id: users[0].id,
-    amount: 10,
-    quantitative_unit_id: quantitative_units[2].id,
-    expiration_date: '2024-6-14',
-  },
-];
-
 const recipes = [
   {
     id: 1,
@@ -139,8 +29,5 @@ const recipes = [
 
 module.exports = {
   users,
-  inventory_items,
-  quantitative_units,
-  products,
   recipes,
 };

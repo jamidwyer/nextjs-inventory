@@ -16,8 +16,6 @@ const FormSchema = z.object({
   expirationDate: z.string(),
 });
 
-const CreateInventoryItem = FormSchema.omit({ id: true });
-
 export type State = {
   errors?: {
     userId?: string[];
@@ -28,42 +26,6 @@ export type State = {
   };
   message?: string | null;
 };
-
-export async function createInventoryItem(
-  prevState: State,
-  formData: FormData,
-) {
-  const validatedFields = CreateInventoryItem.safeParse({
-    userId: formData.get('userId'),
-    productId: formData.get('productId'),
-    amount: formData.get('amount'),
-    unit: formData.get('unit'),
-    expirationDate: formData.get('expirationDate'),
-  });
-
-  if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Create Invoice.',
-    };
-  }
-  const { userId, amount, productId, expirationDate, unit } =
-    validatedFields.data;
-
-  try {
-    await sql`
-    INSERT INTO inventory_items (user_id, amount, product_id, expiration_date, quantitative_unit_id)
-    VALUES (${userId}, ${amount}, ${productId}, ${expirationDate}, ${unit})
-  `;
-  } catch (error) {
-    return {
-      message: 'Database Error: Failed to add inventory item.',
-    };
-  }
-
-  revalidatePath('/');
-  redirect('/');
-}
 
 export async function deleteInventoryItem(id: number) {
   try {

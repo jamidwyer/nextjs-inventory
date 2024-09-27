@@ -11,7 +11,7 @@ const httpLink = new HttpLink({
 const logoutLink = onError(({ graphQLErrors }) => {
   if (
     graphQLErrors?.length &&
-    (graphQLErrors[0].extensions?.response as any).statusCode === 401
+    (graphQLErrors[0].extensions?.response as any)?.statusCode === 401
   ) {
     authenticatedVar(false);
   }

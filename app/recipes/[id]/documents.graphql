@@ -1,0 +1,15 @@
+query GetRecipe($id: Int) {
+  recipe(id: $id) {
+    ingredientSet {
+      unit {
+        name
+      }
+      quantity
+      product {
+        name
+      }
+    }
+    instructions
+    name
+  }
+}

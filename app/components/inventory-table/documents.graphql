@@ -13,13 +13,6 @@ query GetInventory {
   }
 }
 
-query GetProducts {
-  products {
-    id
-    name
-  }
-}
-
 mutation UpdateItemQuantity($id: String!, $quantity: Int!) {
   updateItemQuantity(id: $id, quantity: $quantity) {
     inventoryItem {

@@ -15,17 +15,6 @@ export type GetInventoryQuery = {
   } | null> | null;
 };
 
-export type GetProductsQueryVariables = Types.Exact<{ [key: string]: never }>;
-
-export type GetProductsQuery = {
-  __typename?: 'Query';
-  products?: Array<{
-    __typename?: 'ProductType';
-    id: string;
-    name: string;
-  } | null> | null;
-};
-
 export type UpdateItemQuantityMutationVariables = Types.Exact<{
   id: Types.Scalars['String']['input'];
   quantity: Types.Scalars['Int']['input'];
@@ -95,32 +84,6 @@ export const GetInventoryDocument = {
     },
   ],
 } as unknown as DocumentNode<GetInventoryQuery, GetInventoryQueryVariables>;
-export const GetProductsDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'GetProducts' },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'products' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<GetProductsQuery, GetProductsQueryVariables>;
 export const UpdateItemQuantityDocument = {
   kind: 'Document',
   definitions: [

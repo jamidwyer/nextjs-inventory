@@ -13,13 +13,19 @@ import ItemActionButtons from '@/app/components/item-action-buttons';
 import Td from '@/app/components/td';
 import { UpdateItemQuantityDocument } from '@/app/components/inventory-table/documents.generated';
 import { InventoryItemType } from '@/components/types.generated';
+import { DeleteInventoryItemDocument } from './item-action-buttons/documents.generated';
 
-const InventoryRow = (props: InventoryItemType) => {
+const InventoryRow = (props: Omit<InventoryItemType, 'person'>) => {
   const { id, expirationDate, product, quantity, unit } = props;
 
   const [updateItemQuantity, { data, loading, error: updateError }] =
     useMutation(UpdateItemQuantityDocument);
   const url = `/products/${product.id}`;
+
+  const [
+    deleteInventoryItem,
+    { data: deleteData, loading: deleteLoading, error: deleteError },
+  ] = useMutation(DeleteInventoryItemDocument);
 
   return (
     <tr
@@ -45,6 +51,7 @@ const InventoryRow = (props: InventoryItemType) => {
           quantity={quantity}
           unit={unit}
           updateItemQuantity={updateItemQuantity}
+          deleteInventoryItem={deleteInventoryItem}
         />
       </Td>
     </tr>

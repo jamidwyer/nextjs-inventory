@@ -44,35 +44,33 @@ export type CreateUser = {
   user?: Maybe<UserType>;
 };
 
+export type DeleteInventoryItem = {
+  __typename?: 'DeleteInventoryItem';
+  message?: Maybe<Scalars['String']['output']>;
+  success?: Maybe<Scalars['Boolean']['output']>;
+};
+
 export type IngredientType = {
   __typename?: 'IngredientType';
   id: Scalars['ID']['output'];
   product: ProductType;
-  recipes: RecipeTypeConnection;
+  quantity?: Maybe<Scalars['String']['output']>;
+  recipe?: Maybe<RecipeType>;
   unit: UnitType;
-};
-
-export type IngredientTypeRecipesArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type InventoryItemInput = {
   expirationDate: Scalars['String']['input'];
   id: Scalars['Int']['input'];
   quantity: Scalars['Int']['input'];
-  unit?: InputMaybe<QuantitativeUnitInput>;
+  unitId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type InventoryItemType = {
   __typename?: 'InventoryItemType';
   expirationDate?: Maybe<Scalars['Date']['output']>;
   id: Scalars['ID']['output'];
-  person: Array<UserType>;
+  person: UserType;
   product: ProductType;
   quantity: Scalars['Int']['output'];
   unit: UnitType;
@@ -82,6 +80,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createInventoryItem?: Maybe<CreateInventoryItem>;
   createUser?: Maybe<CreateUser>;
+  deleteInventoryItem?: Maybe<DeleteInventoryItem>;
   refreshToken?: Maybe<Refresh>;
   /** Obtain JSON Web Token mutation */
   tokenAuth?: Maybe<ObtainJsonWebToken>;
@@ -97,6 +96,10 @@ export type MutationCreateUserArgs = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
   username?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationDeleteInventoryItemArgs = {
+  id: Scalars['ID']['input'];
 };
 
 export type MutationRefreshTokenArgs = {
@@ -150,10 +153,17 @@ export type ProductType = {
   ingredientSet: Array<IngredientType>;
   inventoryitemSet: Array<InventoryItemType>;
   name: Scalars['String']['output'];
+  recipeSet: RecipeTypeConnection;
 };
 
-export type QuantitativeUnitInput = {
-  id: Scalars['Int']['input'];
+export type ProductTypeRecipeSetArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  ingredient_Product_Id?: InputMaybe<Scalars['ID']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  name_Icontains?: InputMaybe<Scalars['String']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type Query = {
@@ -164,8 +174,7 @@ export type Query = {
   products?: Maybe<Array<Maybe<ProductType>>>;
   recipe?: Maybe<RecipeType>;
   recipes?: Maybe<RecipeTypeConnection>;
-  tag?: Maybe<TagType>;
-  tags?: Maybe<Array<Maybe<TagType>>>;
+  units?: Maybe<Array<Maybe<UnitType>>>;
   viewer?: Maybe<Query>;
 };
 
@@ -183,14 +192,10 @@ export type QueryRecipesArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
+  ingredient_Product_Id?: InputMaybe<Scalars['ID']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
+  name_Icontains?: InputMaybe<Scalars['String']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-};
-
-export type QueryTagArgs = {
-  id?: InputMaybe<Scalars['Int']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type RecipeType = Node & {
@@ -199,7 +204,8 @@ export type RecipeType = Node & {
   estimatedCost?: Maybe<Scalars['Decimal']['output']>;
   /** The ID of the object */
   id: Scalars['ID']['output'];
-  ingredients: Array<IngredientType>;
+  ingredientSet: Array<IngredientType>;
+  ingredients: Array<ProductType>;
   instructions: Scalars['String']['output'];
   name: Scalars['String']['output'];
   prepTime?: Maybe<Scalars['Int']['output']>;
@@ -229,12 +235,6 @@ export type Refresh = {
   payload: Scalars['GenericScalar']['output'];
   refreshExpiresIn: Scalars['Int']['output'];
   token: Scalars['String']['output'];
-};
-
-export type TagType = {
-  __typename?: 'TagType';
-  id: Scalars['ID']['output'];
-  value?: Maybe<Scalars['String']['output']>;
 };
 
 export type UnitType = {
@@ -270,14 +270,52 @@ export type UserTypeRecipeSetArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
+  ingredient_Product_Id?: InputMaybe<Scalars['ID']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
+  name_Icontains?: InputMaybe<Scalars['String']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type Verify = {
   __typename?: 'Verify';
   payload: Scalars['GenericScalar']['output'];
+};
+
+export type GetProductsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetProductsQuery = {
+  __typename?: 'Query';
+  products?: Array<{
+    __typename?: 'ProductType';
+    id: string;
+    name: string;
+  } | null> | null;
+};
+
+export type GetUnitsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetUnitsQuery = {
+  __typename?: 'Query';
+  units?: Array<{
+    __typename?: 'UnitType';
+    id: string;
+    name: string;
+  } | null> | null;
+};
+
+export type CreateInventoryItemMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+  quantity: Scalars['Int']['input'];
+  unitId?: InputMaybe<Scalars['Int']['input']>;
+  expirationDate: Scalars['String']['input'];
+}>;
+
+export type CreateInventoryItemMutation = {
+  __typename?: 'Mutation';
+  createInventoryItem?: {
+    __typename?: 'CreateInventoryItem';
+    inventoryItem?: { __typename?: 'InventoryItemType'; id: string } | null;
+  } | null;
 };
 
 export type GetInventoryQueryVariables = Exact<{ [key: string]: never }>;
@@ -291,17 +329,6 @@ export type GetInventoryQuery = {
     expirationDate?: any | null;
     product: { __typename?: 'ProductType'; id: string; name: string };
     unit: { __typename?: 'UnitType'; name: string };
-  } | null> | null;
-};
-
-export type GetProductsQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetProductsQuery = {
-  __typename?: 'Query';
-  products?: Array<{
-    __typename?: 'ProductType';
-    id: string;
-    name: string;
   } | null> | null;
 };
 
@@ -320,6 +347,18 @@ export type UpdateItemQuantityMutation = {
       quantity: number;
       unit: { __typename?: 'UnitType'; name: string };
     } | null;
+  } | null;
+};
+
+export type DeleteInventoryItemMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+export type DeleteInventoryItemMutation = {
+  __typename?: 'Mutation';
+  deleteInventoryItem?: {
+    __typename?: 'DeleteInventoryItem';
+    success?: boolean | null;
   } | null;
 };
 
@@ -367,6 +406,77 @@ export type TokenAuthMutation = {
   } | null;
 };
 
+export type GetRecipesQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+export type GetRecipesQuery = {
+  __typename?: 'Query';
+  recipes?: {
+    __typename?: 'RecipeTypeConnection';
+    edges: Array<{
+      __typename?: 'RecipeTypeEdge';
+      node?: { __typename?: 'RecipeType'; id: string; name: string } | null;
+    } | null>;
+  } | null;
+};
+
+export type GetRecipeQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+export type GetRecipeQuery = {
+  __typename?: 'Query';
+  recipe?: {
+    __typename?: 'RecipeType';
+    instructions: string;
+    name: string;
+    ingredientSet: Array<{
+      __typename?: 'IngredientType';
+      quantity?: string | null;
+      unit: { __typename?: 'UnitType'; name: string };
+      product: { __typename?: 'ProductType'; name: string };
+    }>;
+  } | null;
+};
+
+export const GetProductsDocument = gql`
+  query GetProducts {
+    products {
+      id
+      name
+    }
+  }
+`;
+export const GetUnitsDocument = gql`
+  query GetUnits {
+    units {
+      id
+      name
+    }
+  }
+`;
+export const CreateInventoryItemDocument = gql`
+  mutation CreateInventoryItem(
+    $id: Int!
+    $quantity: Int!
+    $unitId: Int
+    $expirationDate: String!
+  ) {
+    createInventoryItem(
+      newInventoryItem: {
+        id: $id
+        quantity: $quantity
+        unitId: $unitId
+        expirationDate: $expirationDate
+      }
+    ) {
+      inventoryItem {
+        id
+      }
+    }
+  }
+`;
 export const GetInventoryDocument = gql`
   query GetInventory {
     inventoryItems {
@@ -383,14 +493,6 @@ export const GetInventoryDocument = gql`
     }
   }
 `;
-export const GetProductsDocument = gql`
-  query GetProducts {
-    products {
-      id
-      name
-    }
-  }
-`;
 export const UpdateItemQuantityDocument = gql`
   mutation UpdateItemQuantity($id: String!, $quantity: Int!) {
     updateItemQuantity(id: $id, quantity: $quantity) {
@@ -401,6 +503,13 @@ export const UpdateItemQuantityDocument = gql`
           name
         }
       }
+    }
+  }
+`;
+export const DeleteInventoryItemDocument = gql`
+  mutation DeleteInventoryItem($id: ID!) {
+    deleteInventoryItem(id: $id) {
+      success
     }
   }
 `;
@@ -433,6 +542,35 @@ export const TokenAuthDocument = gql`
     }
   }
 `;
+export const GetRecipesDocument = gql`
+  query GetRecipes($id: ID) {
+    recipes(ingredient_Product_Id: $id) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+export const GetRecipeDocument = gql`
+  query GetRecipe($id: Int) {
+    recipe(id: $id) {
+      ingredientSet {
+        unit {
+          name
+        }
+        quantity
+        product {
+          name
+        }
+      }
+      instructions
+      name
+    }
+  }
+`;
 
 export type SdkFunctionWrapper = <T>(
   action: (requestHeaders?: Record<string, string>) => Promise<T>,
@@ -453,21 +591,6 @@ export function getSdk(
   withWrapper: SdkFunctionWrapper = defaultWrapper,
 ) {
   return {
-    GetInventory(
-      variables?: GetInventoryQueryVariables,
-      requestHeaders?: GraphQLClientRequestHeaders,
-    ): Promise<GetInventoryQuery> {
-      return withWrapper(
-        (wrappedRequestHeaders) =>
-          client.request<GetInventoryQuery>(GetInventoryDocument, variables, {
-            ...requestHeaders,
-            ...wrappedRequestHeaders,
-          }),
-        'GetInventory',
-        'query',
-        variables,
-      );
-    },
     GetProducts(
       variables?: GetProductsQueryVariables,
       requestHeaders?: GraphQLClientRequestHeaders,
@@ -479,6 +602,52 @@ export function getSdk(
             ...wrappedRequestHeaders,
           }),
         'GetProducts',
+        'query',
+        variables,
+      );
+    },
+    GetUnits(
+      variables?: GetUnitsQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<GetUnitsQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetUnitsQuery>(GetUnitsDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'GetUnits',
+        'query',
+        variables,
+      );
+    },
+    CreateInventoryItem(
+      variables: CreateInventoryItemMutationVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<CreateInventoryItemMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<CreateInventoryItemMutation>(
+            CreateInventoryItemDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders },
+          ),
+        'CreateInventoryItem',
+        'mutation',
+        variables,
+      );
+    },
+    GetInventory(
+      variables?: GetInventoryQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<GetInventoryQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetInventoryQuery>(GetInventoryDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'GetInventory',
         'query',
         variables,
       );
@@ -495,6 +664,22 @@ export function getSdk(
             { ...requestHeaders, ...wrappedRequestHeaders },
           ),
         'UpdateItemQuantity',
+        'mutation',
+        variables,
+      );
+    },
+    DeleteInventoryItem(
+      variables: DeleteInventoryItemMutationVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<DeleteInventoryItemMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<DeleteInventoryItemMutation>(
+            DeleteInventoryItemDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders },
+          ),
+        'DeleteInventoryItem',
         'mutation',
         variables,
       );
@@ -541,6 +726,36 @@ export function getSdk(
           }),
         'TokenAuth',
         'mutation',
+        variables,
+      );
+    },
+    GetRecipes(
+      variables?: GetRecipesQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<GetRecipesQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetRecipesQuery>(GetRecipesDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'GetRecipes',
+        'query',
+        variables,
+      );
+    },
+    GetRecipe(
+      variables?: GetRecipeQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<GetRecipeQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetRecipeQuery>(GetRecipeDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'GetRecipe',
+        'query',
         variables,
       );
     },
