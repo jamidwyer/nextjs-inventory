@@ -63,14 +63,32 @@ export type InventoryItemInput = {
   unitId?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type InventoryItemType = {
+export type InventoryItemType = Node & {
   __typename?: 'InventoryItemType';
   expirationDate?: Maybe<Scalars['Date']['output']>;
+  /** The ID of the object */
   id: Scalars['ID']['output'];
   person: UserType;
   product: ProductType;
   quantity: Scalars['Int']['output'];
   unit: UnitType;
+};
+
+export type InventoryItemTypeConnection = {
+  __typename?: 'InventoryItemTypeConnection';
+  /** Contains the nodes in this connection. */
+  edges: Array<Maybe<InventoryItemTypeEdge>>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+};
+
+/** A Relay edge containing a `InventoryItemType` and its cursor. */
+export type InventoryItemTypeEdge = {
+  __typename?: 'InventoryItemTypeEdge';
+  /** A cursor for use in pagination */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge */
+  node?: Maybe<InventoryItemType>;
 };
 
 export type Mutation = {
@@ -148,9 +166,19 @@ export type ProductType = {
   __typename?: 'ProductType';
   id: Scalars['ID']['output'];
   ingredientSet: Array<IngredientType>;
-  inventoryitemSet: Array<InventoryItemType>;
+  inventoryitemSet: InventoryItemTypeConnection;
   name: Scalars['String']['output'];
   recipeSet: RecipeTypeConnection;
+};
+
+export type ProductTypeInventoryitemSetArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  person_Id?: InputMaybe<Scalars['ID']['input']>;
+  product_Name_Icontains?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ProductTypeRecipeSetArgs = {
@@ -165,7 +193,7 @@ export type ProductTypeRecipeSetArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  inventoryItems?: Maybe<Array<Maybe<InventoryItemType>>>;
+  inventoryItems?: Maybe<InventoryItemTypeConnection>;
   me?: Maybe<UserType>;
   product?: Maybe<ProductType>;
   products?: Maybe<Array<Maybe<ProductType>>>;
@@ -173,6 +201,16 @@ export type Query = {
   recipes?: Maybe<RecipeTypeConnection>;
   units?: Maybe<Array<Maybe<UnitType>>>;
   viewer?: Maybe<Query>;
+};
+
+export type QueryInventoryItemsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  person_Id?: InputMaybe<Scalars['ID']['input']>;
+  product_Name_Icontains?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type QueryProductArgs = {
@@ -238,8 +276,18 @@ export type UnitType = {
   __typename?: 'UnitType';
   id: Scalars['ID']['output'];
   ingredientSet: Array<IngredientType>;
-  inventoryitemSet: Array<InventoryItemType>;
+  inventoryitemSet: InventoryItemTypeConnection;
   name: Scalars['String']['output'];
+};
+
+export type UnitTypeInventoryitemSetArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  person_Id?: InputMaybe<Scalars['ID']['input']>;
+  product_Name_Icontains?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdateItemQuantity = {
@@ -252,7 +300,7 @@ export type UserType = {
   email: Scalars['String']['output'];
   firstName?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
-  inventoryitemSet: Array<InventoryItemType>;
+  inventoryitemSet: InventoryItemTypeConnection;
   isActive: Scalars['Boolean']['output'];
   isStaff: Scalars['Boolean']['output'];
   /** Designates that this user has all permissions without explicitly assigning them. */
@@ -261,6 +309,16 @@ export type UserType = {
   lastName?: Maybe<Scalars['String']['output']>;
   recipeSet: RecipeTypeConnection;
   username?: Maybe<Scalars['String']['output']>;
+};
+
+export type UserTypeInventoryitemSetArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  person_Id?: InputMaybe<Scalars['ID']['input']>;
+  product_Name_Icontains?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UserTypeRecipeSetArgs = {

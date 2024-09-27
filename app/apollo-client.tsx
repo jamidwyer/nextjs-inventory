@@ -1,5 +1,6 @@
 import { ApolloClient, HttpLink, InMemoryCache, makeVar } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
+import { relayStylePagination } from '@apollo/client/utilities';
 
 export const authenticatedVar = makeVar(true);
 
@@ -19,7 +20,15 @@ const logoutLink = onError(({ graphQLErrors }) => {
 
 const client = new ApolloClient({
   link: logoutLink.concat(httpLink),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          inventoryItems: relayStylePagination(),
+        },
+      },
+    },
+  }),
 });
 
 export default client;

@@ -3,17 +3,27 @@
 import Search from '@/app/components/search';
 import InventoryRow from '../inventory-row';
 import Th from '../th';
-import { InventoryItemType } from '@/components/types.generated';
+import {
+  InventoryItemType,
+  InventoryItemTypeConnection,
+  InventoryItemTypeEdge,
+  PageInfo,
+} from '@/components/types.generated';
+import LoadMore from '../load-more';
 
 interface InventoryItemsTableProps {
-  inventoryItems: InventoryItemType[];
+  inventoryItems: InventoryItemTypeConnection;
   onDeleteItem: () => void;
+  loadMore: any;
+  pageInfo: Omit<PageInfo, 'hasPreviousPage'>;
 }
 
 export default function InventoryItemsTable({
   inventoryItems,
+  loadMore,
+  pageInfo,
 }: InventoryItemsTableProps) {
-  if (inventoryItems.length < 1) {
+  if (inventoryItems.edges.length < 1) {
     return (
       <div className="flex flex-col items-center justify-center gap-4">
         No items found.
@@ -35,12 +45,12 @@ export default function InventoryItemsTable({
           </tr>
         </thead>
         <tbody className="bg-coconut">
-          {inventoryItems.map((inventoryItem) => {
-            if (!inventoryItem || !inventoryItem.id) {
+          {inventoryItems.edges.map((inventoryItem) => {
+            if (!inventoryItem || !inventoryItem.node) {
               return null;
             }
             const { id, unit, product, quantity, expirationDate } =
-              inventoryItem;
+              inventoryItem.node;
             return (
               // TODO: ProductType shouldn't have inventoryitemSet or require ingredientSet fields
               id && (
@@ -59,6 +69,18 @@ export default function InventoryItemsTable({
           })}
         </tbody>
       </table>
+      {pageInfo.hasNextPage ? (
+        <LoadMore
+          loadMore={() => {
+            return loadMore({
+              variables: {
+                cursor: pageInfo.endCursor,
+              },
+            });
+          }}
+          loading={false}
+        />
+      ) : null}
     </>
   );
 }

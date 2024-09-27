@@ -36,6 +36,7 @@ export default function Page({
     loading: inventoryLoading,
     error,
     refetch,
+    fetchMore,
   } = useQuery(GetInventoryDocument);
 
   const [showScanner, setShowScanner] = useState(false);
@@ -72,10 +73,11 @@ export default function Page({
     <>
       <Section name="Inventory">
         <InventoryItemsTable
-          currentPage={currentPage}
           query={query}
           // @ts-ignore
           inventoryItems={inventoryItems}
+          loadMore={fetchMore}
+          pageInfo={inventory.inventoryItems.pageInfo}
         />
         {totalPages > 1 && <Pagination totalPages={totalPages} />}
       </Section>
