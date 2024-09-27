@@ -1,0 +1,33 @@
+query GetProducts {
+  products {
+    id
+    name
+  }
+}
+
+query GetUnits {
+  units {
+    id
+    name
+  }
+}
+
+mutation CreateInventoryItem(
+  $id: Int!
+  $quantity: Int!
+  $unitId: Int
+  $expirationDate: String!
+) {
+  createInventoryItem(
+    newInventoryItem: {
+      id: $id
+      quantity: $quantity
+      unitId: $unitId
+      expirationDate: $expirationDate
+    }
+  ) {
+    inventoryItem {
+      id
+    }
+  }
+}

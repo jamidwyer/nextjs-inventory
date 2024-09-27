@@ -41,35 +41,33 @@ export type CreateUser = {
   user?: Maybe<UserType>;
 };
 
+export type DeleteInventoryItem = {
+  __typename?: 'DeleteInventoryItem';
+  message?: Maybe<Scalars['String']['output']>;
+  success?: Maybe<Scalars['Boolean']['output']>;
+};
+
 export type IngredientType = {
   __typename?: 'IngredientType';
   id: Scalars['ID']['output'];
   product: ProductType;
-  recipes: RecipeTypeConnection;
+  quantity?: Maybe<Scalars['String']['output']>;
+  recipe?: Maybe<RecipeType>;
   unit: UnitType;
-};
-
-export type IngredientTypeRecipesArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type InventoryItemInput = {
   expirationDate: Scalars['String']['input'];
   id: Scalars['Int']['input'];
   quantity: Scalars['Int']['input'];
-  unit?: InputMaybe<QuantitativeUnitInput>;
+  unitId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type InventoryItemType = {
   __typename?: 'InventoryItemType';
   expirationDate?: Maybe<Scalars['Date']['output']>;
   id: Scalars['ID']['output'];
-  person: Array<UserType>;
+  person: UserType;
   product: ProductType;
   quantity: Scalars['Int']['output'];
   unit: UnitType;
@@ -79,6 +77,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createInventoryItem?: Maybe<CreateInventoryItem>;
   createUser?: Maybe<CreateUser>;
+  deleteInventoryItem?: Maybe<DeleteInventoryItem>;
   refreshToken?: Maybe<Refresh>;
   /** Obtain JSON Web Token mutation */
   tokenAuth?: Maybe<ObtainJsonWebToken>;
@@ -94,6 +93,10 @@ export type MutationCreateUserArgs = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
   username?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationDeleteInventoryItemArgs = {
+  id: Scalars['ID']['input'];
 };
 
 export type MutationRefreshTokenArgs = {
@@ -147,10 +150,17 @@ export type ProductType = {
   ingredientSet: Array<IngredientType>;
   inventoryitemSet: Array<InventoryItemType>;
   name: Scalars['String']['output'];
+  recipeSet: RecipeTypeConnection;
 };
 
-export type QuantitativeUnitInput = {
-  id: Scalars['Int']['input'];
+export type ProductTypeRecipeSetArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  ingredient_Product_Id?: InputMaybe<Scalars['ID']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  name_Icontains?: InputMaybe<Scalars['String']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type Query = {
@@ -161,8 +171,7 @@ export type Query = {
   products?: Maybe<Array<Maybe<ProductType>>>;
   recipe?: Maybe<RecipeType>;
   recipes?: Maybe<RecipeTypeConnection>;
-  tag?: Maybe<TagType>;
-  tags?: Maybe<Array<Maybe<TagType>>>;
+  units?: Maybe<Array<Maybe<UnitType>>>;
   viewer?: Maybe<Query>;
 };
 
@@ -180,14 +189,10 @@ export type QueryRecipesArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
+  ingredient_Product_Id?: InputMaybe<Scalars['ID']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
+  name_Icontains?: InputMaybe<Scalars['String']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-};
-
-export type QueryTagArgs = {
-  id?: InputMaybe<Scalars['Int']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type RecipeType = Node & {
@@ -196,7 +201,8 @@ export type RecipeType = Node & {
   estimatedCost?: Maybe<Scalars['Decimal']['output']>;
   /** The ID of the object */
   id: Scalars['ID']['output'];
-  ingredients: Array<IngredientType>;
+  ingredientSet: Array<IngredientType>;
+  ingredients: Array<ProductType>;
   instructions: Scalars['String']['output'];
   name: Scalars['String']['output'];
   prepTime?: Maybe<Scalars['Int']['output']>;
@@ -226,12 +232,6 @@ export type Refresh = {
   payload: Scalars['GenericScalar']['output'];
   refreshExpiresIn: Scalars['Int']['output'];
   token: Scalars['String']['output'];
-};
-
-export type TagType = {
-  __typename?: 'TagType';
-  id: Scalars['ID']['output'];
-  value?: Maybe<Scalars['String']['output']>;
 };
 
 export type UnitType = {
@@ -267,8 +267,9 @@ export type UserTypeRecipeSetArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
+  ingredient_Product_Id?: InputMaybe<Scalars['ID']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
+  name_Icontains?: InputMaybe<Scalars['String']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
 };
 

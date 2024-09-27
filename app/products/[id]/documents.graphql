@@ -1,0 +1,10 @@
+query GetRecipes($id: ID) {
+  recipes(ingredient_Product_Id: $id) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}

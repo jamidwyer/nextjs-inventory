@@ -1,7 +1,10 @@
 'use client';
 
+// TODO: fontawesome
 import { MinusIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { UpdateItemQuantityMutationVariables } from './inventory-table/documents.generated';
+import { UpdateItemQuantityMutationVariables } from '../inventory-table/documents.generated';
+import { DeleteInventoryItemMutationVariables } from './documents.generated';
+import { Reference } from '@apollo/client';
 
 // TODO: id and quantity should be non-null numbers
 type Props = {
@@ -12,13 +15,24 @@ type Props = {
   }: {
     variables: UpdateItemQuantityMutationVariables;
   }) => void;
+  deleteInventoryItem: ({
+    variables,
+  }: {
+    variables: DeleteInventoryItemMutationVariables;
+  }) => void;
   unit?: {
     name: string;
   };
 };
 
 export default function InventoryItemButtons(props: Props) {
-  const { id, quantity = 0, updateItemQuantity, unit } = props;
+  const {
+    id,
+    quantity = 0,
+    updateItemQuantity,
+    unit,
+    deleteInventoryItem,
+  } = props;
   if (!id || !quantity) {
     return null;
   }
@@ -28,6 +42,38 @@ export default function InventoryItemButtons(props: Props) {
       variables: {
         id: id,
         quantity: quantity,
+      },
+    });
+  };
+
+  const handleDeleteItem = (id: string) => {
+    deleteInventoryItem({
+      variables: { id: id },
+      // @ts-ignore
+      update: (
+        cache: {
+          modify: (arg0: {
+            fields: {
+              inventoryItems(
+                itemRefs: Reference[],
+                { readField }: { readField: any },
+              ): Reference[];
+            };
+          }) => void;
+        },
+        result: { data: { deleteInventoryItem: any } },
+      ) => {
+        if (id) {
+          cache.modify({
+            fields: {
+              inventoryItems(itemRefs: Reference[], { readField }) {
+                return itemRefs.filter((itemRef) => {
+                  return readField('id', itemRef) !== id;
+                });
+              },
+            },
+          });
+        }
       },
     });
   };
@@ -55,8 +101,7 @@ export default function InventoryItemButtons(props: Props) {
       </button>
       <button
         onClick={async () => {
-          // const deletedAmount = await deleteInventoryItem(id);
-          // setAmount(amount - 1);
+          handleDeleteItem(id);
         }}
         className="rounded-sm border p-2 hover:bg-stainless"
       >

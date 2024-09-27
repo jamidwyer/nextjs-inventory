@@ -27,6 +27,7 @@ Preview: https://nextjs-inventory-sage.vercel.app
 #### Nice To Have
 
 - finish swapping out postgres for apollo client
+- add item not clearing
 - user trust levels for admin
 - update node
 - generalize inventory-row to table-row
@@ -34,11 +35,12 @@ Preview: https://nextjs-inventory-sage.vercel.app
 - recipe name
 - axe
 - pagination when not more pages
+- allow user to "eat" vs. trash/delete food
 - improve deploy
 - db backups
 - barcodes
 - internationalize
-- seo urls
+- seo urls [(getstaticprops)](https://www.udemy.com/course/react-with-typescript/learn/lecture/22717973#overview)
 - performance opt
 - figure out how Next wants us to organize pages
 - organize data components vs. plain ui components
