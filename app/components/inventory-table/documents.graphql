@@ -1,14 +1,23 @@
-query GetInventory {
-  inventoryItems {
-    id
-    quantity
-    expirationDate
-    product {
-      id
-      name
+query GetInventory($cursor: String) {
+  inventoryItems(first: 5, after: $cursor) {
+    edges {
+      node {
+        id
+        quantity
+        expirationDate
+        product {
+          id
+          name
+        }
+        unit {
+          name
+        }
+      }
+      cursor
     }
-    unit {
-      name
+    pageInfo {
+      endCursor
+      hasNextPage
     }
   }
 }

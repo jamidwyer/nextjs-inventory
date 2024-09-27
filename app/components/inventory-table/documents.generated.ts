@@ -1,18 +1,32 @@
 import * as Types from '../../../components/types.generated';
 
 import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
-export type GetInventoryQueryVariables = Types.Exact<{ [key: string]: never }>;
+export type GetInventoryQueryVariables = Types.Exact<{
+  cursor?: Types.InputMaybe<Types.Scalars['String']['input']>;
+}>;
 
 export type GetInventoryQuery = {
   __typename?: 'Query';
-  inventoryItems?: Array<{
-    __typename?: 'InventoryItemType';
-    id: string;
-    quantity: number;
-    expirationDate?: any | null;
-    product: { __typename?: 'ProductType'; id: string; name: string };
-    unit: { __typename?: 'UnitType'; name: string };
-  } | null> | null;
+  inventoryItems?: {
+    __typename?: 'InventoryItemTypeConnection';
+    edges: Array<{
+      __typename?: 'InventoryItemTypeEdge';
+      cursor: string;
+      node?: {
+        __typename?: 'InventoryItemType';
+        id: string;
+        quantity: number;
+        expirationDate?: any | null;
+        product: { __typename?: 'ProductType'; id: string; name: string };
+        unit: { __typename?: 'UnitType'; name: string };
+      } | null;
+    } | null>;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      endCursor?: string | null;
+      hasNextPage: boolean;
+    };
+  } | null;
 };
 
 export type UpdateItemQuantityMutationVariables = Types.Exact<{
@@ -40,39 +54,118 @@ export const GetInventoryDocument = {
       kind: 'OperationDefinition',
       operation: 'query',
       name: { kind: 'Name', value: 'GetInventory' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'cursor' },
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+        },
+      ],
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'inventoryItems' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'first' },
+                value: { kind: 'IntValue', value: '5' },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'after' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'cursor' },
+                },
+              },
+            ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'quantity' } },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'expirationDate' },
-                },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'product' },
+                  name: { kind: 'Name', value: 'edges' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'node' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'id' },
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'quantity' },
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'expirationDate' },
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'product' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'id' },
+                                  },
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'name' },
+                                  },
+                                ],
+                              },
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'unit' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'name' },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'cursor' },
+                      },
                     ],
                   },
                 },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'unit' },
+                  name: { kind: 'Name', value: 'pageInfo' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'endCursor' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'hasNextPage' },
+                      },
                     ],
                   },
                 },
