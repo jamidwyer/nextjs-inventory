@@ -41,8 +41,15 @@ export type CreateUser = {
   user?: Maybe<UserType>;
 };
 
-export type DeleteInventoryItem = {
-  __typename?: 'DeleteInventoryItem';
+export type DeleteInventoryItemInput = {
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['ID']['input'];
+};
+
+export type DeleteInventoryItemPayload = {
+  __typename?: 'DeleteInventoryItemPayload';
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  item?: Maybe<InventoryItemType>;
   message?: Maybe<Scalars['String']['output']>;
   success?: Maybe<Scalars['Boolean']['output']>;
 };
@@ -95,11 +102,11 @@ export type Mutation = {
   __typename?: 'Mutation';
   createInventoryItem?: Maybe<CreateInventoryItem>;
   createUser?: Maybe<CreateUser>;
-  deleteInventoryItem?: Maybe<DeleteInventoryItem>;
+  deleteInventoryItem?: Maybe<DeleteInventoryItemPayload>;
   refreshToken?: Maybe<Refresh>;
   /** Obtain JSON Web Token mutation */
   tokenAuth?: Maybe<ObtainJsonWebToken>;
-  updateItemQuantity?: Maybe<UpdateItemQuantity>;
+  updateItemQuantity?: Maybe<UpdateItemQuantityPayload>;
   verifyToken?: Maybe<Verify>;
 };
 
@@ -114,7 +121,7 @@ export type MutationCreateUserArgs = {
 };
 
 export type MutationDeleteInventoryItemArgs = {
-  id: Scalars['ID']['input'];
+  input: DeleteInventoryItemInput;
 };
 
 export type MutationRefreshTokenArgs = {
@@ -127,8 +134,7 @@ export type MutationTokenAuthArgs = {
 };
 
 export type MutationUpdateItemQuantityArgs = {
-  id: Scalars['String']['input'];
-  quantity: Scalars['Int']['input'];
+  input: UpdateItemQuantityInput;
 };
 
 export type MutationVerifyTokenArgs = {
@@ -290,9 +296,18 @@ export type UnitTypeInventoryitemSetArgs = {
   product_Name_Icontains?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type UpdateItemQuantity = {
-  __typename?: 'UpdateItemQuantity';
+export type UpdateItemQuantityInput = {
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['String']['input'];
+  quantity: Scalars['Int']['input'];
+};
+
+export type UpdateItemQuantityPayload = {
+  __typename?: 'UpdateItemQuantityPayload';
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   inventoryItem?: Maybe<InventoryItemType>;
+  message?: Maybe<Scalars['String']['output']>;
+  success?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type UserType = {

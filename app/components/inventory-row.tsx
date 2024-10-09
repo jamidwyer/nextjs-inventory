@@ -14,12 +14,39 @@ import Td from '@/app/components/td';
 import { UpdateItemQuantityDocument } from '@/app/components/inventory-table/documents.generated';
 import { InventoryItemType } from '@/components/types.generated';
 import { DeleteInventoryItemDocument } from './item-action-buttons/documents.generated';
+import { GetInventoryDocument } from '@/src/mocks/graphql';
 
 const InventoryRow = (props: Omit<InventoryItemType, 'person'>) => {
   const { id, expirationDate, product, quantity, unit } = props;
 
   const [updateItemQuantity, { data, loading, error: updateError }] =
-    useMutation(UpdateItemQuantityDocument);
+    useMutation(UpdateItemQuantityDocument, {
+      update: (cache, { data: mutationData }) => {
+        if (!mutationData) return;
+
+        const updatedItem = mutationData.updateItemQuantity?.inventoryItem;
+
+        if (!updatedItem) return;
+
+        const existingData = cache.readQuery({
+          query: GetInventoryDocument,
+        });
+
+        if (existingData) {
+          // @ts-ignore
+          const updatedItems = existingData.inventoryItems.edges.map((edge) =>
+            edge.node.id === updatedItem.id ? updatedItem : edge,
+          );
+
+          cache.writeQuery({
+            query: GetInventoryDocument,
+            data: {
+              inventoryItems: updatedItems,
+            },
+          });
+        }
+      },
+    });
   const url = `/products/${product.id}`;
 
   const [

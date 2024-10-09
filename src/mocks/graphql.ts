@@ -44,8 +44,15 @@ export type CreateUser = {
   user?: Maybe<UserType>;
 };
 
-export type DeleteInventoryItem = {
-  __typename?: 'DeleteInventoryItem';
+export type DeleteInventoryItemInput = {
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['ID']['input'];
+};
+
+export type DeleteInventoryItemPayload = {
+  __typename?: 'DeleteInventoryItemPayload';
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  item?: Maybe<InventoryItemType>;
   message?: Maybe<Scalars['String']['output']>;
   success?: Maybe<Scalars['Boolean']['output']>;
 };
@@ -98,11 +105,11 @@ export type Mutation = {
   __typename?: 'Mutation';
   createInventoryItem?: Maybe<CreateInventoryItem>;
   createUser?: Maybe<CreateUser>;
-  deleteInventoryItem?: Maybe<DeleteInventoryItem>;
+  deleteInventoryItem?: Maybe<DeleteInventoryItemPayload>;
   refreshToken?: Maybe<Refresh>;
   /** Obtain JSON Web Token mutation */
   tokenAuth?: Maybe<ObtainJsonWebToken>;
-  updateItemQuantity?: Maybe<UpdateItemQuantity>;
+  updateItemQuantity?: Maybe<UpdateItemQuantityPayload>;
   verifyToken?: Maybe<Verify>;
 };
 
@@ -117,7 +124,7 @@ export type MutationCreateUserArgs = {
 };
 
 export type MutationDeleteInventoryItemArgs = {
-  id: Scalars['ID']['input'];
+  input: DeleteInventoryItemInput;
 };
 
 export type MutationRefreshTokenArgs = {
@@ -130,8 +137,7 @@ export type MutationTokenAuthArgs = {
 };
 
 export type MutationUpdateItemQuantityArgs = {
-  id: Scalars['String']['input'];
-  quantity: Scalars['Int']['input'];
+  input: UpdateItemQuantityInput;
 };
 
 export type MutationVerifyTokenArgs = {
@@ -293,9 +299,18 @@ export type UnitTypeInventoryitemSetArgs = {
   product_Name_Icontains?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type UpdateItemQuantity = {
-  __typename?: 'UpdateItemQuantity';
+export type UpdateItemQuantityInput = {
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['String']['input'];
+  quantity: Scalars['Int']['input'];
+};
+
+export type UpdateItemQuantityPayload = {
+  __typename?: 'UpdateItemQuantityPayload';
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   inventoryItem?: Maybe<InventoryItemType>;
+  message?: Maybe<Scalars['String']['output']>;
+  success?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type UserType = {
@@ -412,12 +427,15 @@ export type UpdateItemQuantityMutationVariables = Exact<{
 export type UpdateItemQuantityMutation = {
   __typename?: 'Mutation';
   updateItemQuantity?: {
-    __typename?: 'UpdateItemQuantity';
+    __typename?: 'UpdateItemQuantityPayload';
+    success?: boolean | null;
+    message?: string | null;
     inventoryItem?: {
       __typename?: 'InventoryItemType';
       id: string;
       quantity: number;
       unit: { __typename?: 'UnitType'; name: string };
+      product: { __typename?: 'ProductType'; name: string };
     } | null;
   } | null;
 };
@@ -429,7 +447,7 @@ export type DeleteInventoryItemMutationVariables = Exact<{
 export type DeleteInventoryItemMutation = {
   __typename?: 'Mutation';
   deleteInventoryItem?: {
-    __typename?: 'DeleteInventoryItem';
+    __typename?: 'DeleteInventoryItemPayload';
     success?: boolean | null;
   } | null;
 };
@@ -551,7 +569,7 @@ export const CreateInventoryItemDocument = gql`
 `;
 export const GetInventoryDocument = gql`
   query GetInventory($cursor: String) {
-    inventoryItems(first: 5, after: $cursor) {
+    inventoryItems(first: 20, after: $cursor) {
       edges {
         node {
           id
@@ -576,11 +594,16 @@ export const GetInventoryDocument = gql`
 `;
 export const UpdateItemQuantityDocument = gql`
   mutation UpdateItemQuantity($id: String!, $quantity: Int!) {
-    updateItemQuantity(id: $id, quantity: $quantity) {
+    updateItemQuantity(input: { id: $id, quantity: $quantity }) {
+      success
+      message
       inventoryItem {
         id
         quantity
         unit {
+          name
+        }
+        product {
           name
         }
       }
@@ -589,7 +612,7 @@ export const UpdateItemQuantityDocument = gql`
 `;
 export const DeleteInventoryItemDocument = gql`
   mutation DeleteInventoryItem($id: ID!) {
-    deleteInventoryItem(id: $id) {
+    deleteInventoryItem(input: { id: $id }) {
       success
     }
   }

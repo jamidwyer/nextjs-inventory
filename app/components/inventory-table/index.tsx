@@ -45,12 +45,11 @@ export default function InventoryItemsTable({
           </tr>
         </thead>
         <tbody className="bg-coconut">
-          {inventoryItems.edges.map((inventoryItem) => {
-            if (!inventoryItem || !inventoryItem.node) {
+          {inventoryItems.edges.map((edge) => {
+            if (!edge || !edge.node) {
               return null;
             }
-            const { id, unit, product, quantity, expirationDate } =
-              inventoryItem.node;
+            const { id, unit, product, quantity, expirationDate } = edge.node;
             return (
               // TODO: ProductType shouldn't have inventoryitemSet or require ingredientSet fields
               id && (

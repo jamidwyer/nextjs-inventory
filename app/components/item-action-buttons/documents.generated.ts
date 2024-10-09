@@ -8,7 +8,7 @@ export type DeleteInventoryItemMutationVariables = Types.Exact<{
 export type DeleteInventoryItemMutation = {
   __typename?: 'Mutation';
   deleteInventoryItem?: {
-    __typename?: 'DeleteInventoryItem';
+    __typename?: 'DeleteInventoryItemPayload';
     success?: boolean | null;
   } | null;
 };
@@ -39,10 +39,19 @@ export const DeleteInventoryItemDocument = {
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
+                name: { kind: 'Name', value: 'input' },
                 value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'id' },
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'id' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'id' },
+                      },
+                    },
+                  ],
                 },
               },
             ],
