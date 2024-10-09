@@ -52,7 +52,7 @@ export default function InventoryItemButtons(props: Props) {
       // @ts-ignore
       update: (
         cache: {
-          modify: (arg0: {
+          modify: (args: {
             fields: {
               inventoryItems(
                 itemRefs: Reference[],
@@ -66,10 +66,14 @@ export default function InventoryItemButtons(props: Props) {
         if (id) {
           cache.modify({
             fields: {
-              inventoryItems(itemRefs: Reference[], { readField }) {
-                return itemRefs.filter((itemRef) => {
-                  return readField('id', itemRef) !== id;
-                });
+              inventoryItems(itemRefs, { readField }) {
+                return {
+                  ...itemRefs,
+                  // @ts-ignore
+                  edges: itemRefs.edges.filter((edge) => {
+                    return readField('id', edge.node) !== id;
+                  }),
+                };
               },
             },
           });

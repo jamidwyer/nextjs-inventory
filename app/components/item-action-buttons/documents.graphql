@@ -1,5 +1,5 @@
 mutation DeleteInventoryItem($id: ID!) {
-  deleteInventoryItem(id: $id) {
+  deleteInventoryItem(input: { id: $id }) {
     success
   }
 }

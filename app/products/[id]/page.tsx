@@ -49,7 +49,7 @@ export default function Page({ params }: { params: { id: string } }) {
   if (data.recipes.edges.length < 1) {
     return (
       <div className="flex flex-col items-center justify-center gap-4">
-        No items found.
+        No recipes found.
       </div>
     );
   }

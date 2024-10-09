@@ -13,7 +13,8 @@ import Error from '@/app/error';
 import Loading from './loading';
 import Pagination from './components/pagination';
 
-const OPEN_FOOD_FACTS_API_URL = "https://world.openfoodfacts.org/api/v3/product/";
+const OPEN_FOOD_FACTS_API_URL =
+  'https://world.openfoodfacts.org/api/v3/product/';
 
 export default function Page({
   searchParams,
@@ -32,18 +33,20 @@ export default function Page({
     error,
     refetch,
     fetchMore,
-  } = useQuery(GetInventoryDocument, {variables: {cursor: ''}});
+  } = useQuery(GetInventoryDocument, { variables: { cursor: '' } });
 
   const [showScanner, setShowScanner] = useState(false);
   const [scannedProductName, setScannedProductName] = useState('');
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
 
-  const handleBarcode = async (result: { rawValue: SetStateAction<string | undefined>; }[]) => {
+  const handleBarcode = async (
+    result: { rawValue: SetStateAction<string | undefined> }[],
+  ) => {
     const data = await fetch(`${OPEN_FOOD_FACTS_API_URL}${result[0].rawValue}`);
     const json = await data.json();
     setScannedProductName(json.product.product_name);
-  }
+  };
 
   if (inventoryLoading) {
     return <Loading />;

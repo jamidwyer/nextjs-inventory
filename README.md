@@ -28,6 +28,7 @@ Preview: https://nextjs-inventory-sage.vercel.app
 
 - finish swapping out postgres for apollo client
 - add item not clearing
+- retain load more state on item update
 - user trust levels for admin
 - update node
 - generalize inventory-row to table-row

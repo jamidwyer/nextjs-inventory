@@ -37,12 +37,15 @@ export type UpdateItemQuantityMutationVariables = Types.Exact<{
 export type UpdateItemQuantityMutation = {
   __typename?: 'Mutation';
   updateItemQuantity?: {
-    __typename?: 'UpdateItemQuantity';
+    __typename?: 'UpdateItemQuantityPayload';
+    success?: boolean | null;
+    message?: string | null;
     inventoryItem?: {
       __typename?: 'InventoryItemType';
       id: string;
       quantity: number;
       unit: { __typename?: 'UnitType'; name: string };
+      product: { __typename?: 'ProductType'; name: string };
     } | null;
   } | null;
 };
@@ -74,7 +77,7 @@ export const GetInventoryDocument = {
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'first' },
-                value: { kind: 'IntValue', value: '5' },
+                value: { kind: 'IntValue', value: '20' },
               },
               {
                 kind: 'Argument',
@@ -217,24 +220,35 @@ export const UpdateItemQuantityDocument = {
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
+                name: { kind: 'Name', value: 'input' },
                 value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'id' },
-                },
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'quantity' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'quantity' },
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'id' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'id' },
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'quantity' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'quantity' },
+                      },
+                    },
+                  ],
                 },
               },
             ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'success' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'message' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'inventoryItem' },
@@ -249,6 +263,19 @@ export const UpdateItemQuantityDocument = {
                       {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'unit' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'name' },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'product' },
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [

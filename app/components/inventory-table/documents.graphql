@@ -1,5 +1,5 @@
 query GetInventory($cursor: String) {
-  inventoryItems(first: 5, after: $cursor) {
+  inventoryItems(first: 20, after: $cursor) {
     edges {
       node {
         id
@@ -23,11 +23,16 @@ query GetInventory($cursor: String) {
 }
 
 mutation UpdateItemQuantity($id: String!, $quantity: Int!) {
-  updateItemQuantity(id: $id, quantity: $quantity) {
+  updateItemQuantity(input: { id: $id, quantity: $quantity }) {
+    success
+    message
     inventoryItem {
       id
       quantity
       unit {
+        name
+      }
+      product {
         name
       }
     }
