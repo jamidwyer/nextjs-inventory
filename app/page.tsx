@@ -2,7 +2,7 @@
 
 import InventoryItemsTable from '@/app/components/inventory-table';
 import { Scanner } from '@yudiel/react-qr-scanner';
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import Link from 'next/link';
 import { Button } from './components/button';
@@ -13,12 +13,7 @@ import Error from '@/app/error';
 import Loading from './loading';
 import Pagination from './components/pagination';
 
-// import { Metadata } from 'next';
-
-// export const metadata: Metadata = {
-//   title: 'Inventory',
-//   description: 'Food resource availability.',
-// };
+const OPEN_FOOD_FACTS_API_URL = "https://world.openfoodfacts.org/api/v3/product/";
 
 export default function Page({
   searchParams,
@@ -37,11 +32,18 @@ export default function Page({
     error,
     refetch,
     fetchMore,
-  } = useQuery(GetInventoryDocument);
+  } = useQuery(GetInventoryDocument, {variables: {cursor: ''}});
 
   const [showScanner, setShowScanner] = useState(false);
+  const [scannedProductName, setScannedProductName] = useState('');
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
+
+  const handleBarcode = async (result: { rawValue: SetStateAction<string | undefined>; }[]) => {
+    const data = await fetch(`${OPEN_FOOD_FACTS_API_URL}${result[0].rawValue}`);
+    const json = await data.json();
+    setScannedProductName(json.product.product_name);
+  }
 
   if (inventoryLoading) {
     return <Loading />;
@@ -85,6 +87,7 @@ export default function Page({
         <AddItemForm userId={1} onAddItem={refetch} />
       </Section>
       <Section name="Scan Barcode">
+        {scannedProductName !== '' ? `Scanned: ${scannedProductName}` : null}
         <Button onClick={() => setShowScanner(!showScanner)}>
           {!showScanner ? 'Scan Barcode' : 'Hide Barcode Scanner'}
         </Button>
@@ -115,7 +118,7 @@ export default function Page({
             ]}
             allowMultiple={true}
             onError={(error) => console.log(error)}
-            onScan={(result) => console.log(result)}
+            onScan={(result) => handleBarcode(result)}
           />
         )}
       </Section>
