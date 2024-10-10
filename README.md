@@ -20,21 +20,22 @@ Preview: https://nextjs-inventory-sage.vercel.app
 
 #### MVP
 
-- gate inventory on auth
-- separate recipes app
 - relative urls
 
 #### Nice To Have
 
 - finish swapping out postgres for apollo client
 - add item not clearing
+- persist auth
 - retain load more state on item update
 - user trust levels for admin
 - update node
 - generalize inventory-row to table-row
 - hook for shared login/signup fxnality
 - recipe name
+- expire auth
 - axe
+- separate recipes app
 - pagination when not more pages
 - allow user to "eat" vs. trash/delete food
 - improve deploy

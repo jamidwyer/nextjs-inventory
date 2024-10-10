@@ -13,7 +13,7 @@ import { authenticatedVar } from '../apollo-client';
 export default function LoginForm() {
   const router = useRouter();
   const { pending } = useFormStatus();
-  const [tokenAuth, { data, loading, error: updateError }] =
+  const [tokenAuth, { data: authData, loading, error }] =
     useMutation(TokenAuthDocument);
 
   const handleSubmit = async (event: any) => {
@@ -22,15 +22,25 @@ export default function LoginForm() {
       email: event.target.email.value,
       password: event.target.password.value,
     };
-    tokenAuth({
-      variables: {
-        ...data,
-      },
-    });
-    client.refetchQueries({ include: 'active' });
-    authenticatedVar(true);
-
-    router.push('/');
+    try {
+      tokenAuth({
+        variables: {
+          ...data,
+        },
+        onCompleted: (resp) => {
+          if (resp?.tokenAuth?.token && resp?.tokenAuth?.token.length > 0) {
+            client.refetchQueries({ include: 'active' });
+            authenticatedVar(true);
+            router.push('/');
+          } else {
+            authenticatedVar(false);
+          }
+        },
+      });
+    } catch (e) {
+      console.log(e);
+      authenticatedVar(false);
+    }
   };
 
   return (

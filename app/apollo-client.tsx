@@ -2,7 +2,7 @@ import { ApolloClient, HttpLink, InMemoryCache, makeVar } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import { relayStylePagination } from '@apollo/client/utilities';
 
-export const authenticatedVar = makeVar(true);
+export const authenticatedVar = makeVar(false);
 
 const httpLink = new HttpLink({
   uri: process.env.API_URL,
