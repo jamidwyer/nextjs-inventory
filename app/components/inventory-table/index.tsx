@@ -4,9 +4,7 @@ import Search from '@/app/components/search';
 import InventoryRow from '../inventory-row';
 import Th from '../th';
 import {
-  InventoryItemType,
   InventoryItemTypeConnection,
-  InventoryItemTypeEdge,
   PageInfo,
 } from '@/components/types.generated';
 import LoadMore from '../load-more';
