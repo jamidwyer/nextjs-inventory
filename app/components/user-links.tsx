@@ -1,6 +1,7 @@
 import { useReactiveVar } from '@apollo/client';
 import { authenticatedVar } from '../apollo-client';
 import { useRouter } from 'next/navigation';
+import { Button } from './button';
 
 export default function UserLinks() {
   const authenticated = useReactiveVar(authenticatedVar);
@@ -17,12 +18,12 @@ export default function UserLinks() {
     <div className="flex items-center gap-4">
       {authenticated ? (
         <form onSubmit={handleSubmit}>
-          <button className="flex h-[36px] grow items-center justify-end gap-2 rounded-sm bg-coconut p-3 hover:bg-coconut hover:text-licorice md:flex-none md:justify-end md:p-2 md:px-3">
-            <div className="hidden md:block">Sign Out</div>
-          </button>
+          <Button variant='gray' className="h-[36px] md:px-3">
+            <div className="hidden md:block">Log out</div>
+          </Button>
         </form>
       ) : (
-        <a href="/login">Sign in</a>
+        <a href="/login">Log in</a>
       )}
     </div>
   );

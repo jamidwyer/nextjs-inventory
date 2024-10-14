@@ -6,6 +6,7 @@ import { useBackgroundQuery, useMutation, useReadQuery } from '@apollo/client';
 import { GetProductsDocument, GetUnitsDocument } from './documents.generated';
 import { useState } from 'react';
 import { CreateInventoryItemDocument } from '@/src/mocks/graphql';
+import LinkButton from '../link-button';
 
 interface AddItemFormProps {
   onAddItem: () => void;
@@ -79,9 +80,10 @@ export default function AddItemForm(props: AddItemFormProps) {
   return (
     <form onSubmit={handleAddItem}>
       <input type="hidden" value={userId} name="userId" />
-      <div className="flex flex-row items-end gap-2 rounded-sm bg-coconut p-4">
+      <div className="flex flex-col items-center gap-2 rounded-sm bg-coconut p-4">
+        <div className='flex flex-row gap-2'>
         {/* Product Name */}
-        <div className="w-1/4">
+        <div className="w-1/2">
           <label htmlFor="product" className="mb-2 block text-sm font-medium">
             Choose product
           </label>
@@ -128,7 +130,7 @@ export default function AddItemForm(props: AddItemFormProps) {
 
         {/* Quantitative Unit */}
         {units && (
-          <div className="w-1/8">
+          <div className="w-1/4">
             <label htmlFor="product" className="mb-2 block text-sm font-medium">
               Unit
             </label>
@@ -153,7 +155,7 @@ export default function AddItemForm(props: AddItemFormProps) {
           </div>
         )}
         {/* Expiration Date */}
-        <div className="w-1/4">
+        <div className="w-1/8">
           <label htmlFor="amount" className="mb-2 block text-sm font-medium">
             Expires
           </label>
@@ -170,14 +172,18 @@ export default function AddItemForm(props: AddItemFormProps) {
             </div>
           </div>
         </div>
-        <Link
+        </div>
+        <div className='flex flex-row gap-2 justify-center items-center'>
+        <LinkButton
           href="/inventory"
-          className="w-1/8 flex h-10 items-center rounded-sm bg-jasmineRice px-4 text-sm font-medium text-blackBean transition-colors hover:bg-stainless hover:text-licorice"
+          variant="gray"
+          className="w-1/4"
         >
           Cancel
-        </Link>
-        <Button type="submit">Add Inventory Item</Button>
-      </div>
+        </LinkButton>
+        <Button className="w-3/4" type="submit">Add Inventory Item</Button>
+        </div>
+        </div>
     </form>
   );
 }

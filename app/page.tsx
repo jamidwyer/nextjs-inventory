@@ -3,14 +3,13 @@
 import InventoryItemsTable from '@/app/components/inventory-table';
 import { useState } from 'react';
 import { useQuery } from '@apollo/client';
-import Link from 'next/link';
 import AddItemForm from './components/add-item-form';
 import { Section } from './components/section';
 import { GetInventoryDocument } from './components/inventory-table/documents.generated';
 import Error from '@/app/error';
 import Loading from './components/loading';
-import Pagination from './components/pagination';
 import BarcodeScanner from './components/barcode-scanner';
+import LinkButton from './components/link-button';
 
 export default function Page({
   searchParams,
@@ -72,28 +71,26 @@ export default function Page({
           loadMore={fetchMore}
           pageInfo={inventory.inventoryItems.pageInfo}
         />
-        {totalPages > 1 && <Pagination totalPages={totalPages} />}
       </Section>
       <Section name="Add Inventory Item">
         <AddItemForm userId={1} onAddItem={refetch} />
       </Section>
       <Section name="Scan Barcode">
-        {showScanner && (
-          <BarcodeScanner
-            scannedProduct={scannedProduct}
-            setScannedProduct={setScannedProduct}
-            setShowScanner={setShowScanner}
-            showScanner={showScanner}
-          />
-        )}
+        <BarcodeScanner
+          scannedProduct={scannedProduct}
+          setScannedProduct={setScannedProduct}
+          setShowScanner={setShowScanner}
+          showScanner={showScanner}
+        />
       </Section>
       <Section name="Add Product">
-        <Link
+        <LinkButton
           href="http://localhost/admin/inventory/product/add/"
-          className="flex h-10 w-[200px] items-center justify-center whitespace-nowrap bg-bloodorange px-4 text-sm font-medium tracking-normal text-coconut transition-colors hover:bg-smashedPumpkin focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bloodorange active:bg-smashedPumpkin aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
+          className="w-[200px]"
+          variant='normal'
         >
           Add Product
-        </Link>
+        </LinkButton>
       </Section>
     </>
   );

@@ -5,18 +5,17 @@ import { useFoodFacts } from '../hooks/useFoodFacts';
 import Loading from './loading';
 import Error from '@/app/error';
 
-// TODO: scanned product type
+// TODO: add type for scanned product
 interface BarcodeScannerProps {
   scannedProduct: any;
-  showScanner: boolean;
+  showScanner?: boolean;
   setScannedProduct: (product: any) => void;
   setShowScanner: Dispatch<SetStateAction<boolean>>;
 }
 
 const BarcodeScanner = (props: BarcodeScannerProps) => {
-  const { scannedProduct, setShowScanner, showScanner, setScannedProduct } =
+  const { scannedProduct, setShowScanner, showScanner = false, setScannedProduct } =
     props;
-  const { product_name } = scannedProduct;
   const { fetchFoodFacts, loading, error, product } = useFoodFacts();
 
   const handleBarcode = async (result: { rawValue: string }[]) => {
@@ -27,12 +26,13 @@ const BarcodeScanner = (props: BarcodeScannerProps) => {
   return (
     <>
       {loading ? <Loading /> : null}
-      {product_name !== '' ? `Scanned: ${product_name}` : null}
+      {scannedProduct && scannedProduct.product_name !== '' ? `Scanned: ${scannedProduct.product_name}` : null}
       {error ? <Error error={error} /> : null}
       <Button onClick={() => setShowScanner(!showScanner)}>
         {!showScanner ? 'Scan Barcode' : 'Hide Barcode Scanner'}
       </Button>
-      <Scanner
+      {showScanner && 
+      (<Scanner
         formats={[
           'qr_code',
           'micro_qr_code',
@@ -59,7 +59,8 @@ const BarcodeScanner = (props: BarcodeScannerProps) => {
         allowMultiple={true}
         onError={(error) => console.log(error)}
         onScan={(result) => handleBarcode(result)}
-      />
+      />)
+}
     </>
   );
 };
