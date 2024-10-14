@@ -5,7 +5,7 @@ import { GetRecipeDocument } from './documents.generated';
 import { useQuery } from '@apollo/client';
 import { IngredientType } from '@/components/types.generated';
 import Error from '@/app/error';
-import Loading from '@/app/loading';
+import Loading from '@/app/components/loading';
 
 // export const metadata: Metadata = {
 //   title: 'Recipe',

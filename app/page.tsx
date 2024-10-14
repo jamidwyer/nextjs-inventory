@@ -4,12 +4,11 @@ import InventoryItemsTable from '@/app/components/inventory-table';
 import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import Link from 'next/link';
-import { Button } from './components/button';
 import AddItemForm from './components/add-item-form';
 import { Section } from './components/section';
 import { GetInventoryDocument } from './components/inventory-table/documents.generated';
 import Error from '@/app/error';
-import Loading from './loading';
+import Loading from './components/loading';
 import Pagination from './components/pagination';
 import BarcodeScanner from './components/barcode-scanner';
 
@@ -79,9 +78,14 @@ export default function Page({
         <AddItemForm userId={1} onAddItem={refetch} />
       </Section>
       <Section name="Scan Barcode">
-      {showScanner && (
-        <BarcodeScanner scannedProduct={scannedProduct} setScannedProduct={setScannedProduct} setShowScanner={setShowScanner} showScanner={showScanner} />
-      )}
+        {showScanner && (
+          <BarcodeScanner
+            scannedProduct={scannedProduct}
+            setScannedProduct={setScannedProduct}
+            setShowScanner={setShowScanner}
+            showScanner={showScanner}
+          />
+        )}
       </Section>
       <Section name="Add Product">
         <Link

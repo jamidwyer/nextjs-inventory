@@ -5,13 +5,9 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFire } from '@fortawesome/free-solid-svg-icons';
 
-export default function Error({
-  error,
-}: {
-  error: Error & { digest?: string };
-}) {
+export default function Error({ error }: { error: unknown }) {
   useEffect(() => {
-    // Optionally log the error to an error reporting service
+    // TODO: much, much better error handling
     console.error(error);
   }, [error]);
 

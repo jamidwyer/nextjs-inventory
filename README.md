@@ -28,6 +28,8 @@ Preview: https://nextjs-inventory-sage.vercel.app
 - add item not clearing
 - persist auth
 - retain load more state on item update
+- cdn
+- ssr/server components wherever sensible
 - user trust levels for admin
 - update node
 - generalize inventory-row to table-row

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 import { useQuery } from '@apollo/client';
 import { GetRecipesDocument } from './documents.generated';
-import Loading from '@/app/loading';
+import Loading from '@/app/components/loading';
 import Error from '@/app/error';
 
 // export const metadata: Metadata = {
