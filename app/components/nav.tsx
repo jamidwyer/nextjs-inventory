@@ -1,6 +1,7 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import NavLinks from './nav-links';
+import LinkButton from './link-button';
 
 export default function PageHeader() {
   const loggedIn = true;
@@ -10,12 +11,14 @@ export default function PageHeader() {
       {loggedIn ? (
         <NavLinks />
       ) : (
-        <Link
+        <LinkButton
           href="/login"
-          className="flex items-center gap-5 self-start rounded-sm bg-bloodorange px-6 py-3 text-sm font-medium text-coconut transition-colors hover:bg-smashedPumpkin md:text-base"
+          className="gap-2 self-start rounded-sm bg-bloodorange"
         >
-          <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
-        </Link>
+          <span className="w-1/2">
+            Log in <ArrowRightIcon className="w-1/8" />
+          </span>
+        </LinkButton>
       )}
     </nav>
   );
