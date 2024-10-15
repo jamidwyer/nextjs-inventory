@@ -87,7 +87,7 @@ export default function Page({
         <LinkButton
           href="http://localhost/admin/inventory/product/add/"
           className="w-[200px]"
-          variant='normal'
+          variant="normal"
         >
           Add Product
         </LinkButton>

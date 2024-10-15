@@ -18,7 +18,7 @@ export default function UserLinks() {
     <div className="flex items-center gap-4">
       {authenticated ? (
         <form onSubmit={handleSubmit}>
-          <Button variant='gray' className="h-[36px] md:px-3">
+          <Button variant="gray" className="h-[36px] md:px-3">
             <div className="hidden md:block">Log out</div>
           </Button>
         </form>

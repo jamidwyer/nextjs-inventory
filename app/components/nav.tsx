@@ -15,7 +15,9 @@ export default function PageHeader() {
           href="/login"
           className="gap-2 self-start rounded-sm bg-bloodorange"
         >
-          <span className='w-1/2'>Log in <ArrowRightIcon className="w-1/8" /></span>
+          <span className="w-1/2">
+            Log in <ArrowRightIcon className="w-1/8" />
+          </span>
         </LinkButton>
       )}
     </nav>

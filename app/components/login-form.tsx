@@ -88,7 +88,11 @@ export default function LoginForm() {
             </div>
           </div>
         </div>
-        <Button type="submit" className="mt-4 w-1/2 flex flex-row justify-center items-center" aria-disabled={pending}>
+        <Button
+          type="submit"
+          className="mt-4 flex w-1/2 flex-row items-center justify-center"
+          aria-disabled={pending}
+        >
           Log in <ArrowRightIcon className="h-5" />
         </Button>
       </div>
