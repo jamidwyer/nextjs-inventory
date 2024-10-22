@@ -54,6 +54,16 @@ export type DeleteInventoryItemPayload = {
   success?: Maybe<Scalars['Boolean']['output']>;
 };
 
+export type DeleteJsonWebTokenCookie = {
+  __typename?: 'DeleteJSONWebTokenCookie';
+  deleted: Scalars['Boolean']['output'];
+};
+
+export type DeleteRefreshTokenCookie = {
+  __typename?: 'DeleteRefreshTokenCookie';
+  deleted: Scalars['Boolean']['output'];
+};
+
 export type IngredientType = {
   __typename?: 'IngredientType';
   id: Scalars['ID']['output'];
@@ -98,12 +108,29 @@ export type InventoryItemTypeEdge = {
   node?: Maybe<InventoryItemType>;
 };
 
+export type Login = {
+  __typename?: 'Login';
+  message?: Maybe<Scalars['String']['output']>;
+  token?: Maybe<Scalars['String']['output']>;
+  user?: Maybe<UserType>;
+};
+
+export type LogoutMutation = {
+  __typename?: 'LogoutMutation';
+  success?: Maybe<Scalars['Boolean']['output']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createInventoryItem?: Maybe<CreateInventoryItem>;
   createUser?: Maybe<CreateUser>;
   deleteInventoryItem?: Maybe<DeleteInventoryItemPayload>;
+  deleteRefreshTokenCookie?: Maybe<DeleteRefreshTokenCookie>;
+  deleteTokenCookie?: Maybe<DeleteJsonWebTokenCookie>;
+  login?: Maybe<Login>;
+  logout?: Maybe<LogoutMutation>;
   refreshToken?: Maybe<Refresh>;
+  revokeToken?: Maybe<Revoke>;
   /** Obtain JSON Web Token mutation */
   tokenAuth?: Maybe<ObtainJsonWebToken>;
   updateItemQuantity?: Maybe<UpdateItemQuantityPayload>;
@@ -124,8 +151,17 @@ export type MutationDeleteInventoryItemArgs = {
   input: DeleteInventoryItemInput;
 };
 
+export type MutationLoginArgs = {
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+};
+
 export type MutationRefreshTokenArgs = {
   token?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationRevokeTokenArgs = {
+  refreshToken?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationTokenAuthArgs = {
@@ -276,6 +312,11 @@ export type Refresh = {
   payload: Scalars['GenericScalar']['output'];
   refreshExpiresIn: Scalars['Int']['output'];
   token: Scalars['String']['output'];
+};
+
+export type Revoke = {
+  __typename?: 'Revoke';
+  revoked: Scalars['Int']['output'];
 };
 
 export type UnitType = {
