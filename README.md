@@ -48,6 +48,7 @@ Preview: https://nextjs-inventory-sage.vercel.app
 - performance opt
 - figure out how Next wants us to organize pages
 - organize data components vs. plain ui components
+- chown node_modules is slow https://dev.to/otomato_io/how-to-optimize-production-docker-images-running-nodejs-with-yarn-504b
 - prioritize TODO comments
 - bg video that changes depending on route
 - help nextjs upgrade react deps
