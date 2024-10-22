@@ -5,7 +5,6 @@ import PageHeader from '@/app/components/page-header';
 import Nav from '@/app/components/nav';
 import { ApolloProvider } from '@apollo/client';
 import client from './apollo-client';
-import AuthGuard from './components/auth-guard';
 
 export default function RootLayout({
   children,
