@@ -1,9 +1,4 @@
-import {
-  ApolloClient,
-  concat,
-  HttpLink,
-  InMemoryCache,
-} from '@apollo/client';
+import { ApolloClient, concat, HttpLink, InMemoryCache } from '@apollo/client';
 import { relayStylePagination } from '@apollo/client/utilities';
 import { setContext } from '@apollo/client/link/context';
 
