@@ -3,7 +3,6 @@ import {
   concat,
   HttpLink,
   InMemoryCache,
-  makeVar,
 } from '@apollo/client';
 import { relayStylePagination } from '@apollo/client/utilities';
 import { setContext } from '@apollo/client/link/context';
