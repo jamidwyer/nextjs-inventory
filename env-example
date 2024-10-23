@@ -14,3 +14,6 @@ AUTH_URL=http://localhost:3000/api/auth
 
 # required
 API_URL=http://localhost/graphql
+
+# BASE_URL=https://hord.tech
+BASE_URL=http://localhost

@@ -3,12 +3,12 @@ const nextConfig = {
     return [
       {
         source: '/login',
-        destination: 'http://localhost/admin/login/',
+        destination: `${process.env.BASE_URL}/admin/login/`,
         permanent: true,
       },
       {
         source: '/product/add',
-        destination: 'http://localhost/admin/inventory/product/add/',
+        destination: `${process.env.BASE_URL}/admin/inventory/product/add/`,
         permanent: true,
       },
     ];
