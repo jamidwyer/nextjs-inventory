@@ -11,7 +11,6 @@ import LoadMore from '../load-more';
 
 interface InventoryItemsTableProps {
   inventoryItems: InventoryItemTypeConnection;
-  onDeleteItem: () => void;
   loadMore: any;
   pageInfo: Omit<PageInfo, 'hasPreviousPage'>;
 }

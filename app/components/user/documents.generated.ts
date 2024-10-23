@@ -1,81 +1,44 @@
 import * as Types from '../../../components/types.generated';
 
 import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
-export type ViewerQueryVariables = Types.Exact<{ [key: string]: never }>;
+export type MeQueryVariables = Types.Exact<{ [key: string]: never }>;
 
-export type ViewerQuery = {
+export type MeQuery = {
   __typename?: 'Query';
-  viewer?: {
-    __typename?: 'Query';
-    me?: {
-      __typename?: 'UserType';
-      id: string;
-      email: string;
-      username?: string | null;
-    } | null;
+  me?: {
+    __typename?: 'UserType';
+    id: string;
+    email: string;
+    username?: string | null;
   } | null;
 };
 
-export type CreateUserMutationVariables = Types.Exact<{
-  username?: Types.InputMaybe<Types.Scalars['String']['input']>;
-  password: Types.Scalars['String']['input'];
-  email: Types.Scalars['String']['input'];
-}>;
+export type LogoutMutationVariables = Types.Exact<{ [key: string]: never }>;
 
-export type CreateUserMutation = {
+export type LogoutMutation = {
   __typename?: 'Mutation';
-  createUser?: {
-    __typename?: 'CreateUser';
-    user?: { __typename?: 'UserType'; username?: string | null } | null;
-  } | null;
+  logout?: { __typename?: 'LogoutMutation'; success?: boolean | null } | null;
 };
 
-export type TokenAuthMutationVariables = Types.Exact<{
-  password: Types.Scalars['String']['input'];
-  email: Types.Scalars['String']['input'];
-}>;
-
-export type TokenAuthMutation = {
-  __typename?: 'Mutation';
-  tokenAuth?: {
-    __typename?: 'ObtainJSONWebToken';
-    payload: any;
-    token: string;
-    refreshExpiresIn: number;
-  } | null;
-};
-
-export const ViewerDocument = {
+export const MeDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'query',
-      name: { kind: 'Name', value: 'Viewer' },
+      name: { kind: 'Name', value: 'Me' },
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'viewer' },
+            name: { kind: 'Name', value: 'me' },
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'me' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'email' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'username' },
-                      },
-                    ],
-                  },
-                },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
               ],
             },
           },
@@ -83,100 +46,24 @@ export const ViewerDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<ViewerQuery, ViewerQueryVariables>;
-export const CreateUserDocument = {
+} as unknown as DocumentNode<MeQuery, MeQueryVariables>;
+export const LogoutDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'mutation',
-      name: { kind: 'Name', value: 'CreateUser' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: {
-            kind: 'Variable',
-            name: { kind: 'Name', value: 'username' },
-          },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: {
-            kind: 'Variable',
-            name: { kind: 'Name', value: 'password' },
-          },
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'String' },
-            },
-          },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: {
-            kind: 'Variable',
-            name: { kind: 'Name', value: 'email' },
-          },
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'String' },
-            },
-          },
-        },
-      ],
+      name: { kind: 'Name', value: 'Logout' },
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'createUser' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'username' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'username' },
-                },
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'password' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'password' },
-                },
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'email' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'email' },
-                },
-              },
-            ],
+            name: { kind: 'Name', value: 'logout' },
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'user' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'username' },
-                      },
-                    ],
-                  },
-                },
+                { kind: 'Field', name: { kind: 'Name', value: 'success' } },
               ],
             },
           },
@@ -184,82 +71,4 @@ export const CreateUserDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
-export const TokenAuthDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'mutation',
-      name: { kind: 'Name', value: 'TokenAuth' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: {
-            kind: 'Variable',
-            name: { kind: 'Name', value: 'password' },
-          },
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'String' },
-            },
-          },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: {
-            kind: 'Variable',
-            name: { kind: 'Name', value: 'email' },
-          },
-          type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'NamedType',
-              name: { kind: 'Name', value: 'String' },
-            },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'tokenAuth' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'password' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'password' },
-                },
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'email' },
-                value: {
-                  kind: 'Variable',
-                  name: { kind: 'Name', value: 'email' },
-                },
-              },
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'payload' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'token' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'refreshExpiresIn' },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<TokenAuthMutation, TokenAuthMutationVariables>;
+} as unknown as DocumentNode<LogoutMutation, LogoutMutationVariables>;

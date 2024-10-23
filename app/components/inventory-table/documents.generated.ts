@@ -27,6 +27,7 @@ export type GetInventoryQuery = {
       hasNextPage: boolean;
     };
   } | null;
+  me?: { __typename?: 'UserType'; id: string } | null;
 };
 
 export type UpdateItemQuantityMutationVariables = Types.Exact<{
@@ -172,6 +173,16 @@ export const GetInventoryDocument = {
                     ],
                   },
                 },
+              ],
+            },
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'me' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
               ],
             },
           },

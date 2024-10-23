@@ -10,6 +10,7 @@ import Error from '@/app/error';
 import Loading from './components/loading';
 import BarcodeScanner from './components/barcode-scanner';
 import LinkButton from './components/link-button';
+import { useRouter } from 'next/navigation';
 
 export default function Page({
   searchParams,
@@ -19,8 +20,7 @@ export default function Page({
     page?: string;
   };
 }) {
-  const userId = 1;
-  const totalPages = 0;
+  const router = useRouter();
 
   const {
     data: inventory,
@@ -40,10 +40,16 @@ export default function Page({
   }
 
   if (error) {
+    if (
+      error.graphQLErrors[0]?.message ===
+      'You do not have permission to perform this action'
+    ) {
+      router.push('/login');
+    }
     return <Error error={error} />;
   }
 
-  if (!inventory?.inventoryItems) {
+  if (!inventoryLoading && !inventory?.inventoryItems) {
     return (
       <div className="flex flex-col items-center justify-center gap-4">
         <p className="text-sm text-grapefruit">
@@ -59,21 +65,23 @@ export default function Page({
     );
   }
 
-  const { inventoryItems } = inventory;
-
   return (
     <>
       <Section name="Inventory">
         <InventoryItemsTable
-          query={query}
           // @ts-ignore
-          inventoryItems={inventoryItems}
+          inventoryItems={inventory?.inventoryItems}
           loadMore={fetchMore}
+          // @ts-ignore
           pageInfo={inventory.inventoryItems.pageInfo}
         />
       </Section>
       <Section name="Add Inventory Item">
-        <AddItemForm userId={1} onAddItem={refetch} />
+        <AddItemForm
+          // @ts-ignore
+          userId={inventory.me?.id}
+          onAddItem={refetch}
+        />
       </Section>
       <Section name="Scan Barcode">
         <BarcodeScanner
@@ -84,11 +92,7 @@ export default function Page({
         />
       </Section>
       <Section name="Add Product">
-        <LinkButton
-          href="http://localhost/admin/inventory/product/add/"
-          className="w-[200px]"
-          variant="normal"
-        >
+        <LinkButton href="/product/add" className="w-[200px]" variant="normal">
           Add Product
         </LinkButton>
       </Section>

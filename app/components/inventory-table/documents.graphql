@@ -20,6 +20,9 @@ query GetInventory($cursor: String) {
       hasNextPage
     }
   }
+  me {
+    id
+  }
 }
 
 mutation UpdateItemQuantity($id: String!, $quantity: Int!) {

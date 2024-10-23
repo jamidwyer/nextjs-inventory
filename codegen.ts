@@ -2,19 +2,9 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: 'http://localhost/graphql/',
+  schema: 'http://localhost/graphql',
   documents: ['**/*.graphql'],
   generates: {
-    'src/mocks/graphql.ts': {
-      plugins: [
-        'typescript',
-        'typescript-operations',
-        '@graphql-codegen/typescript-graphql-request',
-      ],
-    },
-    'src/mocks/graphql-mocks.ts': {
-      plugins: ['graphql-codegen-typescript-mock-data'],
-    },
     'components/types.generated.ts': { plugins: ['typescript'] },
     'components/': {
       preset: 'near-operation-file',

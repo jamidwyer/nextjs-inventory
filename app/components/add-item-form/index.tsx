@@ -3,14 +3,17 @@
 import Link from 'next/link';
 import { Button } from '@/app/components/button';
 import { useBackgroundQuery, useMutation, useReadQuery } from '@apollo/client';
-import { GetProductsDocument, GetUnitsDocument } from './documents.generated';
+import {
+  CreateInventoryItemDocument,
+  GetProductsDocument,
+  GetUnitsDocument,
+} from './documents.generated';
 import { useState } from 'react';
-import { CreateInventoryItemDocument } from '@/src/mocks/graphql';
 import LinkButton from '../link-button';
 
 interface AddItemFormProps {
   onAddItem: () => void;
-  userId: number;
+  userId?: string;
 }
 
 export default function AddItemForm(props: AddItemFormProps) {
