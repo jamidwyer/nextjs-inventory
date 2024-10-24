@@ -5,9 +5,6 @@ import { useMutation } from '@apollo/client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 
-// TODO: fix
-import { formatDateToLocal } from '@/app/lib/utils';
-
 import Link from 'next/link';
 import ItemActionButtons from '@/app/components/item-action-buttons';
 import Td from '@/app/components/td';
