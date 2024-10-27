@@ -7,11 +7,11 @@ import clsx from 'clsx';
 
 const links = [
   { name: 'Inventory', href: '/', icon: faList },
-  {
-    name: 'Recipes',
-    href: '/recipes',
-    icon: faUtensils,
-  },
+  // {
+  //   name: 'Recipes',
+  //   href: '/recipes',
+  //   icon: faUtensils,
+  // },
 ];
 
 export default function NavLinks() {

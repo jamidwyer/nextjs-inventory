@@ -51,11 +51,11 @@ export default function UserLinks() {
   };
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center">
       {loggedIn ? (
         <form onSubmit={handleSubmit}>
           <Button variant="gray" className="h-[36px] md:px-3">
-            <div className="hidden md:block">Log out</div>
+            Log out
           </Button>
         </form>
       ) : (
