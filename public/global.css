@@ -192,3 +192,51 @@ button {
   border-radius: 0;
   color: var(--tomato);
 }
+
+table {
+  width: 100%;
+}
+
+.table-container {
+  overflow-x: auto;
+  width: 100%;
+}
+
+@media (max-width: 870px) {
+  .section {
+    align-items: flex-start;
+  }
+  .table-container {
+    padding: 0.2rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .table-container {
+    padding: 0;
+  }
+  .page-header {
+    justify-content: space-between;
+  }
+  .branding {
+    align-items: center;
+    justify-content: center;
+  }
+  .logo {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+  .site-name {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 630px) {
+  .form-inputs {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .form-inputs div {
+    width: 100%;
+  }
+}

@@ -83,8 +83,8 @@ export default function AddItemForm(props: AddItemFormProps) {
   return (
     <form onSubmit={handleAddItem}>
       <input type="hidden" value={userId} name="userId" />
-      <div className="flex flex-col items-center gap-2 rounded-sm bg-coconut p-4">
-        <div className="flex flex-row gap-2">
+      <div className="flex flex-col items-center gap-2 rounded-sm bg-coconut">
+        <div className="form-inputs flex flex-row gap-2">
           {/* Product Name */}
           <div className="w-1/2">
             <label htmlFor="product" className="mb-2 block text-sm font-medium">

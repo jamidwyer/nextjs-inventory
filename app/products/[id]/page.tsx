@@ -32,7 +32,7 @@ export default function Page({ params }: { params: { id: string } }) {
   // TODO: move weird no data but no error cases (they happen) to error component
   if (!data || !data.recipes) {
     return (
-      <div className="flex flex-col items-center justify-center gap-4">
+      <div className="flex flex-col items-center justify-center">
         <p className="text-sm text-grapefruit">
           Unable to load recipes. Please try again later.
         </p>
@@ -48,7 +48,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   if (data.recipes.edges.length < 1) {
     return (
-      <div className="flex flex-col items-center justify-center gap-4">
+      <div className="justify-center4 flex flex-col items-center">
         No recipes found.
       </div>
     );

@@ -17,10 +17,8 @@ export default function RootLayout({
         <ApolloProvider client={client}>
           <PageHeader />
           <Nav />
-          <main className="w-full flex-col items-center justify-center">
-            <div className="p-6">
-              <div className="flex-row">{children}</div>
-            </div>
+          <main className="table-container w-full flex-col items-center justify-center p-6">
+            <div className="flex-row">{children}</div>
           </main>
         </ApolloProvider>
       </body>

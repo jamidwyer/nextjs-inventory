@@ -22,17 +22,17 @@ export default function InventoryItemsTable({
 }: InventoryItemsTableProps) {
   if (inventoryItems.edges.length < 1) {
     return (
-      <div className="flex flex-col items-center justify-center gap-4">
+      <div className="flex flex-col items-center justify-center">
         No items found.
       </div>
     );
   }
 
   return (
-    <>
-      <div className="mt-2 flex flex-col justify-between gap-2">
+    <div className="table-container">
+      {/* <div className="mt-2 flex flex-col justify-between gap-2">
         <Search placeholder="Search inventory..." />
-      </div>
+      </div> */}
       <table className="max-w-[980px] text-licorice">
         <thead className="rounded-sm text-left text-sm font-normal">
           <tr>
@@ -77,6 +77,6 @@ export default function InventoryItemsTable({
           loading={false}
         />
       ) : null}
-    </>
+    </div>
   );
 }
