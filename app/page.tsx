@@ -17,7 +17,8 @@ export default function Page({
 }: {
   searchParams?: {
     query?: string;
-    page?: string;
+    sort?: string;
+    sortDirection?: string;
   };
 }) {
   const router = useRouter();
@@ -32,8 +33,6 @@ export default function Page({
 
   const [showScanner, setShowScanner] = useState(false);
   const [scannedProduct, setScannedProduct] = useState();
-  const query = searchParams?.query || '';
-  const currentPage = Number(searchParams?.page) || 1;
 
   if (inventoryLoading) {
     return <Loading />;

@@ -8,6 +8,7 @@ import {
   PageInfo,
 } from '@/components/types.generated';
 import LoadMore from '../load-more';
+import Sort from '../sort';
 
 interface InventoryItemsTableProps {
   inventoryItems: InventoryItemTypeConnection;
@@ -36,9 +37,15 @@ export default function InventoryItemsTable({
       <table className="max-w-[980px] text-licorice">
         <thead className="rounded-sm text-left text-sm font-normal">
           <tr>
-            <Th className="w-1/2">Product</Th>
-            <Th className="w-1/4">Expires</Th>
-            <Th className="w-1/4">Quantity</Th>
+            <Th className="w-1/2">
+              <Sort title="Product" field="product-name" />
+            </Th>
+            <Th className="w-1/4">
+              <Sort title="Expires" field="expiration-date" />
+            </Th>
+            <Th className="w-1/4">
+              <Sort title="Quantity" field="quantity" />
+            </Th>
           </tr>
         </thead>
         <tbody className="bg-coconut">
