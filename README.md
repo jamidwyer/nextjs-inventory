@@ -24,7 +24,9 @@ Preview: https://nextjs-inventory-sage.vercel.app
 
 #### Nice To Have
 
-- finish swapping out postgres for apollo client
+- never think about Guillermo Rauch again https://docs.astro.build/en/guides/migrate-to-astro/from-nextjs/
+- sort by multiple fields
+- hide product for less-trusted users
 - add item not clearing
 - retain load more state on item update
 - cdn
