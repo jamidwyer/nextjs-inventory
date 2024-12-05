@@ -9,7 +9,7 @@ import {
 interface LinkButtonProps {
   href: string;
   children: ReactNode;
-  className: string;
+  className?: string;
   variant?: ButtonVariant;
 }
 
@@ -21,6 +21,7 @@ export default function LinkButton({
 }: LinkButtonProps) {
   return (
     <Link
+      prefetch
       href={href}
       className={`${buttonBaseClass} ${linkButtonVariantClasses[variant]} ${className}`}
     >

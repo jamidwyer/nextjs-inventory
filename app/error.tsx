@@ -16,6 +16,7 @@ export default function Error({ error }: { error: unknown }) {
       <FontAwesomeIcon icon={faFire} className="w-4" />
       <h2 className="text-center">Something went wrong</h2>
       <Link
+        prefetch
         href="/"
         className="rounded-sm bg-bloodorange px-4 py-2 text-sm text-coconut transition-colors hover:bg-smashedPumpkin"
       >
