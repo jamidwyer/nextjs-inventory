@@ -16,7 +16,7 @@ export default function Page({ params }: { params: { id: string } }) {
   const recipeId = params.id;
   const { data, loading, error } = useQuery(GetRecipeDocument, {
     variables: {
-      id: parseInt(recipeId, 10),
+      id: recipeId,
     },
     fetchPolicy: 'cache-first',
   });

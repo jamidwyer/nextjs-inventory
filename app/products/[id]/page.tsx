@@ -1,16 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { Metadata } from 'next';
 import { useQuery } from '@apollo/client';
 import { GetRecipesDocument } from './documents.generated';
 import Loading from '@/app/components/loading';
 import Error from '@/app/error';
-
-// export const metadata: Metadata = {
-//   title: 'Ingredient',
-//   description: 'Recipes by ingredient.',
-// };
+import LinkButton from '@/app/components/link-button';
 
 export default function Page({ params }: { params: { id: string } }) {
   const productId = params?.id;
@@ -50,6 +45,7 @@ export default function Page({ params }: { params: { id: string } }) {
     return (
       <div className="justify-center4 flex flex-col items-center">
         No recipes found.
+        <LinkButton href="/recipe/add/">Add Recipe</LinkButton>
       </div>
     );
   }
@@ -59,11 +55,12 @@ export default function Page({ params }: { params: { id: string } }) {
       <ul>
         {data.recipes.edges.map((recipe) => {
           // @ts-ignore
-          const { id, name } = recipe?.node;
-          const url = `/recipes/${id}`;
+          const { recipeId, name } = recipe?.node;
+          const url = `/recipes/${recipeId}`;
           return (
-            <li key={id}>
+            <li key={recipeId}>
               <Link
+                prefetch
                 href={url}
                 className="items-center justify-center border text-bloodorange hover:text-smashedPumpkin"
               >

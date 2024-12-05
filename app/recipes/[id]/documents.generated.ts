@@ -2,7 +2,7 @@ import * as Types from '../../../components/types.generated';
 
 import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type GetRecipeQueryVariables = Types.Exact<{
-  id?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  id: Types.Scalars['ID']['input'];
 }>;
 
 export type GetRecipeQuery = {
@@ -31,7 +31,10 @@ export const GetRecipeDocument = {
         {
           kind: 'VariableDefinition',
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
         },
       ],
       selectionSet: {

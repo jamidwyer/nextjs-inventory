@@ -1,4 +1,4 @@
-query GetRecipe($id: Int) {
+query GetRecipe($id: ID!) {
   recipe(id: $id) {
     ingredientSet {
       unit {
