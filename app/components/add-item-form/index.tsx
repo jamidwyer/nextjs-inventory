@@ -8,7 +8,7 @@ import {
   GetProductsDocument,
   GetUnitsDocument,
 } from './documents.generated';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import LinkButton from '../link-button';
 
 interface AddItemFormProps {
@@ -32,6 +32,13 @@ export default function AddItemForm(props: AddItemFormProps) {
   );
   const { products } = productsData;
   const { units } = unitsData;
+
+  const resetForm = useCallback(() => {
+    setProduct('');
+    setAmount('');
+    setUnit('');
+    setExpirationDate('');
+  }, []);
 
   if (!products || products.length < 1) {
     return null;
@@ -62,27 +69,23 @@ export default function AddItemForm(props: AddItemFormProps) {
         quantity: parseInt(amount, 10),
         expirationDate: expirationDate,
         person: {
-          id: 1,
+          id: userId,
         },
       };
       createInventoryItem({
         variables: variables,
         onCompleted: () => {
           onAddItem();
-          setProduct('');
-          setAmount('');
-          setUnit('');
-          setExpirationDate('');
+          resetForm();
         },
       });
     } catch (error) {
-      // TODO: Log the error.
+      console.error('Error adding item:', error);
     }
   };
 
   return (
     <form onSubmit={handleAddItem}>
-      <input type="hidden" value={userId} name="userId" />
       <div className="flex flex-col items-center gap-2 rounded-sm bg-coconut">
         <div className="form-inputs flex flex-row gap-2">
           {/* Product Name */}
@@ -98,6 +101,7 @@ export default function AddItemForm(props: AddItemFormProps) {
                 defaultValue=""
                 aria-describedby="product-error"
                 onChange={handleProductChange}
+                required
               >
                 <option value="" disabled>
                   Select a product
@@ -147,6 +151,7 @@ export default function AddItemForm(props: AddItemFormProps) {
                   className="peer block w-full cursor-pointer rounded-sm border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
                   defaultValue=""
                   onChange={handleUnitChange}
+                  required
                 >
                   <option value="" disabled>
                     Select a unit
@@ -183,7 +188,7 @@ export default function AddItemForm(props: AddItemFormProps) {
           <LinkButton href="/inventory" variant="gray" className="w-1/4">
             Cancel
           </LinkButton>
-          <Button className="w-3/4" type="submit">
+          <Button className="w-3/4" loading={loading} type="submit">
             Add Inventory Item
           </Button>
         </div>

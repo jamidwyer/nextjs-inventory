@@ -1,3 +1,5 @@
+'use client';
+
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import client from '../apollo-client';
 import { useRouter } from 'next/navigation';
