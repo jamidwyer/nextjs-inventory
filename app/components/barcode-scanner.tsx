@@ -34,7 +34,7 @@ const BarcodeScanner = (props: BarcodeScannerProps) => {
         ? `Scanned: ${scannedProduct.product_name}`
         : null}
       {error ? <Error error={error} /> : null}
-      <Button onClick={() => setShowScanner(!showScanner)}>
+      <Button loading={loading} onClick={() => setShowScanner(!showScanner)}>
         {!showScanner ? 'Scan Barcode' : 'Hide Barcode Scanner'}
       </Button>
       {showScanner && (

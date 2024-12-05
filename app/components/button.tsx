@@ -4,6 +4,7 @@ export type ButtonVariant = 'normal' | 'gray' | 'icon';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
+  loading?: boolean;
   variant?: ButtonVariant;
 }
 
@@ -20,19 +21,25 @@ export const linkButtonVariantClasses = {
 export function Button({
   children,
   className,
+  loading,
   variant = 'normal',
   ...rest
 }: ButtonProps) {
   return (
     <button
       {...rest}
+      aria-busy={loading}
+      disabled={loading || rest.disabled}
       className={clsx(
         buttonBaseClass,
         linkButtonVariantClasses[variant],
+        {
+          'cursor-not-allowed opacity-50': loading,
+        },
         className,
       )}
     >
-      {children}
+      {loading ? 'Loading...' : children}
     </button>
   );
 }
