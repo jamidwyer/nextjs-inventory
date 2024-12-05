@@ -1,5 +1,3 @@
-'use client';
-
 import Search from '@/app/components/search';
 import InventoryRow from '../inventory-row';
 import Th from '../th';

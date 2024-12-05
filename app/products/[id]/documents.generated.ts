@@ -11,7 +11,11 @@ export type GetRecipesQuery = {
     __typename?: 'RecipeTypeConnection';
     edges: Array<{
       __typename?: 'RecipeTypeEdge';
-      node?: { __typename?: 'RecipeType'; id: string; name: string } | null;
+      node?: {
+        __typename?: 'RecipeType';
+        recipeId?: string | null;
+        name: string;
+      } | null;
     } | null>;
   } | null;
 };
@@ -63,7 +67,7 @@ export const GetRecipesDocument = {
                           selections: [
                             {
                               kind: 'Field',
-                              name: { kind: 'Name', value: 'id' },
+                              name: { kind: 'Name', value: 'recipeId' },
                             },
                             {
                               kind: 'Field',

@@ -11,6 +11,11 @@ const nextConfig = {
         destination: `${process.env.BASE_URL}/admin/inventory/product/add/`,
         permanent: true,
       },
+      {
+        source: '/recipe/add',
+        destination: `${process.env.BASE_URL}/admin/recipes/recipe/add/`,
+        permanent: true,
+      },
     ];
   },
   async rewrites() {
