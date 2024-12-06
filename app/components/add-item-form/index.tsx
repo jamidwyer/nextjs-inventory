@@ -19,9 +19,9 @@ interface AddItemFormProps {
 export default function AddItemForm(props: AddItemFormProps) {
   const { onAddItem, userId } = props;
   // TODO: should be number
-  const [product, setProduct] = useState('');
+  const [selectedProduct, setSelectedProduct] = useState('');
   const [amount, setAmount] = useState('');
-  const [unit, setUnit] = useState('');
+  const [selectedUnit, setSelectedUnit] = useState('');
   const [expirationDate, setExpirationDate] = useState('');
   const [productQueryRef] = useBackgroundQuery(GetProductsDocument);
   const [unitQueryRef] = useBackgroundQuery(GetUnitsDocument);
@@ -34,9 +34,9 @@ export default function AddItemForm(props: AddItemFormProps) {
   const { units } = unitsData;
 
   const resetForm = useCallback(() => {
-    setProduct('');
+    setSelectedProduct('');
     setAmount('');
-    setUnit('');
+    setSelectedUnit('');
     setExpirationDate('');
   }, []);
 
@@ -49,11 +49,11 @@ export default function AddItemForm(props: AddItemFormProps) {
   };
 
   const handleProductChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setProduct(e.target.value);
+    setSelectedProduct(e.target.value);
   };
 
   const handleUnitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setUnit(e.target.value);
+    setSelectedUnit(e.target.value);
   };
 
   const handleExpirationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,8 +64,8 @@ export default function AddItemForm(props: AddItemFormProps) {
     e.preventDefault();
     try {
       const variables = {
-        id: parseInt(product, 10),
-        unitId: parseInt(unit, 10),
+        id: parseInt(selectedProduct, 10),
+        unitId: parseInt(selectedUnit, 10),
         quantity: parseInt(amount, 10),
         expirationDate: expirationDate,
         person: {
@@ -102,6 +102,7 @@ export default function AddItemForm(props: AddItemFormProps) {
                 aria-describedby="product-error"
                 onChange={handleProductChange}
                 required
+                value={selectedProduct}
               >
                 <option value="" disabled>
                   Select a product
@@ -151,6 +152,7 @@ export default function AddItemForm(props: AddItemFormProps) {
                   className="peer block w-full cursor-pointer rounded-sm border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
                   defaultValue=""
                   onChange={handleUnitChange}
+                  value={selectedUnit}
                   required
                 >
                   <option value="" disabled>
