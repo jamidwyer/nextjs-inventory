@@ -168,6 +168,12 @@ nav {
   font-size: 1.6rem;
 }
 
+.page-header a {
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+}
+
 *,
 *::before,
 *::after {

@@ -39,6 +39,7 @@ const BarcodeScanner = (props: BarcodeScannerProps) => {
       </Button>
       {showScanner && (
         <Scanner
+          scanDelay={2000}
           formats={[
             'qr_code',
             'micro_qr_code',
@@ -65,6 +66,16 @@ const BarcodeScanner = (props: BarcodeScannerProps) => {
           allowMultiple={true}
           onError={(error) => console.log(error)}
           onScan={(result) => handleBarcode(result)}
+          styles={{
+            container: {
+              height: '400px',
+              width: '400px',
+            },
+            video: {
+              height: 'auto',
+              width: '100%',
+            },
+          }}
         />
       )}
     </>

@@ -10,6 +10,7 @@ interface LinkButtonProps {
   href: string;
   children: ReactNode;
   className?: string;
+  loading?: boolean;
   variant?: ButtonVariant;
 }
 
@@ -17,6 +18,7 @@ export default function LinkButton({
   href,
   children,
   className,
+  loading,
   variant = 'normal',
 }: LinkButtonProps) {
   return (
@@ -25,7 +27,7 @@ export default function LinkButton({
       href={href}
       className={`${buttonBaseClass} ${linkButtonVariantClasses[variant]} ${className}`}
     >
-      {children}
+      {loading ? 'Loading...' : children}
     </Link>
   );
 }
