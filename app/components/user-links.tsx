@@ -41,13 +41,10 @@ export default function UserLinks() {
         },
       });
     } catch (e) {
-      console.log(e);
       setLoggedIn(false);
-      console.log('push /login');
       router.push('/login');
     }
 
-    console.log('push /');
     router.push('/');
   };
 

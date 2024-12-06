@@ -98,7 +98,6 @@ export default function AddItemForm(props: AddItemFormProps) {
                 id="product"
                 name="productId"
                 className="peer block w-full cursor-pointer rounded-sm border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
-                defaultValue=""
                 aria-describedby="product-error"
                 onChange={handleProductChange}
                 required
@@ -150,7 +149,6 @@ export default function AddItemForm(props: AddItemFormProps) {
                   id="unit"
                   name="unit"
                   className="peer block w-full cursor-pointer rounded-sm border border-gray-200 py-2 pl-2 text-sm outline-2 placeholder:text-gray-500"
-                  defaultValue=""
                   onChange={handleUnitChange}
                   value={selectedUnit}
                   required

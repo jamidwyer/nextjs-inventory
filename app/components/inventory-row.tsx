@@ -47,8 +47,7 @@ const InventoryRow = (props: Omit<InventoryItemType, 'person'>) => {
         }
       },
     });
-  const url = `/products/${product.id}`;
-
+  const url = `/products/${product.id}?name=${product.name}`;
   const [
     deleteInventoryItem,
     { data: deleteData, loading: deleteLoading, error: deleteError },
@@ -63,7 +62,6 @@ const InventoryRow = (props: Omit<InventoryItemType, 'person'>) => {
         <div className="flex items-center gap-2">
           <p>
             <Link
-              prefetch
               className="flex flex-row items-center gap-1 text-bloodorange hover:text-smashedPumpkin"
               href={url}
             >
