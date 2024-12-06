@@ -1,11 +1,10 @@
-'use client';
-
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import client from '../apollo-client';
 import { useRouter } from 'next/navigation';
 import { Button } from './button';
 import { LogoutDocument, MeDocument } from './user/documents.generated';
 import { useEffect, useState } from 'react';
+import LinkButton from './link-button';
 
 export default function UserLinks() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -56,12 +55,19 @@ export default function UserLinks() {
     <div className="flex items-center">
       {loggedIn ? (
         <form onSubmit={handleSubmit}>
-          <Button variant="gray" className="h-[36px] md:px-3">
+          <Button loading={loading} variant="gray" className="h-[36px] md:px-3">
             Log out
           </Button>
         </form>
       ) : (
-        <a href="/login">Log in</a>
+        <LinkButton
+          href="/login"
+          loading={loading}
+          variant="gray"
+          className="h-[36px] md:px-3"
+        >
+          Log in
+        </LinkButton>
       )}
     </div>
   );
