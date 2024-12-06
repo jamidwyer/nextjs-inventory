@@ -6,9 +6,16 @@ import { GetRecipesDocument } from './documents.generated';
 import Loading from '@/app/components/loading';
 import Error from '@/app/error';
 import LinkButton from '@/app/components/link-button';
+import { Section } from '@/app/components/section';
 
-export default function Page({ params }: { params: { id: string } }) {
+export default function Page({
+  params,
+}: {
+  params: { id: string; name: string };
+}) {
   const productId = params?.id;
+  let searchParams = new URLSearchParams(document.location.search);
+  const productName = searchParams.get('name');
 
   const { data, loading, error } = useQuery(GetRecipesDocument, {
     variables: {
@@ -50,8 +57,9 @@ export default function Page({ params }: { params: { id: string } }) {
     );
   }
 
+  const name = `Recipes for ${productName}`;
   return (
-    <main>
+    <Section name={name}>
       <ul>
         {data.recipes.edges.map((recipe) => {
           // @ts-ignore
@@ -70,6 +78,9 @@ export default function Page({ params }: { params: { id: string } }) {
           );
         })}
       </ul>
-    </main>
+      <LinkButton className="mt-4 w-1/4" href="/recipe/add/">
+        Add Recipe
+      </LinkButton>
+    </Section>
   );
 }
