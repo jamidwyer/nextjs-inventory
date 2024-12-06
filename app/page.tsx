@@ -83,14 +83,14 @@ export default function Page({
           onAddItem={refetch}
         />
       </Section>
-      <Section name="Scan Barcode">
+      {/* <Section name="Scan Barcode">
         <BarcodeScanner
           scannedProduct={scannedProduct}
           setScannedProduct={setScannedProduct}
           setShowScanner={setShowScanner}
           showScanner={showScanner}
         />
-      </Section>
+      </Section> */}
       <Section name="Add Product">
         <LinkButton href="/product/add" className="w-[200px]" variant="normal">
           Add Product

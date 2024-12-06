@@ -24,10 +24,11 @@ Preview: https://nextjs-inventory-sage.vercel.app
 
 #### Nice To Have
 
-- finish swapping out postgres for apollo client
 - add item not clearing
 - retain load more state on item update
+- expiration date editable
 - cdn
+- quantity number editable
 - ssr/server components wherever sensible
 - user trust levels for admin
 - update node
