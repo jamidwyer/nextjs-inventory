@@ -78,7 +78,7 @@ export default function Page({
           );
         })}
       </ul>
-      <LinkButton className="mt-4 w-1/4" href="/recipe/add/">
+      <LinkButton className="mt-4 lg:w-1/4" href="/recipe/add/">
         Add Recipe
       </LinkButton>
     </Section>
