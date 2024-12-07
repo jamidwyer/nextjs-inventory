@@ -91,11 +91,14 @@ export default function Page({
           showScanner={showScanner}
         />
       </Section> */}
-      <Section name="Add Product">
-        <LinkButton href="/product/add" className="w-[200px]" variant="normal">
-          Add Product
-        </LinkButton>
-      </Section>
+      {/* <Section name="Identify Item">
+        <ItemIdentifier
+          photographedProduct={photographedProduct}
+          setPhotographedProduct={setPhotographedProduct}
+          setShowCamera={setShowCamera}
+          showCamera={showCamera}
+        />
+      </Section> */}
     </>
   );
 }

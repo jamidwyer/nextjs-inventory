@@ -10,6 +10,7 @@ import {
 } from './documents.generated';
 import { useCallback, useState } from 'react';
 import LinkButton from '../link-button';
+import { useRouter } from 'next/navigation';
 
 interface AddItemFormProps {
   onAddItem: () => void;
@@ -18,6 +19,8 @@ interface AddItemFormProps {
 
 export default function AddItemForm(props: AddItemFormProps) {
   const { onAddItem, userId } = props;
+  const router = useRouter();
+
   // TODO: should be number
   const [selectedProduct, setSelectedProduct] = useState('');
   const [amount, setAmount] = useState('');
@@ -49,7 +52,11 @@ export default function AddItemForm(props: AddItemFormProps) {
   };
 
   const handleProductChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedProduct(e.target.value);
+    const { value } = e.target;
+    if (value === '/product/add') {
+      router.push(value);
+    }
+    setSelectedProduct(value);
   };
 
   const handleUnitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -111,6 +118,9 @@ export default function AddItemForm(props: AddItemFormProps) {
                     {product?.name}
                   </option>
                 ))}
+                <option value="/product/add">
+                  <Link href="/product/add">(+) Add new product</Link>
+                </option>
               </select>
             </div>
           </div>
